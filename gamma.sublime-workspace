@@ -1,0 +1,288 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 239,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".htaccess",
+			"settings":
+			{
+				"buffer_size": 50,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 49.0,
+		"last_filter": "php",
+		"selected_items":
+		[
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"htm",
+				"Set Syntax: HTML"
+			]
+		],
+		"width": 342.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/axel/Documents/Web/gamma"
+	],
+	"file_history":
+	[
+		"/home/axel/Documents/Web/gamma/test.php",
+		"/home/axel/Documents/Web/gamma/index.php",
+		"/home/axel/Projets/php.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/structure/model/utility.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/structure/model/objects/site/class.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/model/general_values.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/structure/model/core.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/index.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/controller/member.class.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/.htaccess",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gamma/.useraccess",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/newchat/index.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/model/utility.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/index.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/blog/index.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/model/member_utility.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/controller/userspace.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/clicker/index.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/clicker/style.css",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/clicker/index.html",
+		"/home/axel/Projets/Gmod Web/index.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gmod/spoiler.js",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gmod/style.css",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/gmod/index.html",
+		"/home/axel/Téléchargements/jquery.fileTree-1.01/index.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/aboutdev.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/view/footer.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/view/banner.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/home/axel/www/dev/core.php",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/etc/apache2/sites-available/dev.conf",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/etc/apache2/sites-enabled/000-default.conf",
+		"/run/user/1000/gvfs/sftp:host=192.168.2.39/etc/apache2/sites-available/000-default.conf"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ROOT",
+			"getPreventDefault",
+			"echo"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 239,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								156,
+								156
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": ".htaccess",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 50,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13,
+								13
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "gamma.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 241.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
