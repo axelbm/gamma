@@ -6,9 +6,10 @@ class home extends Controller{
 			'title' => 'Gamma',
 			'text' => 'HelloWorld',
 		);
-		
+
 		$this->set($d);
 		$this->render('index');
+
 	}
 }
 ?>
