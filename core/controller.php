@@ -20,5 +20,11 @@ class Controller{
 			require(ROOT.'views/layout/'.$this->layout.'.php');
 		}
 	}
+
+	function loadModel($name){
+		require_once(ROOT.'models/'.strtolower($name).'.php');
+		$this->$name = new $name();
+		return $this->$name;
+	}
 }
 ?>

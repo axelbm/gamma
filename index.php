@@ -1,22 +1,14 @@
 <?php
 define('WEBROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
+define('DB_NAME', 'gamma');
 
 require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 
-mysql_connect("localhost", "gamma", "gammaweb")
-    or die("Impossible de se connecter : " . mysql_error());
-mysql_select_db('gamma')
-	or die ('Impossible de sélectionner la base de données : ' . mysql_error());
+$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, 'gammaweb');
 
-		$data = array();
-		$data['name'] = "Gamma";
-		$data['text'] = "HelloWorld";
-
-		$Model->save($data);
-
-$params = explode('/', $_GET['p']);
+$params = explode("/", $_GET['p']);
 
 if(!isset($params[0]) or $params[0] == '')
 	$controller = 'home';
@@ -34,7 +26,9 @@ $controller = new $controller();
 
 
 if(method_exists($controller, $action)){
-	$controller->$action();
+	unset($params[0]); unset($params[1]);
+	call_user_func_array(array($controller, $action), $params);
+	// $controller->$action();
 }
 else{
 	echo 'error 404';
