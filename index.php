@@ -6,7 +6,13 @@ define('DB_NAME', 'gamma');
 require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 
-$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, 'gammaweb');
+try{
+	$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, 'gammaweb');
+	$Database->setAttribute(PDO::ATTR_ERRMODE, PPO::ERRMODE_WARNING);
+}
+catch(PDOException $e){
+	echo "La base de donnée n'est pas disponible.";
+}
 
 $params = explode("/", $_GET['p']);
 
@@ -35,4 +41,3 @@ else{
 }
 echo "end";
 ?>
-

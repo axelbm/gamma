@@ -5,11 +5,11 @@ class Controller{
 
 	function set($vars){
 		$this->vars = array_merge($this->vars, $vars);
-	} 
+	}
 
 	function render($filename){
 		extract($this->vars);
-		
+
 		ob_start();
 		require(ROOT.'views/'.get_class($this).'/'.$filename.'.php');
 		$content_for_layout = ob_get_clean();
