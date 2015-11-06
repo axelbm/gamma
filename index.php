@@ -8,7 +8,7 @@ require ROOT.'core/controller.php';
 
 try{
 	$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, 'gammaweb');
-	$Database->setAttribute(PDO::ATTR_ERRMODE, PPO::ERRMODE_WARNING);
+	$Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 catch(PDOException $e){
 	echo "La base de donnée n'est pas disponible.";
@@ -39,5 +39,4 @@ if(method_exists($controller, $action)){
 else{
 	echo 'error 404';
 }
-echo "end";
 ?>
