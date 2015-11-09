@@ -87,6 +87,7 @@ class Model{
 	}
 
 	public function find($data=array()){
+		
 		if(isset($this->table) && !empty($this->table)){
 			global $Database;
 
@@ -101,7 +102,8 @@ class Model{
 
 			$sql = "SELECT $fields FROM ".$this->table." WHERE $conditions ORDER BY $order $limit";
 			$req = $Database->query($sql);
-			$data = $req->fetchAll(PDO::FETCH_ASSOC);
+			$data = $req->fetchAll();
+
 			return $data;
 		}
 		else{

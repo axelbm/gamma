@@ -1,13 +1,18 @@
 <?php
+// phpinfo();
+
 define('WEBROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('DB_NAME', 'gamma');
+define('DEFAULT_CONTROLLER', 'home');
+define('DEFAULT_ACTION', 'index');
+
 
 require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 
 try{
-	$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, 'gammaweb');
+	$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, '');
 	$Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 catch(PDOException $e){
@@ -15,28 +20,9 @@ catch(PDOException $e){
 }
 
 $params = explode("/", $_GET['p']);
+$controller = $params[0];
+$action = isset($params[1]) ? $params[1] : null ;
 
-if(!isset($params[0]) or $params[0] == '')
-	$controller = 'home';
-else
-	$controller = $params[0];
+Controller::load($controller, $action, $params);
 
-if(!isset($params[1]) or $params[1] == '')
-	$action = 'index';
-else
-	$action = $params[1];
-
-
-require(ROOT.'controllers/'.$controller.'.php');
-$controller = new $controller();
-
-
-if(method_exists($controller, $action)){
-	unset($params[0]); unset($params[1]);
-	call_user_func_array(array($controller, $action), $params);
-	// $controller->$action();
-}
-else{
-	echo 'error 404';
-}
 ?>
