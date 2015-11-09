@@ -46,6 +46,12 @@ class Model{
 				$id = null;
 			}
 
+			foreach ($data as $key => $value) {
+				if(!in_array($key, $this->tablecolumns)){
+					unset($data[$key]);
+				}
+			}
+
 			if(isset($id) and !empty($id)){
 				$sql = "UPDATE $this->table SET";
 				foreach ($data as $key => $value) {
@@ -81,21 +87,27 @@ class Model{
 	}
 
 	public function find($data=array()){
-		global $Database;
+		if(isset($this->table) && !empty($this->table)){
+			global $Database;
 
-		$conditions = "1";
-		$fields = "*";
-		$limit = "";
-		$order = "id ASC";
-		if(isset($data['conditions'])){	$conditions = $data['conditions'];}
-		if(isset($data['fields'])){		$fields 	= $data['fields'];}
-		if(isset($data['limit'])){		$limit	 	= "LIMIT ".$data['limit'];}
-		if(isset($data['order'])){		$order	 	= $data['order'];}
+			$conditions = "1";
+			$fields = "*";
+			$limit = "";
+			$order = "id ASC";
+			if(isset($data['conditions'])){	$conditions = $data['conditions'];}
+			if(isset($data['fields'])){		$fields 	= $data['fields'];}
+			if(isset($data['limit'])){		$limit	 	= "LIMIT ".$data['limit'];}
+			if(isset($data['order'])){		$order	 	= $data['order'];}
 
-		$sql = "SELECT $fields FROM ".$this->table." WHERE $conditions ORDER BY $order $limit";
-		$req = $Database->query($sql);
-		$data = $req->fetchAll(PDO::FETCH_ASSOC);
-		return $data;
+			$sql = "SELECT $fields FROM ".$this->table." WHERE $conditions ORDER BY $order $limit";
+			$req = $Database->query($sql);
+			$data = $req->fetchAll(PDO::FETCH_ASSOC);
+			return $data;
+		}
+		else{
+			$this->error = "no table";
+			$this->callerror();
+		}
 	}
 
 	public function delete($id){
@@ -125,6 +137,11 @@ class Model{
 			$this->tablesname = array_column($req->fetchAll(), 0);
 			return $this->tablesname;
 		}
+	}
+
+	static function load($name){
+		require_once(ROOT.'models/'.strtolower($name).'.php');
+		return new $name();
 	}
 }
 $Model = new Model();
