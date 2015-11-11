@@ -1,6 +1,4 @@
 <?php
-// phpinfo();
-
 define('WEBROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('DB_NAME', 'gamma');
@@ -14,6 +12,7 @@ require ROOT.'core/controller.php';
 try{
 	$Database = new PDO('mysql:host=localhost;dbname=gamma', DB_NAME, '');
 	$Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	$Database->exec("set names utf8");
 }
 catch(PDOException $e){
 	echo "La base de donnée n'est pas disponible.";

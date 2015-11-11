@@ -4,7 +4,6 @@ class Controller{
 	var $layout = 'default';
 
 	function __construct($action=null, $params=null){
-		echo "fasfasfa0";
 		if(!isset($action) or empty($action))
 			$action = DEFAULT_ACTION;
 
