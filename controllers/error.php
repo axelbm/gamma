@@ -2,7 +2,7 @@
 class error extends Controller{
 
 	function __construct($code, $params){
-		$method = 'err'.$code;
+		$method = 'err_'.$code;
 		if(method_exists($this, $method)){
 			$this->$method($params);
 		}else{
@@ -19,12 +19,12 @@ class error extends Controller{
 		$this->render('index');
 	}
 
-	function err404($params){
+	function err_404($params){
 		$data = array(
 			'message' => $params[0]
 		);
 		$this->set($data);
-		$this->render('err404');
+		$this->render('err_404');
 	}
 }
 ?>

@@ -4,7 +4,7 @@ define('ROOT', preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('DB_NAME', 'gamma');
 define('DEFAULT_CONTROLLER', 'home');
 define('DEFAULT_ACTION', 'index');
-
+define('PREVIOUS_PAGE', (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : WEBROOT);
 
 require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
@@ -22,6 +22,7 @@ $params = explode("/", $_GET['p']);
 $controller = $params[0];
 $action = isset($params[1]) ? $params[1] : null ;
 
+unset($params[0]); unset($params[1]);
 Controller::load($controller, $action, $params);
 
 ?>

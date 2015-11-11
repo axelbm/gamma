@@ -12,6 +12,9 @@
 		<div class="container">
 			<?php include 'parts/header.php'; ?>
 			<?php include 'parts/nav.php'; ?>
+			<?php include 'parts/connection_model.php'; ?>
+
+
 
 			<div class="col-sm-9">
 				<div class="row">

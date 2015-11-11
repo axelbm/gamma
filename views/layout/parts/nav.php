@@ -1,19 +1,29 @@
+<?php
+$tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
+?>
+
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo WEBROOT ?>">Gamma</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="<?php echo WEBROOT ?>">Gamma</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav">
+				<li><a href="<?php echo WEBROOT ?>">Nouveauté</a></li>
+				<li><a href="<?php echo WEBROOT ?>">Populaire</a></li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">Catégories<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<?php foreach ($tab as $key => $value): ?>
+							<li><a href="#"><?php echo $value; ?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+				<li><a onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+			</ul>
+		</div>
+	</div>
 </nav>

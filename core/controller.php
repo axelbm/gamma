@@ -2,16 +2,18 @@
 class Controller{
 	var $vars = array();
 	var $layout = 'default';
+	var $action = 'index';
 
 	function __construct($action=null, $params=null){
 		if(!isset($action) or empty($action))
 			$action = DEFAULT_ACTION;
 
 		if(method_exists($this, $action)){
+			$this->action = $action;
 			call_user_func_array(array($this, $action), $params);
 		}
 		else{
-			Controller::load('error', '404', array('L\'action demandé n\'existe pas.'));
+			$this->noaction($action, $params);
 		}
 	}
 
@@ -19,7 +21,10 @@ class Controller{
 		$this->vars = array_merge($this->vars, $vars);
 	}
 
-	function render($filename){
+	function render($filename=null){
+		if(empty($filename))
+			$filename = $this->action;
+
 		extract($this->vars);
 
 		ob_start();
@@ -37,6 +42,10 @@ class Controller{
 		require_once(ROOT.'models/'.strtolower($name).'.php');
 		$this->$name = new $name();
 		return $this->$name;
+	}
+
+	function noaction($action, $params){
+		Controller::load('error', '404', array('L\'action demandé n\'existe pas.'));
 	}
 
 	static function load($controller=null, $action=null, $params=null){
