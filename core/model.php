@@ -3,7 +3,6 @@ class Model{
 	protected $table;
 	private $tablesname;
 	protected $tablecolumns;
-	public $error;
 
 	public function setTable($table){
 		if(in_array($table, $this->getTables())){
@@ -32,8 +31,7 @@ class Model{
 			return $data;
 		}
 		else{
-			$this->error = "no table";
-			$this->callerror();
+			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
 	}
 
@@ -81,8 +79,7 @@ class Model{
 			}
 		}
 		else{
-			$this->error = "no table";
-			$this->callerror();
+			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
 	}
 
@@ -107,8 +104,7 @@ class Model{
 			return $data;
 		}
 		else{
-			$this->error = "no table";
-			$this->callerror();
+			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
 	}
 
@@ -119,13 +115,8 @@ class Model{
 			$sql = "DELETE FROM ".$this->table." WHERE id=$id";
 			$req = $Database->query($sql);
 		}else{
-			$this->error = "no table";
-			$this->callerror();
+			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
-	}
-
-	protected function callerror(){
-		die($this->error);
 	}
 
 	public function getTables(){
@@ -146,6 +137,4 @@ class Model{
 		return new $name();
 	}
 }
-$Model = new Model();
-
 ?>

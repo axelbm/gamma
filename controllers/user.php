@@ -17,8 +17,12 @@ class user extends Controller{
 
 	}
 
-	function view($id){
+	function view($id=null){
+		if(empty($id))
+			Controller::weberror('404', 'L\'utilistaeur demandé est introuvable.');
 
+
+		Member::GetByID($id);
 	}
 }
 ?>

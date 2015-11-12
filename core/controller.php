@@ -45,7 +45,7 @@ class Controller{
 	}
 
 	function noaction($action, $params){
-		Controller::load('error', '404', array('L\'action demandé n\'existe pas.'));
+		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
 	static function load($controller=null, $action=null, $params=null){
@@ -58,8 +58,13 @@ class Controller{
 			return new $controller($action, $params);
 		}
 		else{
-			Controller::load('error', '404', array('Le controller demandé n\'existe pas.'));
+			Controller::weberror('404', 'Le controller demandé n\'existe pas.');
 		}
+	}
+
+	static function weberror($code, $message){
+		Controller::load('error', $code, array($message));
+		exit;
 	}
 }
 ?>

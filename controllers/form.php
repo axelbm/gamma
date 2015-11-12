@@ -9,7 +9,7 @@ class form extends Controller{
 	}
 
 	function noaction($action, $params){
-		Controller::load('error', '404', array('Le formulaire demandé n\'existe pas.'));
+		Controller::weberror('404', 'Le formulaire demandé n\'existe pas.');
 	}
 }
 ?>

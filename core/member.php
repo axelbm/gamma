@@ -4,15 +4,17 @@ class Member{
 	private $nameid;
 	private $name;
 	private $email;
+	private $birthdate;
 
 	// Methodes
-	public function __construct($data){
+	public function __construct(){
+
+	}
+
+	private function LoadFromTable($data){
 		foreach ($data as $key => $value) {
-			if(isset($this->$key)){
-				$this->$key = $value;
-			}
+			$this->$key = $value;
 		}
-		return $this;
 	}
 
 	// Getter
@@ -38,5 +40,16 @@ class Member{
 	}
 
 
+	static function GetByID($id){
+		global $Database;
+
+		$sql = "SELECT nameid, name, email, birthdate FROM member WHERE $id";
+		$req = $Database->query($sql);
+		$data = $req->fetch(PDO::FETCH_ASSOC);
+
+		$member = new Member;
+		$member->LoadFromTable($data);
+		print_r($member);
+	}
 }
 ?>
