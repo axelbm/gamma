@@ -1,10 +1,5 @@
 <?php
 class Member{
-	private $id;
-	private $nameid;
-	private $name;
-	private $email;
-	private $birthdate;
 
 	// Methodes
 	public function __construct(){
@@ -12,8 +7,10 @@ class Member{
 	}
 
 	private function LoadFromTable($data){
-		foreach ($data as $key => $value) {
-			$this->$key = $value;
+		if(!empty($data)){
+			foreach ($data as $key => $value) {
+				$this->$key = $value;
+			}
 		}
 	}
 
@@ -30,6 +27,9 @@ class Member{
 	public function GetEmail(){
 		return $this->email;
 	}
+	public function GetDescription(){
+		return $this->description;
+	}
 
 	// Setter
 	public function SetName($name){
@@ -43,13 +43,41 @@ class Member{
 	static function GetByID($id){
 		global $Database;
 
-		$sql = "SELECT nameid, name, email, birthdate FROM member WHERE $id";
+		$sql = "SELECT * FROM member_profil WHERE id='$id'";
 		$req = $Database->query($sql);
 		$data = $req->fetch(PDO::FETCH_ASSOC);
 
-		$member = new Member;
-		$member->LoadFromTable($data);
-		print_r($member);
+		if(empty($data)){
+			return null;
+		}else{
+			$member = new Member;
+			$member->LoadFromTable($data);
+			return $member;
+		}
+	}
+
+	static function GetByNameID($nameid){
+		global $Database;
+
+		$data = Model::_find('member_profil', array(
+			'conditions' => "nameid='".$nameid."'",
+			'single'	 => true
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+			$member = new Member;
+			$member->LoadFromTable($data);
+			return $member;
+		}
+	}
+
+	static function AddMember($data){
+		$data['confirmation_token'] = md5($data['nameid'].rand());
+
+		print_r($data);
+		// Model::_save('member_account', $data);
 	}
 }
 ?>

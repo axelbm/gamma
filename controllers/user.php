@@ -19,10 +19,19 @@ class user extends Controller{
 
 	function view($id=null){
 		if(empty($id))
-			Controller::weberror('404', 'L\'utilistaeur demandé est introuvable.');
+			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 
+		$member = Member::GetByNameID($id);
 
-		Member::GetByID($id);
+		if(!$member){
+			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+		}
+
+		$data = array('user'=>$member);
+		
+		$this->setTitle(Site_Name.' - '.$member->getName());
+		$this->set($data);
+		$this->render();
 	}
 }
 ?>

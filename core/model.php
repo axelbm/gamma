@@ -1,11 +1,11 @@
 <?php
 class Model{
 	protected $table;
-	private $tablesname;
+	static $tablesname;
 	protected $tablecolumns;
 
 	public function setTable($table){
-		if(in_array($table, $this->getTables())){
+		if(self::validTable($table)){
 			global $Database;
 
 			$this->table = $table;
@@ -17,15 +17,56 @@ class Model{
 	}
 
 	public function read($id, $fields=null){
-		if(isset($this->table) && !empty($this->table)){
+		return self::_read($this->table, $id, $fields);
+	}
+
+	public function save($id, $data=null){
+		return self::_save($this->table, $id, $data);
+	}
+
+	public function find($data=array()){
+		return self::_find($this->table, $data);
+	}
+
+	public function delete($id){
+		return self::_delete($this->table, $id);
+	}
+
+	static function getTables(){
+		if(isset(self::$tablesname) && !empty(self::$tablesname)){
+			return self::$tablesname;
+		}else{
+			global $Database;
+			$sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."'";
+			$req = $Database->query($sql);
+
+			self::$tablesname = array_column($req->fetchAll(), 0);
+			return self::$tablesname;
+		}
+	}
+
+	static function validTable($table){
+		if(in_array($table, self::getTables())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	static function load($name){
+		require_once(ROOT.'models/'.strtolower($name).'.php');
+		return new $name();
+	}
+
+	static function _read($table, $id, $fields=null){
+		if(self::validTable($table)){
 			global $Database;
 
 			if($fields==null)
 				$fields='*';
 
-			$sql = "SELECT ".$fields." FROM ".$this->table." WHERE id=".$id;
+			$sql = "SELECT $fields FROM $table WHERE id=$id";
 			$req = $Database->query($sql);
-
 
 			$data = $req->fetch(PDO::FETCH_ASSOC);
 			return $data;
@@ -35,8 +76,8 @@ class Model{
 		}
 	}
 
-	public function save($id, $data=null){
-		if(isset($this->table) && !empty($this->table)){
+	static function _save($table, $id, $data=null){
+		if(self::validTable($table)){
 			global $Database;
 
 			if($data == null){
@@ -51,14 +92,14 @@ class Model{
 			}
 
 			if(isset($id) and !empty($id)){
-				$sql = "UPDATE $this->table SET";
+				$sql = "UPDATE $table SET";
 				foreach ($data as $key => $value) {
 					$sql .= " $key = '$value',";
 				}
 				$sql = substr($sql, 0, -1);
 				$sql .= " WHERE id=$id";
 			}else{
-				$sql = "INSERT INTO ".$this->table." (";
+				$sql = "INSERT INTO ".$table." (";
 				foreach ($data as $key => $value) {
 					$sql .= "$key, ";
 				}
@@ -83,23 +124,29 @@ class Model{
 		}
 	}
 
-	public function find($data=array()){
-		
-		if(isset($this->table) && !empty($this->table)){
+	static function _find($table, $data=array()){
+		if(self::validTable($table)){
 			global $Database;
 
 			$conditions = "1";
 			$fields = "*";
 			$limit = "";
 			$order = "id ASC";
+			$single = false;
 			if(isset($data['conditions'])){	$conditions = $data['conditions'];}
 			if(isset($data['fields'])){		$fields 	= $data['fields'];}
 			if(isset($data['limit'])){		$limit	 	= "LIMIT ".$data['limit'];}
 			if(isset($data['order'])){		$order	 	= $data['order'];}
+			if(isset($data['single'])){		$single	 	= $data['single'];}
 
-			$sql = "SELECT $fields FROM ".$this->table." WHERE $conditions ORDER BY $order $limit";
+			$sql = "SELECT $fields FROM ".$table." WHERE $conditions ORDER BY $order $limit";
 			$req = $Database->query($sql);
-			$data = $req->fetchAll();
+
+			if($single){
+				$data = $req->fetch(PDO::FETCH_ASSOC);
+			}else{
+				$data = $req->fetchAll(PDO::FETCH_ASSOC);
+			}
 
 			return $data;
 		}
@@ -108,33 +155,15 @@ class Model{
 		}
 	}
 
-	public function delete($id){
-		if(isset($this->table) && !empty($this->table)){
+	static function _delete($table, $id){
+		if(self::validTable($table)){
 			global $Database;
 
-			$sql = "DELETE FROM ".$this->table." WHERE id=$id";
+			$sql = "DELETE FROM ".$table." WHERE id=$id";
 			$req = $Database->query($sql);
 		}else{
 			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
-	}
-
-	public function getTables(){
-		if(isset($this->tablesname) && !empty($this->tablesname)){
-			return $this->tablesname;
-		}else{
-			global $Database;
-			$sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."'";
-			$req = $Database->query($sql);
-
-			$this->tablesname = array_column($req->fetchAll(), 0);
-			return $this->tablesname;
-		}
-	}
-
-	static function load($name){
-		require_once(ROOT.'models/'.strtolower($name).'.php');
-		return new $name();
 	}
 }
 ?>

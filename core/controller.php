@@ -3,6 +3,7 @@ class Controller{
 	var $vars = array();
 	var $layout = 'default';
 	var $action = 'index';
+	var $title;
 
 	function __construct($action=null, $params=null){
 		if(!isset($action) or empty($action))
@@ -37,6 +38,12 @@ class Controller{
 			require(ROOT.'views/layout/'.$this->layout.'.php');
 		}
 	}
+
+	function setTitle($title){
+		$this->vars['title'] = $title;
+	}
+
+
 
 	function loadModel($name){
 		require_once(ROOT.'models/'.strtolower($name).'.php');
