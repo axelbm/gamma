@@ -1,0 +1,98 @@
+<?php
+$account = array();
+$formdata = array();
+$error = false;
+$fields = array('nameid', 'email', 'pwd', 'pwd_conf');
+
+foreach ($fields as $key => $value) {
+	if(isset($_POST[$value])){
+		$formdata[$key] = array();
+		$formdata[$value]['value'] = $_POST[$value];
+	}else{
+		Controller::weberror('500', 'Les données du formulaire ne sont pas valide.');
+	}
+}
+
+
+$nameid = $_POST['nameid'];
+if(isset($nameid) & !empty($nameid)){
+	if(strlen($nameid) >= 4 & strlen($nameid) <= 16){
+		$check = Model::_find('member_account', array(
+			"conditions"	=> "nameid='".$nameid."'",
+			"single"    	=> true
+		));
+
+		if(!isset($check) | empty($check)){
+			$account['nameid'] = $nameid;
+		}else{
+			$error = true;
+			$formdata['nameid']['error'] = 'L\'identifiant est déja utilisé.';
+		}
+	}else{
+		$error = true;
+		$formdata['nameid']['error'] = 'L\'identifiant n\'est pas valide.';
+	}
+}else{
+	$error = true;
+	$formdata['nameid']['error'] = 'L\'identifiant est obligatoir.';
+}
+
+
+$email = $_POST['email'];
+if(isset($nameid) & !empty($nameid)){
+	if(preg_match('/^[\w\.\-]*@\w*\.[\w\.]*$/', $email)){
+		$check = Model::_find('member_account', array(
+			"conditions"	=> "email='".$email."'",
+			"single"    	=> true
+		));
+
+		if(!isset($check) | empty($check)){
+			$account['email'] = $email;
+		}else{
+			$error = true;
+			$formdata['email']['error'] = 'L\'email est déja utilisé.';
+		}
+	}else{
+		$error = true;
+		$formdata['email']['error'] = 'L\'email n\'est pas valide.';
+	}
+}else{
+	$error = true;
+	$formdata['email']['error'] = 'L\'email est obligatoir.';
+}
+
+
+$password = $_POST['pwd'];
+$passwordconf = $_POST['pwd_conf'];
+if(isset($password) & !empty($password)){
+	if(strlen($password) >= 6 & strlen($password) <= 16){
+		$account['password'] = $password;
+	}else{
+		$error = true;
+		$formdata['pwd']['error'] = 'Le mot de passe doit contenir entre 6 et 16 lettres.';
+	}
+}else{
+	$error = true;
+	$formdata['pwd']['error'] = 'Le mot de passe est obligatoir.';
+}
+
+
+if(isset($passwordconf) & !empty($passwordconf)){
+	if($password != $passwordconf){
+		$error = true;
+		$formdata['pwd_conf']['error'] = 'Les mots de passe ne correspondent pas.';
+	}
+}else{
+	$error = true;
+	$formdata['pwd_conf']['error'] = 'Vous devez confirmer votre mot de passse.';
+}
+
+if($error){
+	$this->data['formdata'] = $formdata;
+	Controller::load('user', 'signup', array(), $this->data);
+}else{
+	Member_Account::CreateAccout($account);
+}
+
+
+?>

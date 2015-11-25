@@ -1,6 +1,5 @@
 <?php
-class Member{
-
+class Member_Account{
 	// Methodes
 	public function __construct(){
 
@@ -18,26 +17,33 @@ class Member{
 	public function GetID(){
 		return $this->id;
 	}
-	public function GetName(){
-		return $this->name;
-	}
 	public function GetNameID(){
 		return $this->nameid;
 	}
 	public function GetEmail(){
 		return $this->email;
 	}
-	public function GetDescription(){
-		return $this->description;
+	public function GetPassword(){
+		return $this->password;
+	}
+	public function GetRegistrationDate(){
+		return $this->registration_date;
+	}
+	public function IsConfirmed(){
+		return $this->confirmed;
+	}
+	public function GetConfirmationToken(){
+		return $this->confirmation_token;
 	}
 
+
 	// Setter
-	public function SetName($name){
-		$this->name = $name;
-	}
-	public function SetEmail($email){
-		$this->email = $email;
-	}
+	// public function SetName($name){
+	// 	$this->name = $name;
+	// }
+	// public function SetEmail($email){
+	// 	$this->email = $email;
+	// }
 
 
 	static function GetByID($id){
@@ -73,7 +79,8 @@ class Member{
 		}
 	}
 
-	static function AddMember($data){
+	static function CreateAccout($data){
+		$data['confirmed'] = false;
 		$data['confirmation_token'] = md5($data['nameid'].rand());
 
 		print_r($data);

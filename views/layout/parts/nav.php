@@ -14,11 +14,11 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">Catégories<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo WEBROOT.'book/list/all/'; ?>">Tous</a></li>
+						<li><a href="<?php echo WEBROOT.'book/category/all/'; ?>">Tous</a></li>
 						<li><a href="<?php echo WEBROOT.'book/category/'; ?>">Catégories</a></li>
 						<li class="divider"></li>
 						<?php foreach ($tab as $key => $value): ?>
-							<li><a href="<?php echo WEBROOT.'book/list/category/'.$value; ?>"><?php echo $value; ?></a></li>
+							<li><a href="<?php echo WEBROOT.'book/category/'.$value; ?>"><?php echo $value; ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				</li>

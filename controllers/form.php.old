@@ -1,0 +1,20 @@
+<?php
+class form extends Controller{
+	
+	function __construct($action=null, $params=null){
+		if(!empty($_POST)){
+			$filename = ROOT.'controllers/forms/'.$action.'.php';
+
+			if(file_exists($filename)){
+				$qwer = 'test';
+				require($filename);
+			}
+			else{
+				Controller::weberror('404', 'Le formulaire demandé n\'existe pas.');
+			}
+		}else{
+			Controller::weberror('500', 'Les données du formulaire ne sont pas valide.');
+		}
+	}
+}
+?>

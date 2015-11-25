@@ -1,6 +1,5 @@
 <?php
-
-
-
-header("location:".PREVIOUS_PAGE."#connection_modal");
+class form_login extends Form{
+	var $formfields = array();
+}
 ?>

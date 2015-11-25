@@ -2,12 +2,19 @@
 class Controller{
 	var $vars = array();
 	var $layout = 'default';
-	var $action = 'index';
+	var $action;
+	var $data = array();
 	var $title;
 
-	function __construct($action=null, $params=null){
+	static $controllername = '';
+
+	function __construct($action=null, $params=null, $data=array()){
+		
+		
 		if(!isset($action) or empty($action))
 			$action = DEFAULT_ACTION;
+
+		$this->data = $data;
 
 		if(method_exists($this, $action)){
 			$this->action = $action;
@@ -55,14 +62,16 @@ class Controller{
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
-	static function load($controller=null, $action=null, $params=null){
+	static function load($controller=null, $action=null, $params=null, $data=array()){
 		if(!isset($controller) or empty($controller))
 			$controller = DEFAULT_CONTROLLER;
+
+		self::$controllername = $controller;
 
 		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
-			return new $controller($action, $params);
+			return new $controller($action, $params, $data);
 		}
 		else{
 			Controller::weberror('404', 'Le controller demandé n\'existe pas.');

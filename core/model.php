@@ -7,9 +7,9 @@ class Model{
 	public function setTable($table){
 		if(self::validTable($table)){
 			global $Database;
-
+			
 			$this->table = $table;
-
+			
 			$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='".$table."'";
 			$req = $Database->query($sql);
 			$this->tablecolumns = array_column($req->fetchAll(), 0);
