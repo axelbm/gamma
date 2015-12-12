@@ -9,6 +9,22 @@ class user extends Controller{
 		$this->render();
 	}
 
+	function success(){
+		$this->render();
+	}
+
+	function confirm($token){
+		$account = Member_Account::GetByToken($token);
+
+		if(empty($account))
+			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+
+		$d = array('account' => $account);
+
+		$this->set($d);
+		$this->render();
+	}
+
 	function login(){
 		$this->render();
 	}
@@ -21,7 +37,7 @@ class user extends Controller{
 		if(empty($id))
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 
-		$member = Member::GetByNameID($id);
+		$member = Member_Account::GetByNameID($id);
 
 		if(!$member){
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');

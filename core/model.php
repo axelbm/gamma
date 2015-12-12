@@ -45,6 +45,14 @@ class Model{
 		}
 	}
 
+	static function getColumns($table){
+		global $Database;
+
+		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='".$table."'";
+		$req = $Database->query($sql);
+		return array_column($req->fetchAll(), 0);
+	}
+
 	static function validTable($table){
 		if(in_array($table, self::getTables())){
 			return true;
@@ -86,7 +94,7 @@ class Model{
 			}
 
 			foreach ($data as $key => $value) {
-				if(!in_array($key, $this->tablecolumns)){
+				if(!in_array($key, self::getColumns($table))){
 					unset($data[$key]);
 				}
 			}

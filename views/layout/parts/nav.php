@@ -25,7 +25,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-				<li><a onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+				<li><a href="#connection_modal" onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 			</ul>
 		</div>
 	</div>

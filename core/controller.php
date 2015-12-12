@@ -8,7 +8,7 @@ class Controller{
 
 	static $controllername = '';
 
-	function __construct($action=null, $params=null, $data=array()){
+	function __construct($action=null, $params=array(), $data=array()){
 		
 		
 		if(!isset($action) or empty($action))
@@ -62,7 +62,7 @@ class Controller{
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
-	static function load($controller=null, $action=null, $params=null, $data=array()){
+	static function load($controller=null, $action=null, $params=array(), $data=array()){
 		if(!isset($controller) or empty($controller))
 			$controller = DEFAULT_CONTROLLER;
 

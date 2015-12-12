@@ -64,7 +64,7 @@ class Form_View{
 		<label><input type="checkbox" name="'.$id.'">'.$label.'</label>
 		</div>';
 
-
+		array_push($this->inputs, $html);
 	}
 
 	function submit($value,$style='default'){

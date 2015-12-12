@@ -49,14 +49,14 @@ class Member_Account{
 	static function GetByID($id){
 		global $Database;
 
-		$sql = "SELECT * FROM member_profil WHERE id='$id'";
+		$sql = "SELECT * FROM member_account WHERE id='$id'";
 		$req = $Database->query($sql);
 		$data = $req->fetch(PDO::FETCH_ASSOC);
 
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member;
+			$member = new Member_Account;
 			$member->LoadFromTable($data);
 			return $member;
 		}
@@ -65,7 +65,7 @@ class Member_Account{
 	static function GetByNameID($nameid){
 		global $Database;
 
-		$data = Model::_find('member_profil', array(
+		$data = Model::_find('member_account', array(
 			'conditions' => "nameid='".$nameid."'",
 			'single'	 => true
 		));
@@ -73,18 +73,64 @@ class Member_Account{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member;
+			$member = new Member_Account;
 			$member->LoadFromTable($data);
 			return $member;
 		}
 	}
 
-	static function CreateAccout($data){
-		$data['confirmed'] = false;
-		$data['confirmation_token'] = md5($data['nameid'].rand());
+	static function GetByToken($token){
+		global $Database;
 
-		print_r($data);
-		// Model::_save('member_account', $data);
+		$data = Model::_find('member_account', array(
+			'conditions' => "confirmation_token='".$token."'",
+			'single'	 => true
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+			$member = new Member_Account;
+			$member->LoadFromTable($data);
+			return $member;
+		}
+	}
+
+	static function GetByEmail($email){
+		global $Database;
+
+		$data = Model::_find('member_account', array(
+			'conditions' => "email='".$email."'",
+			'single'	 => true
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+			$member = new Member_Account;
+			$member->LoadFromTable($data);
+			return $member;
+		}
+	}
+
+
+	static function CreateAccout($data){
+		if(!isset($data['nameid']) | empty($data['nameid']))
+			return;
+		if(!isset($data['email']) | empty($data['email']))
+			return;
+		if(!isset($data['password']) | empty($data['password']))
+			return;
+
+		$data['nameid'] = strtolower($data['nameid']);
+		$data['email'] = strtolower($data['email']);
+		$data['confirmation_token'] = md5($data['nameid'].rand());
+		$data['password'] = md5($data['password']);
+
+		echo Util::SublimTab($data);
+
+		// echo Util::SublimTab(Model::getColume('member_account'));
+		Model::_save('member_account', $data);
 	}
 }
 ?>

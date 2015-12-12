@@ -14,7 +14,8 @@ class Form{
 		}else{
 			foreach ($this->formfields as $key) {
 				$this->data[$key] = array();
-				
+				$this->data[$key]['error'] = null;
+
 				if(isset($data[$key])){
 					$this->data[$key]['value'] = $data[$key];
 				}
@@ -95,6 +96,15 @@ class Form{
 
 	protected function key(){
 		return $this->varname;
+	}
+
+	protected function value($key){
+		if(!isset($key))
+			$key = $this->varname;
+
+		if(isset($this->data[$key])){
+			return $this->data[$key]['value'];
+		}
 	}
 
 	protected function success(){

@@ -21,11 +21,20 @@
 				<div class="col-sm-4">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container"><?php global $Main; echo get_class($Main); ?></button>
+							<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
 							<div id="debug-value-container" class="collapse panel panel-default">
 								<div class="panel-body" style="overflow-y: auto;">
-									<?php global $MainController; print_r($MainController); ?>
-									<!-- <?php echo Util::SublimTab($this); ?> -->
+									<?php echo Util::SublimTab($this, 'Controller'); ?>
+									<br>
+									<?php echo Util::SublimTab($_COOKIE, 'Cookie'); ?>
+									<br>
+									<?php echo Util::SublimTab($_GET, 'Get'); ?>
+									<br>
+									<?php echo Util::SublimTab($_POST, 'Post'); ?>
+									<br>
+									<?php echo Util::SublimTab($_SERVER, 'Server'); ?>
+									<br>
+									<?php echo Util::SublimTab($_SESSION, 'Session'); ?>
 								</div>
 							</div>
 						</div>

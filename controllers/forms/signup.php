@@ -66,7 +66,7 @@ class form_signup extends Form{
 
 	function check_pwd_conf($passwordconf){
 		if(isset($passwordconf) & !empty($passwordconf)){
-			if($passwordconf == $this->get('pwd')['value']){
+			if($passwordconf == $this->value('pwd')){
 				return true;
 			}else{
 				$this->error('Les mots de passe ne correspondent pas.');
@@ -79,7 +79,15 @@ class form_signup extends Form{
 	}
 
 	function success(){
-		
+		$account = array();
+
+		$account['nameid'] = $this->value('nameid');
+		$account['email'] = $this->value('email');
+		$account['password'] = $this->value('pwd');
+
+		Member_Account::CreateAccout($account);
+
+		// header('Location: '.WEBROOT);
 		// exit;
 	}
 }
