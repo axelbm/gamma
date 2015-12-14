@@ -6,7 +6,7 @@ class home extends Controller{
 		$data['tab'] = $Tutoriel->find();
 		
 		$this->set($data);
-		$this->render('index');
+		$this->render();
 
 	}
 }

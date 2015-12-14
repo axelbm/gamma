@@ -38,15 +38,18 @@ class form_login extends Form{
 	}
 
 	function success(){
-		// $this->account = Model::_find('member_account', array(
-		//	"conditions"	=> "email='".$this->get('email')['value']."'",
-		//	"single"    	=> true
-		// ));
-		$this->account = Member_Account::GetByEmail($this->get('email')['value']);
+		$account       	= Member_Account::GetByEmail($this->get('email')['value']);
+		$this->account 	= $account;
+		$password      	= md5($this->get('pwd')['value']);
+		$this->password	= $password;
 
-		$this->password = md5($this->get('pwd')['value']);
-
-
+		if($account->GetPassword() == $password){
+			$Controller = Controller::$self;
+			$Controller->UserLogin($account);
+			header('Location: '.WEBROOT);
+		}else{
+			$this->fail();
+		}
 	}
 }
 ?>

@@ -18,7 +18,7 @@ class Form_View{
 		array_push($this->inputs, $html);		
 	}
 
-	function input($id, $value=nill, $label=nill, $type='text', $attributes=array()){
+	function input($id, $value=null, $label=null, $type='text', $attributes=array()){
 		if(isset($this->data[$id]))
 			$data = $this->data[$id];
 

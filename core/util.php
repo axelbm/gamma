@@ -21,7 +21,7 @@ class Util{
 			';
 			$html .= '<div id="'.$id.'" class="collapse">
 			';
-			$html .= '<ul style="border-left: solid 1px; border-color: #337AB7;	list-style: none;">
+			$html .= '<ul style="border-left: solid 1px; border-color: #337AB7;	list-style: none; padding-left: 20px;">
 			';
 
 			if(empty($tab)){

@@ -24,17 +24,15 @@
 							<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
 							<div id="debug-value-container" class="collapse panel panel-default">
 								<div class="panel-body" style="overflow-y: auto;">
-									<?php echo Util::SublimTab($this, 'Controller'); ?>
-									<br>
-									<?php echo Util::SublimTab($_COOKIE, 'Cookie'); ?>
-									<br>
-									<?php echo Util::SublimTab($_GET, 'Get'); ?>
-									<br>
-									<?php echo Util::SublimTab($_POST, 'Post'); ?>
-									<br>
-									<?php echo Util::SublimTab($_SERVER, 'Server'); ?>
-									<br>
-									<?php echo Util::SublimTab($_SESSION, 'Session'); ?>
+									<ul style="list-style:none; padding-left: 0px;">
+										<li><?php echo Util::SublimTab($this, 'Controller'); ?></li>
+										<li><?php echo Util::SublimTab($_COOKIE, 'Cookie'); ?></li>
+										<li><?php echo Util::SublimTab($_GET, 'Get'); ?></li>
+										<li><?php echo Util::SublimTab($_POST, 'Post'); ?></li>
+										<li><?php echo Util::SublimTab($_SERVER, 'Server'); ?></li>
+										<li><?php echo Util::SublimTab($_SESSION, 'Session'); ?></li>
+										<li><?php echo Util::SublimTab($this->GetUser(), 'User'); ?></li>
+									</ul>
 								</div>
 							</div>
 						</div>

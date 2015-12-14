@@ -29,11 +29,16 @@ class user extends Controller{
 		$this->render();
 	}
 
+	function logout(){
+		unset($_SESSION['user_id']);
+		header('Location: '.WEBROOT);
+	}
+
 	function edit($id){
 
 	}
 
-	function view($id=null){
+	function profil($id=null){
 		if(empty($id))
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 
@@ -45,9 +50,9 @@ class user extends Controller{
 
 		$data = array('user'=>$member);
 		
-		$this->setTitle(Site_Name.' - '.$member->getName());
+		// $this->setTitle(Site_Name.' - '.$member->getName());
 		$this->set($data);
-		$this->render();
+		$this->render('');
 	}
 }
 ?>

@@ -36,13 +36,17 @@ class Member_Account{
 		return $this->confirmation_token;
 	}
 
+	// public function Login(){
+	//	$_SESSION['user_id'] = $this->id;
+
+	// }
 
 	// Setter
 	// public function SetName($name){
-	// 	$this->name = $name;
+	//	$this->name = $name;
 	// }
 	// public function SetEmail($email){
-	// 	$this->email = $email;
+	//	$this->email = $email;
 	// }
 
 
@@ -129,7 +133,6 @@ class Member_Account{
 
 		echo Util::SublimTab($data);
 
-		// echo Util::SublimTab(Model::getColume('member_account'));
 		Model::_save('member_account', $data);
 	}
 }

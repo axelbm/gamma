@@ -1,7 +1,10 @@
 <?php
 class error extends Controller{
 
-	function __construct($code, $params){
+	function run(){
+		$code = $this->action;
+		$params = $this->params;
+
 		$method = 'err_'.$code;
 		if(method_exists($this, $method)){
 			$this->$method($params);

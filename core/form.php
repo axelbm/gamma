@@ -5,7 +5,7 @@ class Form{
 	var $varname = '';
 	var $formfields = array();
 
-	public function __construct($data){
+	public function __construct($data=array()){
 		if(empty($this->formfields)){
 			foreach ($data as $key => $value) {
 				$this->data[$key] = array();

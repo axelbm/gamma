@@ -3,25 +3,30 @@ class Controller{
 	var $vars = array();
 	var $layout = 'default';
 	var $action;
+	var $params = array();
 	var $data = array();
 	var $title;
 
+	static $self;
 	static $controllername = '';
 
 	function __construct($action=null, $params=array(), $data=array()){
-		
-		
+		Controller::$self = $this;
+
 		if(!isset($action) or empty($action))
 			$action = DEFAULT_ACTION;
 
+		$this->action = $action;
+		$this->params = $params;
 		$this->data = $data;
+	}
 
-		if(method_exists($this, $action)){
-			$this->action = $action;
-			call_user_func_array(array($this, $action), $params);
+	function run(){
+		if(method_exists($this, $this->action)){
+			call_user_func_array(array($this, $this->action), $this->params);
 		}
 		else{
-			$this->noaction($action, $params);
+			$this->noaction($this->action, $this->params);
 		}
 	}
 
@@ -50,6 +55,12 @@ class Controller{
 		$this->vars['title'] = $title;
 	}
 
+	function GetUser(){
+		if(isset($this->data['user']))
+			return $this->data['user'];
+		else
+			return null;
+	}
 
 
 	function loadModel($name){
@@ -62,7 +73,13 @@ class Controller{
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
-	static function load($controller=null, $action=null, $params=array(), $data=array()){
+	function UserLogin($user){
+		$this->data['user'] = $user;
+		$_SESSION['user_id'] = $user->GetID();
+	}
+
+
+	static function preload($controller=null, $action=null, $params=array(), $data=array()){
 		if(!isset($controller) or empty($controller))
 			$controller = DEFAULT_CONTROLLER;
 
@@ -71,16 +88,27 @@ class Controller{
 		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
-			return new $controller($action, $params, $data);
+			$controller = new $controller($action, $params, $data);
+
+			return $controller;
 		}
 		else{
-			Controller::weberror('404', 'Le controller demandé n\'existe pas.');
+			return Controller::weberror('404', 'Le controller demandé n\'existe pas.');
 		}
 	}
 
-	static function weberror($code, $message){
-		Controller::load('error', $code, array($message));
-		exit;
+	static function load($controller=null, $action=null, $params=array(), $data=array()){
+		$controller = self::preload($controller, $action, $params, $data);
+		return $controller->run();
+	}
+
+	static function get(){
+		return Controller::$self;
+	}
+
+	static function weberror($code, $message=null, $data=array()){
+		self::load('error', $code, array($message), $data);
+		exit();
 	}
 }
 ?>

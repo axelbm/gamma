@@ -24,8 +24,21 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-				<li><a href="#connection_modal" onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+				<?php if(empty($this->GetUser())){ ?>
+					<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+					<li><a href="#connection_modal" onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+				<?php 
+				}else{ $user = $this->GetUser(); ?>
+					<li class="dropdown">
+						<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetNameID() ?> <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="<?php echo WEBROOT.'user/view/'.$user->GetNameID().'/'; ?>">Profil</a></li>
+							<li><a href="<?php echo WEBROOT.'user/edit/'; ?>">Edit</a></li>
+							<li class="divider"></li>
+							<li><a href="<?php echo WEBROOT.'user/Logout/'; ?>">Logout</a></li>
+						</ul>
+					</li>
+				<?php } ?>
 			</ul>
 		</div>
 	</div>
