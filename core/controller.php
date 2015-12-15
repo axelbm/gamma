@@ -5,6 +5,9 @@ class Controller{
 	var $action;
 	var $params = array();
 	var $data = array();
+	var $user = null;
+	var $form = null;
+	var $formdata = null;
 	var $title;
 
 	static $self;
@@ -16,9 +19,13 @@ class Controller{
 		if(!isset($action) or empty($action))
 			$action = DEFAULT_ACTION;
 
-		$this->action = $action;
-		$this->params = $params;
-		$this->data = $data;
+		$this->action	= $action;
+		$this->params	= $params;
+		$this->data  	= $data;
+
+		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
+			$this->user = Member_Account::GetByID($_SESSION['user_id']);
+		}
 	}
 
 	function run(){
@@ -38,28 +45,27 @@ class Controller{
 		if(empty($filename))
 			$filename = $this->action;
 
-		extract($this->vars);
+		$viewfile = ROOT.'views/pages/'.get_class($this).'/'.$filename.'.php';
 
-		ob_start();
-		require(ROOT.'views/pages/'.get_class($this).'/'.$filename.'.php');
-		$content_for_layout = ob_get_clean();
+		if(file_exists($viewfile)){
+			extract($this->vars);
 
-		if($this->layout == false){
-			echo $content_for_layout;
+			ob_start();
+			require($viewfile);
+			$content_for_layout = ob_get_clean();
+
+			if($this->layout == false){
+				echo $content_for_layout;
+			}else{
+				require(ROOT.'views/layout/'.$this->layout.'.php');
+			}
 		}else{
-			require(ROOT.'views/layout/'.$this->layout.'.php');
+			Controller::weberror('500', '');
 		}
 	}
 
 	function setTitle($title){
 		$this->vars['title'] = $title;
-	}
-
-	function GetUser(){
-		if(isset($this->data['user']))
-			return $this->data['user'];
-		else
-			return null;
 	}
 
 
@@ -74,10 +80,16 @@ class Controller{
 	}
 
 	function UserLogin($user){
-		$this->data['user'] = $user;
+		$this->user = $user;
 		$_SESSION['user_id'] = $user->GetID();
 	}
 
+	function HasError(){
+		if($this->error){
+			return true;
+		}
+		return false;
+	}
 
 	static function preload($controller=null, $action=null, $params=array(), $data=array()){
 		if(!isset($controller) or empty($controller))
@@ -97,7 +109,7 @@ class Controller{
 		}
 	}
 
-	static function load($controller=null, $action=null, $params=array(), $data=array()){
+	static function load($controller=null, $action=null, $params=null, $data=null){
 		$controller = self::preload($controller, $action, $params, $data);
 		return $controller->run();
 	}
@@ -106,7 +118,7 @@ class Controller{
 		return Controller::$self;
 	}
 
-	static function weberror($code, $message=null, $data=array()){
+	static function weberror($code, $message=null, $data=null){
 		self::load('error', $code, array($message), $data);
 		exit();
 	}

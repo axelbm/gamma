@@ -32,35 +32,31 @@ $controller	= $params[0];
 $action    	= isset($params[1]) ? $params[1] : null ;
 unset($params[0]); unset($params[1]);
 
-$data = array();
+$data        	= array();
+$data['post']	= $_POST;
 
 if(isset($_SESSION['data']) & !empty($_SESSION['data']))
 	$data['reviousdata'] = $_SESSION['reviousdata'];
 
 $Controller = Controller::preload($controller, $action, $params, $data);
 
-$user_account = null;
 
-if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-	$user_account = Member_Account::GetByID($_SESSION['user_id']);
-}elseif(isset($_COOKIE['connection_key']) & !empty($_COOKIE['connection_key'])){
+// if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
+//	$user_account = Member_Account::GetByID($_SESSION['user_id']);
+// }elseif(isset($_COOKIE['connection_key']) & !empty($_COOKIE['connection_key'])){
 
-}
+// }
 
 
 $formid = isset($_POST['formid']) ? $_POST['formid'] : null ;
 unset($_POST['formid']);
 
 
-$Controller->data['formdata']	= array();
-$Controller->data['post']    	= $_POST;
-$Controller->data['user']    	= $user_account;
-
 if(isset($formid)){
 	$form = Form::load($formid, $_POST);
 
-	$Controller->data['form']    	= $form;
-	$Controller->data['formdata']	= $form->GetData();
+	$Controller->form    	= $form;
+	$Controller->formdata	= $form->GetData();
 }
 
 $Controller->run();

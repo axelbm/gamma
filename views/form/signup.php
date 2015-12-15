@@ -1,5 +1,5 @@
 <?php
-$form = new Form_View('signup', $this->data['formdata']);
+$form = new Form_View('signup');
 $form->input('nameid', '', 'Identifiant:', 'text');
 $form->input('email', '', 'Address courriel:', 'text');
 $form->input('pwd', '', 'Mot de passe:', 'password');

@@ -12,7 +12,9 @@
 		<div class="container">
 			<?php include 'parts/header.php'; ?>
 			<?php include 'parts/nav.php'; ?>
-			<?php include 'parts/connection_model.php'; ?>
+
+			<?php if(empty($this->user))
+				include 'parts/connection_model.php'; ?>
 
 			<div class="row">
 				<div class="col-sm-8">
@@ -31,7 +33,7 @@
 										<li><?php echo Util::SublimTab($_POST, 'Post'); ?></li>
 										<li><?php echo Util::SublimTab($_SERVER, 'Server'); ?></li>
 										<li><?php echo Util::SublimTab($_SESSION, 'Session'); ?></li>
-										<li><?php echo Util::SublimTab($this->GetUser(), 'User'); ?></li>
+										<li><?php echo Util::SublimTab($this->user, 'User'); ?></li>
 									</ul>
 								</div>
 							</div>

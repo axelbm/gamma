@@ -85,7 +85,8 @@ class form_signup extends Form{
 		$account['email'] = $this->value('email');
 		$account['password'] = $this->value('pwd');
 
-		Member_Account::CreateAccout($account);
+		$this->success = true;
+		//Member_Account::CreateAccout($account);
 
 		// header('Location: '.WEBROOT);
 		// exit;

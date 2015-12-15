@@ -1,5 +1,5 @@
 <?php
-$form = new Form_View('login', $this->data['formdata']);
+$form = new Form_View('login');
 $form->input('email', '', 'Address courriel:', 'text');
 $form->input('pwd', '', 'Mot de passe:', 'password');
 $form->checkbox('remember', 'Se souvenir de moi.');

@@ -1,7 +1,9 @@
 <?php
 class Form{
+	var $id;
 	var $data = array();
 	var $isvalid = true;
+	var $success = false;
 	var $varname = '';
 	var $formfields = array();
 
@@ -122,7 +124,9 @@ class Form{
 			$formclass = 'form_'.$formid;
 
 			require($formfile);
-			return new $formclass($data);
+			$form = new $formclass($data);
+			$form->id = $formid;
+			return $form;
 		}
 	} 
 }

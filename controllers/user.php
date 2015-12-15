@@ -5,8 +5,15 @@ class user extends Controller{
 
 	}
 
-	function signup(){
-		$this->render();
+	function signup($message=null){
+		if($this->user)
+			Controller::weberror('404', 'La page est invalide.');
+
+		if($message == 'success'){
+			echo 'heyyy';
+		}else{
+			$this->render();
+		}
 	}
 
 	function success(){
@@ -14,6 +21,9 @@ class user extends Controller{
 	}
 
 	function confirm($token){
+		if($this->user)
+			Controller::weberror('404', 'La page est invalide.');
+
 		$account = Member_Account::GetByToken($token);
 
 		if(empty($account))
@@ -26,6 +36,9 @@ class user extends Controller{
 	}
 
 	function login(){
+		if($this->user)
+			Controller::weberror('404', 'La page est invalide.');
+
 		$this->render();
 	}
 
@@ -34,13 +47,25 @@ class user extends Controller{
 		header('Location: '.WEBROOT);
 	}
 
-	function edit($id){
+	function edit($id=null){
+		if(empty($id)){
+			if($this->user){
+				$id = $this->user->GetNameID();
+			}else{
+				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+			}
+		}
 
 	}
 
 	function profil($id=null){
-		if(empty($id))
-			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+		if(empty($id)){
+			if(!empty($this->user)){
+				$id = $this->user->GetNameID();
+			}else{
+				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+			}
+		}
 
 		$member = Member_Account::GetByNameID($id);
 

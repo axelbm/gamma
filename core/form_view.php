@@ -5,6 +5,18 @@ class Form_View{
 	private $data = array();
 
 	function __construct($formid, $data=array()){
+		if(empty($data)){
+			$lastform = Controller::$self->form;
+
+			if(isset($lastform) & !empty($lastform)){
+				if($lastform->id == $formid){
+					if(!empty($lastform->data)){
+						$data = $lastform->data;
+					}
+				}
+			}
+		}
+
 		$this->formid	= $formid;
 		$this->data  	= $data;
 
