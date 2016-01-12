@@ -6,6 +6,7 @@ class Form{
 	var $success = false;
 	var $varname = '';
 	var $formfields = array();
+	var $formerror = '';
 
 	public function __construct($data=array()){
 		if(empty($this->formfields)){
@@ -44,6 +45,8 @@ class Form{
 			}
 		}
 
+		unset($varname);
+
 		if($this->isvalid){
 			$this->success();
 		}else{
@@ -74,6 +77,10 @@ class Form{
 		if(isset($this->data[$key])){
 			$this->data[$key]['error'] = $error;
 		}
+	}
+
+	protected function formerror($error){
+		$this->formerror = $error;
 	}
 
 	protected function set($key, $value=null){

@@ -14,7 +14,7 @@
 			<?php include 'parts/nav.php'; ?>
 
 			<?php if(empty($this->user))
-				include 'parts/connection_model.php'; ?>
+				include 'parts/connection_modal.php'; ?>
 
 			<div class="row">
 				<div class="col-sm-8">

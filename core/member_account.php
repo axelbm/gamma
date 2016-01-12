@@ -1,16 +1,17 @@
 <?php
 class Member_Account{
 	// Methodes
-	public function __construct(){
-
-	}
-
-	private function LoadFromTable($data){
+	public function __construct($data){
 		if(!empty($data)){
 			foreach ($data as $key => $value) {
 				$this->$key = $value;
 			}
 		}
+
+		$this->profil = Member_Profil::GetByNameID($this->nameid);
+	}
+
+	private function LoadFromTable($data){
 	}
 
 	// Getter
@@ -34,6 +35,9 @@ class Member_Account{
 	}
 	public function GetConfirmationToken(){
 		return $this->confirmation_token;
+	}
+	public function GetProfil(){
+		return $this->profil;
 	}
 
 	// public function Login(){
@@ -60,8 +64,7 @@ class Member_Account{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member_Account;
-			$member->LoadFromTable($data);
+			$member = new Member_Account($data);
 			return $member;
 		}
 	}
@@ -77,8 +80,7 @@ class Member_Account{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member_Account;
-			$member->LoadFromTable($data);
+			$member = new Member_Account($data);
 			return $member;
 		}
 	}
@@ -94,8 +96,7 @@ class Member_Account{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member_Account;
-			$member->LoadFromTable($data);
+			$member = new Member_Account($data);
 			return $member;
 		}
 	}
@@ -111,8 +112,7 @@ class Member_Account{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member_Account;
-			$member->LoadFromTable($data);
+			$member = new Member_Account($data);
 			return $member;
 		}
 	}

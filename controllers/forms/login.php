@@ -43,13 +43,16 @@ class form_login extends Form{
 		$password      	= md5($this->get('pwd')['value']);
 		$this->password	= $password;
 
-		if($account->GetPassword() == $password){
-			$Controller = Controller::$self;
-			$Controller->UserLogin($account);
-			header('Location: '.WEBROOT);
-		}else{
-			$this->fail();
+		if(!empty($account)){
+			if($account->GetPassword() == $password){
+				$Controller = Controller::$self;
+				$Controller->UserLogin($account);
+				header('Location: '.WEBROOT);
+			}
 		}
+
+		$this->formerror('Le email ou le mot de pass est invalide.');
+		$this->fail();
 	}
 }
 ?>

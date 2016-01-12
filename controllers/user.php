@@ -48,14 +48,17 @@ class user extends Controller{
 	}
 
 	function edit($id=null){
-		if(empty($id)){
-			if($this->user){
+		if($this->user){
+			if(empty($id)){
 				$id = $this->user->GetNameID();
-			}else{
-				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+			}elseif($id != $this->user->GetNameID()){
+				Controller::weberror('404', 'La page est invalide.');
 			}
-		}
 
+			$this->render();
+		}else{
+			Controller::weberror('404', 'La page est invalide.');
+		}
 	}
 
 	function profil($id=null){

@@ -147,7 +147,7 @@ class Model{
 			if(isset($data['order'])){		$order	 	= $data['order'];}
 			if(isset($data['single'])){		$single	 	= $data['single'];}
 
-			$sql = "SELECT $fields FROM ".$table." WHERE $conditions ORDER BY $order $limit";
+			$sql = "SELECT $fields FROM $table WHERE $conditions ORDER BY $order $limit";
 			$req = $Database->query($sql);
 
 			if($single){
