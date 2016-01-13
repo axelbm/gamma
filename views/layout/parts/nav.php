@@ -30,7 +30,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 				<?php 
 				}else{ $user = $this->user; ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetNameID() ?> <span class="caret"></span></a>
+						<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetUsername() ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo WEBROOT.'user/profil/'; ?>">Profil</a></li>
 							<li><a href="<?php echo WEBROOT.'user/edit/'; ?>">Edit</a></li>

@@ -38,16 +38,18 @@ class form_login extends Form{
 	}
 
 	function success(){
-		$account       	= Member_Account::GetByEmail($this->get('email')['value']);
+		$account       	= Member::GetByEmail($this->get('email')['value']);
 		$this->account 	= $account;
 		$password      	= md5($this->get('pwd')['value']);
 		$this->password	= $password;
 
 		if(!empty($account)){
-			if($account->GetPassword() == $password){
-				$Controller = Controller::$self;
-				$Controller->UserLogin($account);
-				header('Location: '.WEBROOT);
+			if($account->IsConfirmed()){
+				if($account->GetPassword() == $password){
+					$Controller = Controller::$self;
+					$Controller->UserLogin($account);
+					header('Location: '.WEBROOT);
+				}
 			}
 		}
 

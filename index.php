@@ -12,8 +12,7 @@ require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 require ROOT.'core/form.php';
 
-require ROOT.'core/member_account.php';
-require ROOT.'core/member_profil.php';
+require ROOT.'core/member.php';
 require ROOT.'core/form_view.php';
 
 try{
@@ -42,7 +41,7 @@ $Controller = Controller::preload($controller, $action, $params, $data);
 
 
 // if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-//	$user_account = Member_Account::GetByID($_SESSION['user_id']);
+//	$user_account = Member::GetByID($_SESSION['user_id']);
 // }elseif(isset($_COOKIE['connection_key']) & !empty($_COOKIE['connection_key'])){
 
 // }

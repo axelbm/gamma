@@ -24,7 +24,7 @@ class Controller{
 		$this->data  	= $data;
 
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-			$this->user = Member_Account::GetByID($_SESSION['user_id']);
+			$this->user = Member::GetByID($_SESSION['user_id']);
 		}
 	}
 

@@ -172,12 +172,12 @@ class Form_View{
 		}
 
 
-		foreach ($values as $value) {
+		foreach ($values as $key => $value) {
 			$s = '';
-			if($val == $value)
+			if($val == $key)
 				$s = ' selected="selected"';
 
-			$html .= '<option'.$s.'>'.$value.'</option>
+			$html .= '<option value="'.$key.'" '.$s.'>'.$value.'</option>
 			';
 		}
 
@@ -189,7 +189,7 @@ class Form_View{
 			$html .= '<div class="alert alert-danger" style="padding:8px; margin-top:1px;">
 			';
 			$html .= $data['error'] . '
-			</div';
+			</div>';
 		}
 
 
