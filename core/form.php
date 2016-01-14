@@ -7,6 +7,7 @@ class Form{
 	var $varname = '';
 	var $formfields = array();
 	var $formerror = '';
+	var $formsuccess = '';
 
 	public function __construct($data=array()){
 		if(empty($this->formfields)){
@@ -81,6 +82,10 @@ class Form{
 
 	protected function formerror($error){
 		$this->formerror = $error;
+	}
+
+	protected function formsuccess($success){
+		$this->formsuccess = $success;
 	}
 
 	protected function set($key, $value=null){

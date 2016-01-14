@@ -10,6 +10,19 @@ class Member{
 		}
 	}
 
+	public function SetUserName($username){
+		$this->username = $username;
+	}
+	public function SetPassword($pwd){
+		$this->password = $pwd;
+	}
+	public function SetBirtdate($birtdate){
+		$this->birtdate = $birtdate;
+	}
+	public function SetCountry($country){
+		$this->country = $country;
+	}
+
 	// Getter
 	public function GetID(){
 		return $this->id;
@@ -46,6 +59,18 @@ class Member{
 		$this->confirmation_token = '';
 
 		$data = array('confirmed' => 1, 'confirmation_token' => '');
+		Model::_save('member', $this->GetID(), $data);
+	}
+
+	public function Save(){
+		$data = array(
+			'username' => $this->GetUserName(),
+			'email' => $this->GetEmail(),
+			'password' => $this->GetPassword(),
+			'birtdate' => $this->GetPassword(),
+			'country' => $this->GetCountry()
+		);
+
 		Model::_save('member', $this->GetID(), $data);
 	}
 

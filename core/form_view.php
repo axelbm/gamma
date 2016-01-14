@@ -4,6 +4,7 @@ class Form_View{
 	private $formid = "";
 	private $data = array();
 	private $formerror;
+	private $formsuccess;
 	private $inhorizontalform;
 
 	function __construct($formid, $data=array()){
@@ -13,17 +14,26 @@ class Form_View{
 			if(isset($lastform) & !empty($lastform)){
 				if($lastform->id == $formid){
 					if(!empty($lastform->data)){
-						$data = $lastform->data;
+						$this->data = $lastform->data;
 					}
 					if(!empty($lastform->formerror)){
 						$this->formerror = $lastform->formerror;
+					}
+					if(!empty($lastform->formsuccess)){
+						$this->formsuccess = $lastform->formsuccess;
 					}
 				}
 			}
 		}
 
-		$this->formid	= $formid;
-		$this->data  	= $data;
+		foreach ($data as $key => $value) {
+			if(!isset($this->data[$key]) | empty($this->data[$key])){
+				$this->data[$key] = array('error'=>null, 'value'=>$value);
+			}
+		}
+
+		$this->formid 	= $formid;
+		// $this->data	= $data;
 
 		$this->hidden('formid', $formid);
 	}
@@ -253,6 +263,12 @@ class Form_View{
 
 		if(!empty($this->formerror)){
 			$html .= '<div class="alert alert-danger" style="padding:8px; margin-top:1px;">
+			';
+			$html .= $this->formerror . '
+			</div>';
+		}
+		if(!empty($this->formsuccess)){
+			$html .= '<div class="alert alert-success" style="padding:8px; margin-top:1px;">
 			';
 			$html .= $this->formerror . '
 			</div>';
