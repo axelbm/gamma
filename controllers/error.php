@@ -4,6 +4,7 @@ class error extends Controller{
 	function run(){
 		$code = $this->action;
 		$params = $this->params;
+		$this->error = $params[0];
 
 		$method = 'err_'.$code;
 		if(method_exists($this, $method)){

@@ -1,4 +1,23 @@
-
+<div id="delete_account" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div id="delete" class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Suppression du Compte</h4>
+			</div>
+			<div class="modal-body">
+				<?php
+				$form = new Form_View('delete_account');
+				$form->input('pwd', '', 'Mot de passe:', 'password');
+				$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
+				$form->label('Attention, cette action est irreversible!');
+				$form->submit('Supprimer');
+				$form->done();
+				?>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -41,7 +60,7 @@
 			</div>
 			<div id="setting" class="tab-pane fade">
 				<?php
-				$language_list = array('FR' => 'Français', 'EN' => 'english');
+				$language_list = array('FR' => 'Français', 'EN' => 'English');
 				$style_list = array('default' => 'Défaut');
 				
 				$form = new Form_View('user_setting', $data);
@@ -68,7 +87,7 @@
 						<div style="margin-bottom:25px;">
 							<h4>Suppression du compte</h4>
 							<p>Cette action est irreversible. Soyez sur de vous avant de suprémer votre comptre, car vous ne pouriez plus le récupérer après!</p>
-							<button type="button" class="btn btn-danger btn-block">Suppression du compte</button>
+							<button type="button" class="btn btn-danger btn-block" onclick="$('#delete_account').modal()">Suppression du compte</button>
 						</div>
 					</div>
 				</div>

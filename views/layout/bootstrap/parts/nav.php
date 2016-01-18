@@ -23,6 +23,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					</ul>
 				</li>
 			</ul>
+			<?php if(!$this->HasError()){ ?>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(empty($this->user)){ ?>
 					<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
@@ -40,6 +41,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					</li>
 				<?php } ?>
 			</ul>
+			<?php } ?>
 		</div>
 	</div>
 </nav>

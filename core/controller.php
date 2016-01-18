@@ -1,7 +1,7 @@
 <?php
 class Controller{
 	var $vars = array();
-	var $layout = 'default';
+	var $layout = DEFAULT_LAYOUT;
 	var $action;
 	var $params = array();
 	var $data = array();
@@ -9,6 +9,7 @@ class Controller{
 	var $form = null;
 	var $formdata = null;
 	var $title;
+	var $error;
 
 	static $self;
 	static $controllername = '';
@@ -57,7 +58,12 @@ class Controller{
 			if($this->layout == false){
 				echo $content_for_layout;
 			}else{
-				require(ROOT.'views/layout/'.$this->layout.'.php');
+				$path = ROOT.'views/layout/'.$this->layout.'/';
+				if(file_exists($path.get_class($this).'.php')){
+					require($path.get_class($this).'.php');
+				}else{
+					require($path.'index.php');
+				}
 			}
 		}else{
 			Controller::weberror('500', '');

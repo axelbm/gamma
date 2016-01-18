@@ -21,21 +21,13 @@
 					<?php echo $content_for_layout; ?>
 				</div>
 				<div class="col-sm-4">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
-							<div id="debug-value-container" class="collapse panel panel-default">
-								<div class="panel-body" style="overflow-y: auto;">
-									<ul style="list-style:none; padding-left: 0px;">
-										<li><?php echo Util::SublimTab($this, 'Controller'); ?></li>
-										<li><?php echo Util::SublimTab($_COOKIE, 'Cookie'); ?></li>
-										<li><?php echo Util::SublimTab($_GET, 'Get'); ?></li>
-										<li><?php echo Util::SublimTab($_POST, 'Post'); ?></li>
-										<li><?php echo Util::SublimTab($_SERVER, 'Server'); ?></li>
-										<li><?php echo Util::SublimTab($_SESSION, 'Session'); ?></li>
-										<li><?php echo Util::SublimTab($this->user, 'User'); ?></li>
-									</ul>
-								</div>
+					<div class="panel-group">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 style="margin:5px;">Nouveautés sur le site</h3>
+							</div>
+							<div class="panel-body">
+
 							</div>
 						</div>
 					</div>

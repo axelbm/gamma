@@ -5,6 +5,7 @@ define('Site_Name'         	, 'Story Hub');
 define('DB_NAME'           	, 'gamma');
 define('DEFAULT_CONTROLLER'	, 'home');
 define('DEFAULT_ACTION'    	, 'index');
+define('DEFAULT_LAYOUT'    	, 'bootstrap');
 define('PREVIOUS_PAGE'     	, (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : WEBROOT);
 
 require ROOT.'core/util.php';
