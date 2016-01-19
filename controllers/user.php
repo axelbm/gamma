@@ -1,5 +1,8 @@
 <?php
 class user extends Controller{
+	function start(){
+
+	}
 
 	function index(){
 
@@ -21,7 +24,8 @@ class user extends Controller{
 			$id = $_SESSION['success_userid'];
 
 			if(isset($id) & !empty($id)){
-				$user = Member::GetByID($id);
+				$Member = $this->loadModel('member');
+				$user = $Member->GetByID($id);
 
 				if(empty($user))
 					Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
@@ -43,7 +47,8 @@ class user extends Controller{
 		if($this->user)
 			Controller::weberror('404', 'La page est invalide.');
 
-		$user = Member::GetByToken($token);
+		$Member = $this->loadModel('member');
+		$user = $Member->GetByToken($token);
 
 		if(empty($user))
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
@@ -81,7 +86,8 @@ class user extends Controller{
 				Controller::weberror('404', 'La page est invalide.');
 			}
 
-			$user = Member::GetByID($id);
+			$Member = $this->loadModel('member');
+			$user = $Member->GetByID($id);
 			$d = array('user' => $user);
 
 			$this->set($d);
@@ -100,13 +106,14 @@ class user extends Controller{
 			}
 		}
 
-		$member = Member::GetByID($id);
+		$Member = $this->loadModel('member');
+		$user = $Member->GetByID($id);
 
-		if(!$member){
+		if(!$user){
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 		}
 
-		$data = array('user'=>$member);
+		$data = array('user'=>$user);
 		
 		// $this->setTitle(Site_Name.' - '.$member->getName());
 		$this->set($data);

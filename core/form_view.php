@@ -255,10 +255,10 @@ class Form_View{
 		array_push($this->inputs, $html);
 	}
 
-	function done(){
+	function done($ac=''){
 		$class = ($this->inhorizontalform) ? 'form-horizontal' : '' ;
 
-		$html = '<form class="'.$class.'" id="'. $this->formid .'"" role="form" method="post">
+		$html = '<form class="'.$class.' '.$ac.'" id="'. $this->formid .'"" role="form" method="post">
 		';
 
 		if(!empty($this->formerror)){

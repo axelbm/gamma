@@ -5,7 +5,9 @@ class form_edit_profil extends Form{
 
 	function check_id($id){
 		if(isset($id) & !empty($id)){
-			$user = Member::GetByID($id);
+			$Controller = Controller::$self;
+			$Member = $Controller->loadModel('member');
+			$user = $Member->GetByID($id);
 
 			if(!empty($user)){
 				$this->user = $user;
@@ -22,10 +24,10 @@ class form_edit_profil extends Form{
 
 	function check_username($username){
 		if(isset($username) & !empty($username)){
-			if(strlen($username) >= 4 & strlen($username) <= 32){
+			if(strlen($username) >= 1 & strlen($username) <= 32){
 				return true;
 			}else{
-				$this->error('Le nom doit être entre 4 et 32 lettres');
+				$this->error('Le nom doit être entre 1 et 32 lettres');
 				return false;
 			}
 		}else{
@@ -64,6 +66,12 @@ class form_edit_profil extends Form{
 		}
 	}
 
+	function fail(){
+		$Controller = Controller::$self;
+		$Controller->setjs('user_edit_tab', 'profil');
+		$Controller->setjs('hash', 'edit_profil');
+	}
+
 	function success(){
 		if(!empty($this->value('username')))
 			$this->user->SetUserName($this->value('username'));
@@ -75,6 +83,10 @@ class form_edit_profil extends Form{
 		$this->user->Save();
 
 		$this->formsuccess('Les paramètres on été enregistrés');
+
+		$Controller = Controller::$self;
+		$Controller->setjs('user_edit_tab', 'profil');
+		$Controller->setjs('hash', 'edit_profil');
 	}
 }
 ?>

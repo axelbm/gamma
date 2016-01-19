@@ -37,8 +37,16 @@ class form_login extends Form{
 		}
 	}
 
+	function fail(){
+		$Controller = Controller::$self;
+		$Controller->setjs('connection_modal', true);
+	}
+
 	function success(){
-		$account       	= Member::GetByEmail($this->get('email')['value']);
+		$Controller = Controller::$self;
+		$Member = $Controller->loadModel('member');
+
+		$account       	= $Member->GetByEmail($this->get('email')['value']);
 		$this->account 	= $account;
 		$password      	= md5($this->get('pwd')['value']);
 		$this->password	= $password;

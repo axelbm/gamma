@@ -10,6 +10,9 @@ class Controller{
 	var $formdata = null;
 	var $title;
 	var $error;
+	var $js = array();
+	var $jsvars = array();
+	var $userid = 0;
 
 	static $self;
 	static $controllername = '';
@@ -25,12 +28,19 @@ class Controller{
 		$this->data  	= $data;
 
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-			$this->user = Member::GetByID($_SESSION['user_id']);
+			$Member = $this->loadModel('member');
+			$this->user = $Member->GetByID($_SESSION['user_id']);
+			$this->userid = $_SESSION['user_id'];
 		}
+	}
+
+	function start(){
+
 	}
 
 	function run(){
 		if(method_exists($this, $this->action)){
+			$this->start();
 			call_user_func_array(array($this, $this->action), $this->params);
 		}
 		else{
@@ -38,8 +48,36 @@ class Controller{
 		}
 	}
 
-	function set($vars){
-		$this->vars = array_merge($this->vars, $vars);
+	function set($vars, $value=null){
+		if(isset($value) & !empty($value)){
+			if(is_string($vars)){
+				$this->vars[$vars] = $value;
+			}
+		}else{
+			if(is_array($vars)){
+				$this->vars = array_merge($this->vars, $vars);
+			}else{
+				array_push($this->vars, $vars);
+			}
+		}
+	}
+
+	function setjs($vars, $value=null){
+		if(isset($value) & !empty($value)){
+			if(is_string($vars)){
+				$this->jsvars[$vars] = $value;
+			}
+		}else{
+			if(is_array($vars)){
+				$this->jsvars = array_merge($this->jsvars, $vars);
+			}else{
+				array_push($this->jsvars, $vars);
+			}
+		}
+	}
+
+	function addjs($name){
+		array_push($this->js, $name);
 	}
 
 	function render($filename=null){
@@ -49,7 +87,29 @@ class Controller{
 		$viewfile = ROOT.'views/pages/'.get_class($this).'/'.$filename.'.php';
 
 		if(file_exists($viewfile)){
+			if(file_exists(ROOT.'/controllers/layout/'.$this->layout.'.php')){
+				include(ROOT.'/controllers/layout/'.$this->layout.'.php');
+				$name = 'layout_'.$this->layout;
+				$layout = new $name;
+				$this->set($layout->getvars());
+
+			}
+
 			extract($this->vars);
+
+			$this->addjs('views/pages/'.get_class($this).'/js/javascript.js');
+			$this->addjs('views/pages/'.get_class($this).'/js/'.$filename.'.js');
+			$this->addjs('views/layout/'.$this->layout.'/js/javascript.js');
+			$this->addjs('views/pages/'.get_class($this).'/js/'.get_class($this).'.js');
+
+			$jsfiles = array();
+			foreach ($this->js as $js) {
+				if(file_exists(ROOT.$js)){
+					array_push($jsfiles, WEBROOT.$js);
+				}
+			}
+
+			$jsvars = json_encode($this->jsvars);
 
 			ob_start();
 			require($viewfile);
@@ -77,8 +137,8 @@ class Controller{
 
 	function loadModel($name){
 		require_once(ROOT.'models/'.strtolower($name).'.php');
-		$this->$name = new $name();
-		return $this->$name;
+		$class = Model::Get('model_'.strtolower($name));
+		return $class;
 	}
 
 	function noaction($action, $params){

@@ -12,6 +12,7 @@ require ROOT.'core/util.php';
 require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 require ROOT.'core/form.php';
+require ROOT.'core/layout.php';
 
 require ROOT.'core/member.php';
 require ROOT.'core/form_view.php';
@@ -34,9 +35,6 @@ unset($params[0]); unset($params[1]);
 
 $data        	= array();
 $data['post']	= $_POST;
-
-if(isset($_SESSION['data']) & !empty($_SESSION['data']))
-	$data['reviousdata'] = $_SESSION['reviousdata'];
 
 $Controller = Controller::preload($controller, $action, $params, $data);
 

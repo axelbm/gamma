@@ -1,6 +1,6 @@
 <?php
-class Tutoriel extends Model{
-	function __construct(){
+class model_tutoriel extends Model{
+	protected function load(){
 		$this->setTable('global');
 	}
 }

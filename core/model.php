@@ -2,7 +2,13 @@
 class Model{
 	protected $table;
 	static $tablesname;
+	static $_instance = array();
 	protected $tablecolumns;
+	static $self;
+
+	private function __construct(){
+		$this->load();
+	}
 
 	public function setTable($table){
 		if(self::validTable($table)){
@@ -61,10 +67,6 @@ class Model{
 		}
 	}
 
-	static function load($name){
-		require_once(ROOT.'models/'.strtolower($name).'.php');
-		return new $name();
-	}
 
 	static function _read($table, $id, $fields=null){
 		if(self::validTable($table)){
@@ -142,10 +144,10 @@ class Model{
 			$order = "id ASC";
 			$single = false;
 			if(isset($data['conditions'])){	$conditions = $data['conditions'];}
-			if(isset($data['fields'])){		$fields 	= $data['fields'];}
-			if(isset($data['limit'])){		$limit	 	= "LIMIT ".$data['limit'];}
-			if(isset($data['order'])){		$order	 	= $data['order'];}
-			if(isset($data['single'])){		$single	 	= $data['single'];}
+			if(isset($data['fields'])){    		$fields	= $data['fields'];}
+			if(isset($data['limit'])){     		$limit 		= "LIMIT ".$data['limit'];}
+			if(isset($data['order'])){     		$order 		= $data['order'];}
+			if(isset($data['single'])){    		$single		= $data['single'];}
 
 			$sql = "SELECT $fields FROM $table WHERE $conditions ORDER BY $order $limit";
 			$req = $Database->query($sql);
@@ -172,6 +174,16 @@ class Model{
 		}else{
 			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
+	}
+
+
+
+	public static function Get($name) {
+		if(!isset(Model::$_instance[$name]) | empty(Model::$_instance[$name])) {
+			Model::$_instance[$name] = new $name();
+		}
+
+		return Model::$_instance[$name];
 	}
 }
 ?>

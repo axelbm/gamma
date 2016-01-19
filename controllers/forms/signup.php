@@ -4,10 +4,10 @@ class form_signup extends Form{
 
 	function check_username($username){
 		if(isset($username) & !empty($username)){
-			if(strlen($username) >= 4 & strlen($username) <= 32){
+			if(strlen($username) >= 1 & strlen($username) <= 32){
 				return true;
 			}else{
-				$this->error('Le nom doit être entre 4 et 32 lettres');
+				$this->error('Le nom doit être entre 1 et 32 lettres');
 				return false;
 			}
 		}else{

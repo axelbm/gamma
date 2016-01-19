@@ -5,7 +5,9 @@ class form_change_pwd extends Form{
 
 	function check_id($id){
 		if(isset($id) & !empty($id)){
-			$user = Member::GetByID($id);
+			$Controller = Controller::$self;
+			$Member = $Controller->loadModel('member');
+			$user = $Member->GetByID($id);
 
 			if(!empty($user)){
 				$this->user = $user;
@@ -67,6 +69,12 @@ class form_change_pwd extends Form{
 			$this->error('Vous devez confirmer votre mot de passse.');
 			return false;
 		}
+	}
+
+	function fail(){
+		$Controller = Controller::$self;
+		$Controller->setjs('user_edit_tab', 'profil');
+		$Controller->setjs('hash', 'change_pwd');
 	}
 
 	function success(){

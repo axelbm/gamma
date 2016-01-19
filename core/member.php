@@ -71,7 +71,10 @@ class Member{
 			'country' => $this->GetCountry()
 		);
 
-		Model::_save('member', $this->GetID(), $data);
+
+		$Controller = Controller::$self;
+		$Member = $Controller->loadModel('member');
+		$Member->save($this->GetID(), $data);
 	}
 
 	// public function Login(){
@@ -88,65 +91,65 @@ class Member{
 	// }
 
 
-	static function GetByID($id){
-		global $Database;
+	// static function GetByID($id){
+	//	global $Database;
 
-		$sql = "SELECT * FROM member WHERE id='$id'";
-		$req = $Database->query($sql);
-		$data = $req->fetch(PDO::FETCH_ASSOC);
+	//	$sql = "SELECT * FROM member WHERE id='$id'";
+	//	$req = $Database->query($sql);
+	//	$data = $req->fetch(PDO::FETCH_ASSOC);
 
-		if(empty($data)){
-			return null;
-		}else{
-			$member = new Member($data);
-			return $member;
-		}
-	}
+	//	if(empty($data)){
+	//		return null;
+	//	}else{
+	//		$member = new Member($data);
+	//		return $member;
+	//	}
+	// }
 
-	static function GetByToken($token){
-		global $Database;
+	// static function GetByToken($token){
+	//	global $Database;
 
-		$data = Model::_find('member', array(
-			'conditions' => "confirmation_token='".$token."'",
-			'single'	 => true
-		));
+	//	$data = Model::_find('member', array(
+	//		'conditions' => "confirmation_token='".$token."'",
+	//		'single'	 => true
+	//	));
 
-		if(empty($data)){
-			return null;
-		}else{
-			$member = new Member($data);
-			return $member;
-		}
-	}
+	//	if(empty($data)){
+	//		return null;
+	//	}else{
+	//		$member = new Member($data);
+	//		return $member;
+	//	}
+	// }
 
-	static function GetByEmail($email){
-		global $Database;
+	// static function GetByEmail($email){
+	//	global $Database;
 
-		$data = Model::_find('member', array(
-			'conditions' => "email='".$email."'",
-			'single'	 => true
-		));
+	//	$data = Model::_find('member', array(
+	//		'conditions' => "email='".$email."'",
+	//		'single'	 => true
+	//	));
 
-		if(empty($data)){
-			return null;
-		}else{
-			$member = new Member($data);
-			return $member;
-		}
-	}
+	//	if(empty($data)){
+	//		return null;
+	//	}else{
+	//		$member = new Member($data);
+	//		return $member;
+	//	}
+	// }
 
 
-	static function CreateAccout($data){
-		if(!isset($data['email']) | empty($data['email']))
-			return;
-		if(!isset($data['password']) | empty($data['password']))
-			return;
+	// static function CreateAccout($data){
+	//	if(!isset($data['email']) | empty($data['email']))
+	//		return;
+	//	if(!isset($data['password']) | empty($data['password']))
+	//		return;
 
-		$data['email'] = strtolower($data['email']);
-		$data['confirmation_token'] = md5($data['email'].rand());
-		$data['password'] = md5($data['password']);
+	//	$data['email'] = strtolower($data['email']);
+	//	$data['confirmation_token'] = md5($data['email'].rand());
+	//	$data['password'] = md5($data['password']);
 
-		return Model::_save('member', $data);
-	}
+	//	return Model::_save('member', $data);
+	// }
 }
 ?>

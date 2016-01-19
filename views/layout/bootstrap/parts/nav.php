@@ -2,12 +2,18 @@
 $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 ?>
 
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
 		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>                        
+			</button>
 			<a class="navbar-brand" href="<?php echo WEBROOT ?>"><span class="glyphicon glyphicon-home"></span> Home</a>
 		</div>
-		<div>
+
+		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="<?php echo WEBROOT ?>">Nouveauté</a></li>
 				<li><a href="<?php echo WEBROOT ?>">Populaire</a></li>
@@ -23,15 +29,26 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					</ul>
 				</li>
 			</ul>
-			<?php if(!$this->HasError()){ ?>
+
+			<form class="navbar-form navbar-left">
+				<div class="form-group input-group">
+					<input type="text" placeholder="Recherche" class="form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<span  class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+
 			<ul class="nav navbar-nav navbar-right">
-				<?php if(empty($this->user)){ ?>
+				<?php if(empty($user)){ ?>
 					<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-					<li><a href="#connection_modal" onclick="$('#connection_modal').modal()"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+					<li><a href="" data-toggle="modal" data-target="#connection_modal"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 				<?php 
-				}else{ $user = $this->user; ?>
+				}else{  ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetUsername() ?> <span class="caret"></span></a>
+						<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetUsername() ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo WEBROOT.'user/profil/'; ?>">Profil</a></li>
 							<li><a href="<?php echo WEBROOT.'user/edit/'; ?>">Edit</a></li>
@@ -41,7 +58,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					</li>
 				<?php } ?>
 			</ul>
-			<?php } ?>
+
 		</div>
 	</div>
 </nav>
