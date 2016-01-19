@@ -113,7 +113,7 @@ class user extends Controller{
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 		}
 
-		$data = array('user'=>$user);
+		$data = array('member'=>$user);
 		
 		// $this->setTitle(Site_Name.' - '.$member->getName());
 		$this->set($data);

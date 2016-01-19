@@ -1,12 +1,18 @@
 <div class="panel-group">
 	<?php foreach ($tab as $key => $value): ?>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4><?php echo $value['title']; ?></h2>
-		</div>
-		<div class="panel-body">
-			<?php echo $value['description']; ?>
-		</div>
+	<div>
+		<h2>
+			<a href=""><?php echo $value['title']; ?></a>
+		</h2>
+		<p class="lead">Par <a href="<?php echo WEBROOT.'user/profil/'.$value['creator']->GetID(); ?>"><?php echo $value['creator']->GetUserName(); ?></a></p>
+		<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $value['publication_date']; ?></p>
+		<hr>
+		<p><?php echo $value['description']; ?></p>
+		<a class="btn btn-primary" href="">
+			Voir le livre 
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+		<hr>
 	</div>
 	<?php endforeach; ?>
 </div>

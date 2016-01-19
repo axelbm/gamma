@@ -45,7 +45,7 @@
 				$form->submit('Envoyer');
 				$form->done();
 				?>
-
+				<hr>
 				<?php
 				$form = new Form_View('change_pwd');
 				$form->horizontal();

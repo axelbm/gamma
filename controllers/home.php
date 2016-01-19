@@ -1,12 +1,16 @@
 <?php
 class home extends Controller{
 	function index(){
-		$Tutoriel = $this->loadModel('tutoriel');
-		$data = array();
-		$data['tab'] = $Tutoriel->find();
+		$Book = $this->loadModel('book');
+		$Member = $this->loadModel('member');
+		$data = $Book->find();
+
+		foreach ($data as $key => $value) {
+			$data[$key]['creator'] = $Member->GetByID($data[$key]['creator']);
+		}
 		
-		// print_r($data['tab']);
-		$this->set($data);
+		$d = array('tab'=>$data);
+		$this->set($d);
 		$this->render();
 
 	}
