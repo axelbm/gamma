@@ -8,6 +8,7 @@ class Form{
 	var $formfields = array();
 	var $formerror = '';
 	var $formsuccess = '';
+	var $result = '';
 
 	public function __construct($data=array()){
 		if(empty($this->formfields)){

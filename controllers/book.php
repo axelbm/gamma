@@ -5,9 +5,9 @@ class book extends Controller{
 	private $Answer;
 
 	function init(){
-		$this->Book = $this->loadModel('book');
-		$this->Page = $this->loadModel('page');
-		$this->Answer = $this->loadModel('answer');
+		$this->Book  	= $this->loadModel('book');
+		$this->Page  	= $this->loadModel('page');
+		$this->Answer	= $this->loadModel('answer');
 	}
 
 	function act_index(){
@@ -26,26 +26,37 @@ class book extends Controller{
 
 	}
 
-	function act_view($bookid, $pageid=null){
-		$book = $this->Book->GetByID($bookid);
+	function act_view($bookid=null, $pageid=null){
+		if(isset($bookid) & !empty($bookid)){
+			$book = $this->Book->GetByID($bookid);
 
-		if(!isset($pageid) | empty($pageid)){
-			$pageid = $book['starting_page'];
-		}
+			if(!isset($pageid) | empty($pageid)){
+				if(!empty($this->form)){
+					if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
+						$pageid = $this->formresult;
+					}else{
+						$pageid = $book['starting_page'];
+					}
+				}else{
+					$pageid = $book['starting_page'];
+				}
+			}
 
-		$page = $this->Page->GetByID($pageid);
+			$page = $this->Page->GetByID($pageid);
 
-		if(empty($page)){
-			Controller::weberror('404', 'La page est introuvable.');
+			if(empty($page)){
+				Controller::weberror('404', 'La page est introuvable.');
+			}
+
+			$answers = $this->Answer->GetByPageID($pageid);
+
+			$this->set('book',   	$book);
+			$this->set('page',   	$page);
+			$this->set('answers',	$answers);
+			$this->render();
 		}else{
-			$this->set('page', $page);
+			$this->noaction();
 		}
-
-		$answers = $this->Answer->GetByPageID($pageid);
-		$this->set('answers', $answers);
-
-		$this->set('book', $book);
-		$this->render();
 	}
 
 	function act_edit($id){

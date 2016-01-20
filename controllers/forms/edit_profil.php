@@ -1,7 +1,20 @@
 <?php
 class form_edit_profil extends Form{
-	var $formfields = array('id', 'username', 'country', 'birtdate');
+	var $formfields = array('username', 'country', 'birtdate');
 	var $user;
+
+	function init(){
+		$Controller = Controller::$self;
+		$Member = $Controller->loadModel('member');
+		$user = $Member->GetByID($Controller->userid);
+
+		if(!empty($user)){
+			$this->user = $user;
+		}else{
+			$this->formerror('L\'utilisateur est introuvable.');
+			$this->fail();
+		}
+	}
 
 	function check_id($id){
 		if(isset($id) & !empty($id)){

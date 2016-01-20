@@ -10,7 +10,7 @@ class error extends Controller{
 		if(method_exists($this, $method)){
 			$this->$method($params);
 		}else{
-			$this->index($code, $params[0]);
+			$this->act_index($code, $params[0]);
 		}
 	}
 

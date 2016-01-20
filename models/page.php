@@ -19,5 +19,24 @@ class model_page extends Model{
 			return $data;
 		}
 	}
+
+	public function GetByBookID($id){
+		$data = $this->find(array(
+			'conditions' => 'book='.$id
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+			$Controller = Controller::$self;
+			$Member = $Controller->loadModel('member');
+
+			foreach ($data as $id => $answer) {
+				$data[$id]['creator'] = $Member->GetByID($data[$id]['creator']);
+			}
+
+			return $data;
+		}
+	}
 }
 ?>

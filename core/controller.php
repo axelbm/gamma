@@ -127,7 +127,7 @@ class Controller{
 				}
 			}
 		}else{
-			Controller::weberror('500', '');
+			Controller::weberror('500', 'tew');
 		}
 	}
 
@@ -148,7 +148,7 @@ class Controller{
 		}
 	}
 
-	function noaction($action, $params){
+	function noaction($action=null, $params=null){
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
