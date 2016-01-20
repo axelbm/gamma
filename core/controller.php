@@ -34,14 +34,15 @@ class Controller{
 		}
 	}
 
-	function start(){
+	function init(){
 
 	}
 
 	function run(){
-		if(method_exists($this, $this->action)){
-			$this->start();
-			call_user_func_array(array($this, $this->action), $this->params);
+		$action = 'act_'.$this->action;
+		if(method_exists($this, $action)){
+			$this->init();
+			call_user_func_array(array($this, $action), $this->params);
 		}
 		else{
 			$this->noaction($this->action, $this->params);
@@ -136,9 +137,15 @@ class Controller{
 
 
 	function loadModel($name){
-		require_once(ROOT.'models/'.strtolower($name).'.php');
-		$class = Model::Get('model_'.strtolower($name));
-		return $class;
+		$file = ROOT.'models/'.strtolower($name).'.php';
+		
+		if(file_exists($file)){
+			require_once($file);
+			$class = Model::Get('model_'.strtolower($name));
+			return $class;
+		}else{
+			Controller::weberror('404', 'Le model demandé n\'existe pas.');
+		}
 	}
 
 	function noaction($action, $params){

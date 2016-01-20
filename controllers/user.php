@@ -1,14 +1,13 @@
 <?php
 class user extends Controller{
-	function start(){
+	private $Member;
 
+	function init(){
+		$this->Member = $this->loadModel('member');
 	}
 
-	function index(){
 
-	}
-
-	function signup($message=null){
+	function act_signup($message=null){
 		if($this->user)
 			Controller::weberror('404', 'La page est invalide.');
 
@@ -19,13 +18,12 @@ class user extends Controller{
 		}
 	}
 
-	function success(){
+	function act_success(){
 		if(isset($_SESSION['success_userid']) & !empty($_SESSION['success_userid'])){
 			$id = $_SESSION['success_userid'];
 
 			if(isset($id) & !empty($id)){
-				$Member = $this->loadModel('member');
-				$user = $Member->GetByID($id);
+				$user = $this->Member->GetByID($id);
 
 				if(empty($user))
 					Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
@@ -43,12 +41,11 @@ class user extends Controller{
 		}
 	}
 
-	function confirm($token){
+	function act_confirm($token){
 		if($this->user)
 			Controller::weberror('404', 'La page est invalide.');
 
-		$Member = $this->loadModel('member');
-		$user = $Member->GetByToken($token);
+		$user = $this->Member->GetByToken($token);
 
 		if(empty($user))
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
@@ -66,38 +63,27 @@ class user extends Controller{
 
 	}
 
-	function login(){
+	function act_login(){
 		if($this->user)
 			Controller::weberror('404', 'La page est invalide.');
 
 		$this->render();
 	}
 
-	function logout(){
+	function act_logout(){
 		unset($_SESSION['user_id']);
 		header('Location: '.WEBROOT);
 	}
 
-	function edit($id=null){
+	function act_edit(){
 		if($this->user){
-			if(empty($id)){
-				$id = $this->user->GetID();
-			}elseif($id != $this->user->GetID()){
-				Controller::weberror('404', 'La page est invalide.');
-			}
-
-			$Member = $this->loadModel('member');
-			$user = $Member->GetByID($id);
-			$d = array('user' => $user);
-
-			$this->set($d);
 			$this->render();
 		}else{
 			Controller::weberror('404', 'La page est invalide.');
 		}
 	}
 
-	function profil($id=null){
+	function act_profil($id=null){
 		if(empty($id)){
 			if(!empty($this->user)){
 				$id = $this->user->GetID();
@@ -106,8 +92,7 @@ class user extends Controller{
 			}
 		}
 
-		$Member = $this->loadModel('member');
-		$user = $Member->GetByID($id);
+		$user = $this->Member->GetByID($id);
 
 		if(!$user){
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
@@ -117,7 +102,7 @@ class user extends Controller{
 		
 		// $this->setTitle(Site_Name.' - '.$member->getName());
 		$this->set($data);
-		$this->render('');
+		$this->render();
 	}
 }
 ?>

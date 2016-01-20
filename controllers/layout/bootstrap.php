@@ -1,16 +1,15 @@
 <?php
 class layout_bootstrap extends Layout{
-	function __construct(){
 
-	}
-
-	function getvars(){
+	function init(){
 		$Controller = Controller::$self;
 		$Member = $Controller->loadModel('member');
 		$user = $Member->GetByID($Controller->userid);
 
-		$vars = array('user'=>$user);
+		$this->set('user', $user);
+	}
 
-		return $vars;
+	function index(){
+
 	}
 }

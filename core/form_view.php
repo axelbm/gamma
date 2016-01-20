@@ -52,8 +52,8 @@ class Form_View{
 		$labelclass = '';
 		$divclass = '';
 		if($this->inhorizontalform){
-			$labelclass = 'col-sm-2 control-label';
-			$divclass = 'col-sm-10';
+			$labelclass = 'col-lg-2 control-label';
+			$divclass = 'col-lg-10';
 		}
 
 		$html = '<div class="form-group">
@@ -101,8 +101,8 @@ class Form_View{
 		$labelclass = '';
 		$divclass = '';
 		if($this->inhorizontalform){
-			$labelclass = 'col-sm-2 control-label';
-			$divclass = 'col-sm-10';
+			$labelclass = 'col-lg-2 control-label';
+			$divclass = 'col-lg-10';
 		}
 
 		$html = '<div class="form-group">
@@ -154,8 +154,8 @@ class Form_View{
 		$labelclass = '';
 		$divclass = '';
 		if($this->inhorizontalform){
-			$labelclass = 'col-sm-2 control-label';
-			$divclass = 'col-sm-10';
+			$labelclass = 'col-lg-2 control-label';
+			$divclass = 'col-lg-10';
 		}
 
 		$html = '<div class="form-group">
@@ -214,7 +214,7 @@ class Form_View{
 	//	<label><input type="checkbox" name="rm">Se souvenir de moi</label>
 	// </div>
 	function checkbox($id, $label=''){
-		$class = ($this->inhorizontalform) ? 'col-sm-offset-2 col-sm-10' : '';
+		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 
 		$html = '
 		<div class="form-group">
@@ -229,7 +229,7 @@ class Form_View{
 	}
 
 	function submit($value,$style='default'){
-		$class = ($this->inhorizontalform) ? 'col-sm-offset-2 col-sm-10' : '';
+		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 
 		$html = '
 		<div class="form-group">
@@ -243,7 +243,7 @@ class Form_View{
 
 	function label($text, $h=null){
 		$tag = (!empty($h) & is_numeric($h) & $h <= 6 & $h > 0) ? 'h'.$h : 'label';
-		$class = ($this->inhorizontalform) ? 'col-sm-offset-2 col-sm-10' : '';
+		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 
 		$html = '
 		<div class="form-group">

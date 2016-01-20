@@ -1,7 +1,7 @@
 <?php
-class model_book extends Model{
+class model_page extends Model{
 	protected function load(){
-		$this->setTable('books');
+		$this->setTable('pages');
 	}
 
 	public function GetByID($id){

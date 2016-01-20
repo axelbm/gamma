@@ -8,6 +8,7 @@
 			<div class="modal-body">
 				<?php
 				$form = new Form_View('delete_account');
+				$form->hidden('id', $user->GetID());
 				$form->input('pwd', '', 'Mot de passe:', 'password');
 				$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
 				$form->label('Attention, cette action est irreversible!');

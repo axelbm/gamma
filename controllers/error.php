@@ -4,9 +4,9 @@ class error extends Controller{
 	function run(){
 		$code = $this->action;
 		$params = $this->params;
-		$this->error = $params[0];
+		$this->error = $params[0] or 'error';
 
-		$method = 'err_'.$code;
+		$method = 'act_err_'.$code;
 		if(method_exists($this, $method)){
 			$this->$method($params);
 		}else{
@@ -14,7 +14,7 @@ class error extends Controller{
 		}
 	}
 
-	function index($code, $message='error'){
+	function act_index($code, $message='error'){
 		$data = array(
 			'code' => $code,
 			'message' => $message
@@ -23,7 +23,7 @@ class error extends Controller{
 		$this->render('index');
 	}
 
-	function err_404($params){
+	function act_err_404($params){
 		$data = array(
 			'message' => $params[0]
 		);

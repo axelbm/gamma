@@ -3,3 +3,7 @@ if(phpvar.user_edit_tab){
 }else{
 	$('.nav-tabs a[href="#tab_profil').tab('show');
 }
+
+if(phpvar.delete_account_modal == true){
+	$("#delete_account").modal("show");
+}

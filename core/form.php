@@ -29,6 +29,8 @@ class Form{
 			}
 		}
 
+		$this->init();
+
 		foreach ($this->data as $key => $value) {
 			$value = $value['value'];
 			$method = 'check_'.$key;
@@ -54,6 +56,10 @@ class Form{
 			$this->fail();
 		}
 	}
+
+	protected function init(){
+
+	} 
 
 	public function GetData(){
 		return $this->data;
@@ -139,6 +145,8 @@ class Form{
 			$form = new $formclass($data);
 			$form->id = $formid;
 			return $form;
+		}else{
+			return null;
 		}
 	} 
 }

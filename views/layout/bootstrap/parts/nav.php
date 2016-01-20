@@ -48,7 +48,10 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 				<?php 
 				}else{  ?>
 					<li class="dropdown">
-						<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>"><?php echo $user->GetUsername() ?> <span class="caret"></span></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">
+							<b><?php echo $user->GetUsername() ?></b> 
+							<span class="caret"></span>
+						</a>
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo WEBROOT.'user/profil/'; ?>">Profil</a></li>
 							<li><a href="<?php echo WEBROOT.'user/edit/'; ?>">Edit</a></li>

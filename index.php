@@ -53,8 +53,10 @@ unset($_POST['formid']);
 if(isset($formid)){
 	$form = Form::load($formid, $_POST);
 
-	$Controller->form    	= $form;
-	$Controller->formdata	= $form->GetData();
+	if(!empty($form)){
+		$Controller->form    	= $form;
+		$Controller->formdata	= $form->GetData();
+	}
 }
 
 $Controller->run();
