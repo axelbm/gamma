@@ -1,24 +1,18 @@
 <?php
 class form_change_pwd extends Form{
-	var $formfields = array('id', 'pwd', 'new_pwd', 'new_pwd_conf');
+	var $formfields = array('pwd', 'new_pwd', 'new_pwd_conf');
 	var $user;
 
-	function check_id($id){
-		if(isset($id) & !empty($id)){
-			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
-			$user = $Member->GetByID($id);
+	function init(){
+		$Controller	= Controller::$self;
+		$Member    	= $Controller->loadModel('member');
+		$user      	= $Member->GetByID($Controller->userid);
 
-			if(!empty($user)){
-				$this->user = $user;
-				return true;
-			}else{
-				$this->formerror('L\'utilisateur est introuvable.');
-				return false;
-			}
+		if(!empty($user)){
+			$this->user = $user;
 		}else{
 			$this->formerror('L\'utilisateur est introuvable.');
-			return false;
+			$this->fail();
 		}
 	}
 

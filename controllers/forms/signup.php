@@ -1,6 +1,12 @@
 <?php
 class form_signup extends Form{
 	var $formfields = array('username', 'email', 'pwd', 'pwd_conf', 'country', 'birtdate', 'aggre');
+	private $Member;
+
+	function init(){
+		$Controller  	= Controller::$self;
+		$this->Member	= $Controller->loadModel('member');
+	}
 
 	function check_username($username){
 		if(isset($username) & !empty($username)){
@@ -19,12 +25,9 @@ class form_signup extends Form{
 	function check_email($email){
 		if(isset($email) & !empty($email)){
 			if(preg_match('/^[\w\.\-]*@\w*\.[\w\.]*$/', $email)){
-				$check = Model::_find('member', array(
-					"conditions"	=> "email='".$email."'",
-					"single"    	=> true
-				));
+				$data = $this->Member->GetByEmail($email);
 
-				if(!isset($check) | empty($check)){
+				if(!isset($data) | empty($data)){
 					return true;
 				}else{
 					$this->error('L\'email est déja utilisé.');
@@ -111,13 +114,13 @@ class form_signup extends Form{
 	function success(){
 		$account = array();
 
-		$account['email'] = $this->value('email');
-		$account['username'] = $this->value('username');
-		$account['password'] = $this->value('pwd');
-		$account['country'] = $this->value('country');
-		$account['birtdate'] = $this->value('birtdate');
+		$account['email']   	= $this->value('email');
+		$account['username']	= $this->value('username');
+		$account['password']	= $this->value('pwd');
+		$account['country'] 	= $this->value('country');
+		$account['birtdate']	= $this->value('birtdate');
 
-		$id = Member::CreateAccout($account);
+		$id = $this->Member->CreateAccout($account);
 
 		if(isset($id) & !empty($id)){
 			$this->success = true;

@@ -59,6 +59,8 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="book" value="<?php echo $book['id']; ?>">
+		<input type="hidden" name="pageid" value="<?php echo $page['id']; ?>">
 		<input id="action_input" type="hidden" name="action" value="">
 		<input id="page_input" type="hidden" name="page" value="">
 		<button type="submit" class="btn btn-success btn-block">Envoyer</button>

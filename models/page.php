@@ -4,18 +4,29 @@ class model_page extends Model{
 		$this->setTable('pages');
 	}
 
+	public function Create($data){
+		$page = array(
+			'book'   	=> $data['book'],
+			'title'  	=> $data['title'] ?: null,
+			'content'	=> $data['content'],
+			'creator'	=> $data['creator']
+		);
+
+		return $this->save($page);
+	}
+
 	public function GetByID($id){
 		$data = $this->find(array(
-			'conditions' => 'id='.$id,
-			'single' => true
+			'conditions'	=> 'id='.$id,
+			'single'    	=> true
 		));
 
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
-			$data['creator'] = $Member->GetByID($data['creator']);
+			$Controller     	= Controller::$self;
+			$Member         	= $Controller->loadModel('member');
+			$data['creator']	= $Member->GetByID($data['creator']);
 			return $data;
 		}
 	}
@@ -28,8 +39,8 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
+			$Controller	= Controller::$self;
+			$Member    	= $Controller->loadModel('member');
 
 			foreach ($data as $id => $answer) {
 				$data[$id]['creator'] = $Member->GetByID($data[$id]['creator']);

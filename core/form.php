@@ -67,13 +67,7 @@ class Form{
 	}
 
 	protected function varcheck($var){
-		$value = array();
-		if(isset($var) & !empty($var)){
-			return true;
-		}else{
-			$this->error('La donnée n\'est pas valide.');
-			return false;
-		}
+		return true;
 	}
 
 	protected function error($key, $error=null){

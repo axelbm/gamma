@@ -30,16 +30,18 @@ class book extends Controller{
 		if(isset($bookid) & !empty($bookid)){
 			$book = $this->Book->GetByID($bookid);
 
-			if(!isset($pageid) | empty($pageid)){
-				if(!empty($this->form)){
-					if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
-						$pageid = $this->formresult;
-					}else{
-						$pageid = $book['starting_page'];
-					}
+			if(!isset($book) | empty($book)){
+				Controller::weberror('404', 'La livre est introuvable.');
+			}
+
+			if(!empty($this->form)){
+				if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
+					$pageid = $this->formresult;
 				}else{
-					$pageid = $book['starting_page'];
+					$pageid = $pageid?:$book['starting_page'];
 				}
+			}else{
+				$pageid = $pageid?:$book['starting_page'];
 			}
 
 			$page = $this->Page->GetByID($pageid);

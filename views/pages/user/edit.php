@@ -38,7 +38,6 @@
 
 				$form = new Form_View('edit_profil', $data);
 				$form->horizontal();
-				$form->hidden('id', $user->GetID());
 				$form->label('Profil', 3);
 				$form->input('username', '', 'Nom', 'text');
 				$form->select('country', $country_list, 'Pays');
@@ -50,7 +49,6 @@
 				<?php
 				$form = new Form_View('change_pwd');
 				$form->horizontal();
-				$form->hidden('id', $user->GetID());
 				$form->label('Changement de mot de passe', 3);
 				$form->input('pwd', '', 'Mot de passe', 'password');
 				$form->input('new_pwd', '', 'Nouveau mot de passe', 'password');

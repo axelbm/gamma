@@ -29,7 +29,7 @@ class user extends Controller{
 					Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 
 
-				$data = array('user'=>$user);
+				$data = array('member'=>$user);
 				$this->set($data);
 
 				$this->render();
@@ -53,7 +53,7 @@ class user extends Controller{
 		if(!$user->IsConfirmed()){
 			$user->Confirm();
 
-			$d = array('user' => $user, 'success' => true);
+			$d = array('member' => $user, 'success' => true);
 
 			$this->set($d);
 			$this->render();

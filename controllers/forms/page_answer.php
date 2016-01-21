@@ -1,6 +1,6 @@
 <?php
 class form_page_answer extends Form{
-	var $formfields = array('answer');
+	var $formfields = array('book', 'answer');
 	private $page;
 	
 	function check_answer($answer){
@@ -29,7 +29,8 @@ class form_page_answer extends Form{
 
 	function success(){
 		$id = $this->page['id'];
-
-		$this->result = $id;
+		$bookid = $this->value('book');
+		// $this->result = $id;
+		header('Location: '.WEBROOT.'book/view/'.$bookid.'/'.$id);
 	}
 }

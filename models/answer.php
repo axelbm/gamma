@@ -4,6 +4,17 @@ class model_answer extends Model{
 		$this->setTable('answer');
 	}
 
+	public function Create($data){
+		$answer = array(
+			'page'       	=> $data['page'],
+			'destination'	=> $data['destination'],
+			'content'    	=> $data['content'],
+			'creator'    	=> $data['creator']
+		);
+
+		return $this->save($answer);
+	}
+
 	public function GetByPageID($id){
 		$data = $this->find(array(
 			'conditions' => 'page='.$id
@@ -12,8 +23,8 @@ class model_answer extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
+			$Controller	= Controller::$self;
+			$Member    	= $Controller->loadModel('member');
 
 			foreach ($data as $id => $answer) {
 				$data[$id]['creator'] = $Member->GetByID($data[$id]['creator']);
