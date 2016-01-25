@@ -1,24 +1,20 @@
 <div>
-    	<div class="heading">
-    		<h1 class=""><?php echo $book['title']; ?> 
-    		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']->GetID(); ?>"><?php echo $book['creator']->GetUserName(); ?></a></small></h1>
-    		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book['publication_date']; ?></p>
-    	</div>
-    	<hr>
-    	<div class="body">
-<!--		<?php if ($page['id'] == $book['starting_page']) { ?>
-    		<h4>Description</h4>
-    		<p><?php echo $book['description']; ?></p>
-    		<hr>
-    		<?php } ?> -->
-    	<h4><?php echo $page['title'] ?: 'Page '.$page['id']; ?> 
-    	<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$page['creator']->GetID(); ?>"><?php echo $page['creator']->GetUserName(); ?></a></small></h4>
+	<div class="heading">
+		<h1 class=""><?php echo $book['title']; ?> 
+		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']->GetID(); ?>"><?php echo $book['creator']->GetUserName(); ?></a></small></h1>
+		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book['publication_date']; ?></p>
+	</div>
+	<hr>
+	<div class="body">
+	<h4><?php echo $page['title'] ?: 'Page '.$page['id']; ?> 
+	<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$page['creator']->GetID(); ?>"><?php echo $page['creator']->GetUserName(); ?></a></small></h4>
 
 		<p><?php echo $page['content']; ?></p>
 		<br>
 		<?php if(isset($answers) & !empty($answers)){ ?>
 			<form id="page_answer" role="form" method="post">
 				<input name="formid" type="hidden" value="page_answer">
+				<input name="page" type="hidden" value="<?php echo $page['id']; ?>">
 				<input name="book" type="hidden" value="<?php echo $book['id']; ?>">
 			
 				<div class="form-group list-group">
@@ -37,8 +33,17 @@
 			</form>
 		<?php } ?>
 
-		<br>
+		<hr>
 
-		<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'page/add/'.$page['id']; ?>"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter un choix</a>
+		<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'page/add/'.$page['id']; ?>">Ajouter un choix</a>
+
+		<?php if(isset($previous_page) & !empty($previous_page)){ if($previous_page != $page['id']){ ?>
+			<hr>
+			<form method="get" action="<?php echo WEBROOT.'book/view/'.$book['id'].'/'.$previous_page; ?>">
+				<?php if($minimize) ?>
+				<input type="hidden" name="m" value="true">
+				<button type="submit" class="btn btn-danger btn-block">Page précédente</button>
+			</form>
+		<?php }} ?>
 	</div>
 </div>

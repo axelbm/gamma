@@ -115,7 +115,7 @@ class form_signup extends Form{
 		$account = array();
 
 		$account['email']   	= $this->value('email');
-		$account['username']	= $this->value('username');
+		$account['username']	= htmlspecialchars($this->value('username'));
 		$account['password']	= $this->value('pwd');
 		$account['country'] 	= $this->value('country');
 		$account['birtdate']	= $this->value('birtdate');

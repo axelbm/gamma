@@ -50,7 +50,7 @@ class Controller{
 	}
 
 	function set($vars, $value=null){
-		if(isset($value) & !empty($value)){
+		if(isset($value)){
 			if(is_string($vars)){
 				$this->vars[$vars] = $value;
 			}
@@ -96,7 +96,16 @@ class Controller{
 
 			}
 
+			$can_minimize = false;
 			extract($this->vars);
+
+			$minimize = false;
+
+			if(isset($_GET['m']) & !empty($_GET['m'])){
+				if($_GET['m'] == true){
+					$minimize = true;
+				}
+			}
 
 			$this->addjs('views/pages/'.get_class($this).'/js/javascript.js');
 			$this->addjs('views/pages/'.get_class($this).'/js/'.$filename.'.js');
@@ -120,10 +129,11 @@ class Controller{
 				echo $content_for_layout;
 			}else{
 				$path = ROOT.'views/layout/'.$this->layout.'/';
-				if(file_exists($path.get_class($this).'.php')){
-					require($path.get_class($this).'.php');
+				$m = $minimize & $can_minimize ? '_minimized' : '';
+				if(file_exists($path.$filename.$m.'.php')){
+					require($path.$filename.$m.'.php');
 				}else{
-					require($path.'index.php');
+					require($path.'index'.$m.'.php');
 				}
 			}
 		}else{

@@ -1,4 +1,4 @@
-<div class="panel-group">
+<div>
 	<?php foreach ($books as $key => $book): ?>
 	<div>
 		<div class="heading">
@@ -20,6 +20,8 @@
 	</div>
 	<?php endforeach; ?>
 
+	<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/create/'; ?>"><span class="glyphicon glyphicon-plus-sign"></span> Créer un livre</a>
+	
 	<?php if (count($books) >= 5) { ?>
 		<ul class="pager">
 			<li class="previous"><a href="#">Previous</a></li>

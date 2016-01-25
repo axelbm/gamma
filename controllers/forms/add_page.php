@@ -110,6 +110,6 @@ class form_add_page extends Form{
 			$this->fail();
 		}
 
-		header("Location: ".WEBROOT.'book/view/'.$this->value('pageid'));
+		header("Location: ".WEBROOT.'book/view/'.$this->value('book').'/'.$this->value('pageid'));
 	}
 }

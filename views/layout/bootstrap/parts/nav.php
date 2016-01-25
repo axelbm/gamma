@@ -10,7 +10,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>                        
 			</button>
-			<a class="navbar-brand" href="<?php echo WEBROOT ?>"><span class="glyphicon glyphicon-home"></span> Home</a>
+			<a class="navbar-brand" href="<?php echo WEBROOT ?>"><span class="glyphicon glyphicon-home"></span> Accueil</a>
 		</div>
 
 		<div id="navbar" class="navbar-collapse collapse">
@@ -35,11 +35,15 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					<input type="text" placeholder="Recherche" class="form-control">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="submit">
-							<span  class="glyphicon glyphicon-search"></span>
+							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>
 				</div>
 			</form>
+		
+			<?php if($can_minimize){ ?>
+				<a class="btn btn-primary navbar-btn" role="button" href="<?php echo $_SERVER['REDIRECT_URL'].'?m=true'; ?>">Minimiser</a>
+			<?php } ?>
 
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(empty($user)){ ?>

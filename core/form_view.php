@@ -210,9 +210,6 @@ class Form_View{
 		array_push($this->inputs, $html);
 	}
 
-	// <div class="checkbox">
-	//	<label><input type="checkbox" name="rm">Se souvenir de moi</label>
-	// </div>
 	function checkbox($id, $label=''){
 		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 

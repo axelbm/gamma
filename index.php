@@ -2,7 +2,8 @@
 define('WEBROOT'           	, preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT'              	, preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('Site_Name'         	, 'Story Hub');
-define('DB_NAME'           	, 'gamma');
+define('DB_NAME'           	, 'story_hub');
+define('DB_PSW'           	, 'kiwi');
 define('DEFAULT_CONTROLLER'	, 'home');
 define('DEFAULT_ACTION'    	, 'index');
 define('DEFAULT_LAYOUT'    	, 'bootstrap');
@@ -18,7 +19,7 @@ require ROOT.'core/member.php';
 require ROOT.'core/form_view.php';
 
 try{
-	$Database = new PDO('mysql:host=localhost;dbname='.DB_NAME, DB_NAME, '');
+	$Database = new PDO('mysql:host=localhost;dbname='.DB_NAME, DB_NAME, DB_PSW);
 	$Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 	$Database->exec("set names utf8");
 }

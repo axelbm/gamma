@@ -69,7 +69,7 @@ class form_edit_profil extends Form{
 
 	function success(){
 		if(!empty($this->value('username')))
-			$this->user->SetUserName($this->value('username'));
+			$this->user->SetUserName(htmlspecialchars($this->value('username')));
 		if(!empty($this->value('country')))
 			$this->user->SetCountry($this->value('country'));
 		if(!empty($this->value('birtdate')))
