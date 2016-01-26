@@ -26,46 +26,67 @@ class book extends Controller{
 
 	// }
 
-	function act_view($bookid=null, $pageid=null){
+	function act_view($bookid=null){
 		if(isset($bookid) & !empty($bookid)){
-			$this->set(array('can_minimize'=>true));
-			
 			$book = $this->Book->GetByID($bookid);
 
 			if(!isset($book) | empty($book)){
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
-			if(!empty($this->form)){
-				if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
-					$pageid = $this->formresult;
-				}else{
-					$pageid = $pageid?:$book['starting_page'];
-				}
-			}else{
-				$pageid = $pageid?:$book['starting_page'];
-			}
+			$this->Page->GetAuthors($bookid);
 
-			$page = $this->Page->GetByID($pageid);
-
-			if(empty($page)){
-				Controller::weberror('404', 'La page est introuvable.');
-			}
-
-			$answers = $this->Answer->GetByPageID($pageid);
-
-			$this->set('book',   	$book);
-			$this->set('page',   	$page);
-			$this->set('answers',	$answers);
-			
-			if(isset($_SESSION['previous_page']) & !empty($_SESSION['previous_page'])){
-				$this->set('previous_page', $_SESSION['previous_page']);
-			}
-
-			
+			$this->set('book', $book);
 			$this->render();
 		}else{
 			$this->noaction();
+		}
+	}
+
+	function act_read($bookid=null, $pageid=null){
+		if($this->user){
+			if(isset($bookid) & !empty($bookid)){
+				$this->set(array('can_minimize'=>true));
+				
+				$book = $this->Book->GetByID($bookid);
+
+				if(!isset($book) | empty($book)){
+					Controller::weberror('404', 'La livre est introuvable.');
+				}
+
+				if(!empty($this->form)){
+					if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
+						$pageid = $this->formresult;
+					}else{
+						$pageid = $pageid?:$book['starting_page'];
+					}
+				}else{
+					$pageid = $pageid?:$book['starting_page'];
+				}
+
+				$page = $this->Page->GetByID($pageid);
+
+				if(empty($page)){
+					Controller::weberror('404', 'La page est introuvable.');
+				}
+
+				$answers = $this->Answer->GetByPageID($pageid);
+
+				$this->set('book',   	$book);
+				$this->set('page',   	$page);
+				$this->set('answers',	$answers);
+				
+				if(isset($_SESSION['previous_page']) & !empty($_SESSION['previous_page'])){
+					$this->set('previous_page', $_SESSION['previous_page']);
+				}
+
+				
+				$this->render();
+			}else{
+				$this->noaction();
+			}
+		}else{
+			Controller::weberror('500', 'Vous devez vous cconnecter pour acceder à cette page.');
 		}
 	}
 

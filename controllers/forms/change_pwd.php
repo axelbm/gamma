@@ -5,8 +5,7 @@ class form_change_pwd extends Form{
 
 	function init(){
 		$Controller	= Controller::$self;
-		$Member    	= $Controller->loadModel('member');
-		$user      	= $Member->GetByID($Controller->userid);
+		$user      	= $Controller->user;
 
 		if(!empty($user)){
 			$this->user = $user;

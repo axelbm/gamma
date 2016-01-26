@@ -4,7 +4,6 @@ class form_add_page extends Form{
 	var $user;
 	var $selected_page;
 	var $book;
-	private $Member;
 	private $Book;
 	private $Page;
 	private $Answer;
@@ -12,11 +11,10 @@ class form_add_page extends Form{
 
 	function init(){
 		$Controller  	= Controller::$self;
-		$this->Member	= $Controller->loadModel('member');
 		$this->Book  	= $Controller->loadModel('book');
 		$this->Page  	= $Controller->loadModel('page');
 		$this->Answer	= $Controller->loadModel('answer');
-		$user        	= $this->Member->GetByID($Controller->userid);
+		$user        	= $Controller->user;
 
 		if(!empty($user)){
 			$this->user = $user;

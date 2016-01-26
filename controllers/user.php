@@ -84,15 +84,18 @@ class user extends Controller{
 	}
 
 	function act_profil($id=null){
+		$user = null;
+
 		if(empty($id)){
 			if(!empty($this->user)){
-				$id = $this->user->GetID();
+				$user = $this->user;
 			}else{
 				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 			}
 		}
-
-		$user = $this->Member->GetByID($id);
+		else{
+			$user = $this->Member->GetByID($id);
+		}
 
 		if(!$user){
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');

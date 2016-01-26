@@ -5,11 +5,15 @@ class home extends Controller{
 		$Member = $this->loadModel('member');
 		$data = $Book->find();
 
-		foreach ($data as $key => $value) {
-			$data[$key]['creator'] = $Member->GetByID($data[$key]['creator']);
-		}
+		$getcreator = function($book){
+			return $book['creator'];
+		};
+
+		$ids = array_unique(array_map($getcreator, $data));
+		$usersname = $Member->GetBasic($ids);
 		
 		$this->set('books', $data);
+		$this->set('usersname', $usersname);
 		$this->render();
 
 	}

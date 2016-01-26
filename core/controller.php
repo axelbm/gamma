@@ -30,7 +30,6 @@ class Controller{
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
 			$Member = $this->loadModel('member');
 			$this->user = $Member->GetByID($_SESSION['user_id']);
-			$this->userid = $_SESSION['user_id'];
 		}
 	}
 
@@ -96,16 +95,7 @@ class Controller{
 
 			}
 
-			$can_minimize = false;
 			extract($this->vars);
-
-			$minimize = false;
-
-			if(isset($_GET['m']) & !empty($_GET['m'])){
-				if($_GET['m'] == true){
-					$minimize = true;
-				}
-			}
 
 			$this->addjs('views/pages/'.get_class($this).'/js/javascript.js');
 			$this->addjs('views/pages/'.get_class($this).'/js/'.$filename.'.js');
@@ -129,11 +119,10 @@ class Controller{
 				echo $content_for_layout;
 			}else{
 				$path = ROOT.'views/layout/'.$this->layout.'/';
-				$m = $minimize & $can_minimize ? '_minimized' : '';
-				if(file_exists($path.$filename.$m.'.php')){
-					require($path.$filename.$m.'.php');
+				if(file_exists($path.$filename.'.php')){
+					require($path.$filename.'.php');
 				}else{
-					require($path.'index'.$m.'.php');
+					require($path.'index'.'.php');
 				}
 			}
 		}else{

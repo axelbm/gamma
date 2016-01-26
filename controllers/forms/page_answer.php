@@ -33,7 +33,6 @@ class form_page_answer extends Form{
 		$bookid = $this->value('book');
 		// $this->result = $id;
 		$_SESSION['previous_page'] = $pageid;
-		$minimized = isset($_GET['m']) & $_GET['m']==true ? true : false;
-		header('Location: '.WEBROOT.'book/view/'.$bookid.'/'.$id. ($minimized ? '?m=true' : '') );
+		header('Location: '.WEBROOT.'book/view/'.$bookid.'/'.$id);
 	}
 }

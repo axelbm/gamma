@@ -4,6 +4,20 @@ class model_member extends Model{
 		$this->setTable('member');
 	}
 
+	public function GetBasic($ids=array()){
+		$data = $this->find(array(
+			'fields' => 'id, username',
+			'conditions' => 'id IN ('.implode(', ', $ids).')'
+		));
+
+		$users = array();
+		foreach ($data as $key => $value) {
+			$users[$value['id']] = $value['username'];
+		}
+		
+		return $users;
+	}
+
 	public function GetByID($id){
 		$data = $this->find(array(
 			'conditions' => 'id='.$id,

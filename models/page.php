@@ -49,5 +49,13 @@ class model_page extends Model{
 			return $data;
 		}
 	}
+
+	public function GetAuthors($book){
+		$data = $this->find(array(
+			'fields' => 'DISTINCT creator',
+			'conditions' => 'book='.$book
+		));
+		return array_map(function($v){return $v['creator'];}, $data);
+	}
 }
 ?>

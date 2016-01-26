@@ -5,7 +5,7 @@
 			<h2>
 				<a href="<?php echo WEBROOT.'book/view/'.$book['id']; ?>"><?php echo $book['title']; ?></a>
 			</h2>
-			<p class="lead">Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']->GetID(); ?>"><?php echo $book['creator']->GetUserName(); ?></a></p>
+			<p class="lead">Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></p>
 			<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book['publication_date']; ?></p>
 		</div>
 		<hr>

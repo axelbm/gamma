@@ -16,10 +16,11 @@
 		body {
 			padding-top: 50px;
 			padding-bottom: 20px;
+			font-size: 16px;
 		}
 		@media (min-width: 768px) {
 			.container {
-				max-width: 730px;
+				max-width: 1000px;
 			}
 		}
 		</style>
@@ -38,9 +39,6 @@
 
 
 				<div id="navbar" class="navbar-collapse collapse">
-
-					<a class="btn btn-primary navbar-btn" role="button" href="<?php echo $_SERVER['REDIRECT_URL']; ?>">Retour</a>
-
 					<ul class="nav navbar-nav navbar-right">
 						<?php if(empty($user)){ ?>
 							<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>

@@ -40,11 +40,7 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 					</span>
 				</div>
 			</form>
-		
-			<?php if($can_minimize){ ?>
-				<a class="btn btn-primary navbar-btn" role="button" href="<?php echo $_SERVER['REDIRECT_URL'].'?m=true'; ?>">Minimiser</a>
-			<?php } ?>
-
+			
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(empty($user)){ ?>
 					<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
