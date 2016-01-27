@@ -3,11 +3,13 @@ class book extends Controller{
 	private $Book;
 	private $Page;
 	private $Answer;
+	private $Link;
 
 	function init(){
 		$this->Book  	= $this->loadModel('book');
 		$this->Page  	= $this->loadModel('page');
 		$this->Answer	= $this->loadModel('answer');
+		$this->Link  	= $this->loadModel('user_book');
 	}
 
 	// function act_index(){
@@ -34,8 +36,12 @@ class book extends Controller{
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
+			$userid = $this->user ? $this->user->GetID() : 0;
+			$link = $this->Link->GetLink($userid, $bookid);
+			
 			$this->Page->GetAuthors($bookid);
 
+			$this->set('link', $link);
 			$this->set('book', $book);
 			$this->render();
 		}else{
@@ -43,43 +49,40 @@ class book extends Controller{
 		}
 	}
 
-	function act_read($bookid=null, $pageid=null){
+	function act_read($bookid=null){
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
-				$this->set(array('can_minimize'=>true));
-				
 				$book = $this->Book->GetByID($bookid);
-
-				if(!isset($book) | empty($book)){
+				if(!isset($book) | empty($book))
 					Controller::weberror('404', 'La livre est introuvable.');
+
+				$link = $this->Link->GetLink($this->user->GetID(), $bookid);
+				$progression = $link['progression'];
+
+				$data = array();
+
+				foreach ($progression as $key => $value) {
+					$page = $this->Page->GetByID($value[1]);
+					$answer = $this->Answer->GetByID($value[1]);
+					array_push($data, array($page, $answer));
 				}
 
-				if(!empty($this->form)){
-					if($this->form->id == 'page_answer' & isset($this->formresult) & !empty($this->formresult) ){
-						$pageid = $this->formresult;
-					}else{
-						$pageid = $pageid?:$book['starting_page'];
-					}
+				if(count($data) == 0){
+					$pageid = $book['starting_page'];
 				}else{
-					$pageid = $pageid?:$book['starting_page'];
+					$pageid = $data[count($data)-1][1]['destination'];
 				}
 
 				$page = $this->Page->GetByID($pageid);
-
-				if(empty($page)){
+				if(empty($page))
 					Controller::weberror('404', 'La page est introuvable.');
-				}
 
 				$answers = $this->Answer->GetByPageID($pageid);
 
-				$this->set('book',   	$book);
-				$this->set('page',   	$page);
-				$this->set('answers',	$answers);
-				
-				if(isset($_SESSION['previous_page']) & !empty($_SESSION['previous_page'])){
-					$this->set('previous_page', $_SESSION['previous_page']);
-				}
-
+				$this->set('previous',	$data);
+				$this->set('book',    	$book);
+				$this->set('page',    	$page);
+				$this->set('answers', 	$answers);
 				
 				$this->render();
 			}else{

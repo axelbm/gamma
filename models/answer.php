@@ -15,6 +15,19 @@ class model_answer extends Model{
 		return $this->save($answer);
 	}
 
+	public function GetByID($id){
+		$data = $this->find(array(
+			'conditions'	=> 'id='.$id,
+			'single'    	=> true
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+			return $data;
+		}
+	}
+
 	public function GetByPageID($id){
 		$data = $this->find(array(
 			'conditions' => 'page='.$id

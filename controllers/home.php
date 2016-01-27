@@ -15,7 +15,6 @@ class home extends Controller{
 		$this->set('books', $data);
 		$this->set('usersname', $usersname);
 		$this->render();
-
 	}
 }
 ?>

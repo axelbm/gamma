@@ -19,11 +19,11 @@
 			
 				<div class="form-group list-group">
 						<?php if(count($answers) == 1){ ?>
-							<input type="hidden" name="answer" value="<?php echo $answers[0]['destination']; ?>">
+							<input type="hidden" name="answer" value="<?php echo $answers[0]['id']; ?>">
 							<label class="list-group-item" style="font-weight:500;"><?php echo $answers[0]['content']; ?></label>
 						<?php }elseif(count($answers) > 1){ ?>
 							<?php foreach ($answers as $i => $answer): ?>
-								<label class="list-group-item" style="font-weight:500;"><input type="radio" name="answer" value="<?php echo $answer['destination']; ?>"> 
+								<label class="list-group-item" style="font-weight:500;"><input type="radio" name="answer" value="<?php echo $answer['id']; ?>"> 
 									<?php echo $answer['content']; ?></label>
 							<?php endforeach ?>
 						<?php } ?>
