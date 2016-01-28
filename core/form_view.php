@@ -79,10 +79,10 @@ class Form_View{
 
 		if(isset($data['error'])){
 			$html .= '>
-			<div class="alert alert-danger" style="padding:8px; margin-top:1px;">
+			<span class="help-block"><span class="text-danger">
 			';
 			$html .= $data['error'] . '
-			</div';
+			</span></span';
 		}
 
 
@@ -133,10 +133,10 @@ class Form_View{
 		';
 
 		if(isset($data['error'])){
-			$html .= '<div class="alert alert-danger" style="padding:8px; margin-top:1px;">
+			$html .= '<span class="help-block"><span class="text-danger">
 			';
 			$html .= $data['error'] . '
-			</div';
+			</span></span>';
 		}
 
 
@@ -196,10 +196,10 @@ class Form_View{
 		';
 
 		if(isset($data['error'])){
-			$html .= '<div class="alert alert-danger" style="padding:8px; margin-top:1px;">
+			$html .= '<span class="help-block"><span class="text-danger">
 			';
 			$html .= $data['error'] . '
-			</div>';
+			</span></span>';
 		}
 
 
@@ -211,6 +211,8 @@ class Form_View{
 	}
 
 	function checkbox($id, $label=''){
+		if(isset($this->data[$id]))
+			$data = $this->data[$id];
 		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 
 		$html = '
@@ -218,6 +220,15 @@ class Form_View{
 			<div class="'.$class.'">
 				<div class="checkbox">
 					<label><input type="checkbox" name="'.$id.'">'.$label.'</label>
+						';
+
+					if(isset($data['error'])){
+						$html .= '<span class="help-block"><span class="text-danger">
+						';
+						$html .= $data['error'] . '
+						</span></span>';
+					}
+					$html .='
 				</div>
 			</div>
 		</div>';

@@ -8,7 +8,6 @@ class model_user_book extends Model{
 		if(!empty($user)){
 			$link = $this->find(array(
 				'conditions'	=> 'user='.$user.' AND book='.$book,
-				'order'     	=> 'user ASC',
 				'single'    	=> true
 			));
 
@@ -23,7 +22,6 @@ class model_user_book extends Model{
 
 				$link = $this->find(array(
 					'conditions'	=> 'user='.$user.' AND book='.$book,
-					'order'     	=> 'user ASC',
 					'single'    	=> true
 				));
 			}
@@ -63,12 +61,8 @@ class model_user_book extends Model{
 	public function AddPage($user, $book, $data){
 		$link = $this->GetLink($user, $book);
 
-
 		array_push($link['progression'], $data);
 		$link['progression'] = json_encode($link['progression']);
-
-		$link['user'] = $user;
-		$link['book'] = $book;
 
 		$this->save($link['id'],$link);
 	}

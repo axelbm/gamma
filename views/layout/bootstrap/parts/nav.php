@@ -15,31 +15,24 @@ $tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
 
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="<?php echo WEBROOT ?>">Nouveauté</a></li>
-				<li><a href="<?php echo WEBROOT ?>">Populaire</a></li>
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">Catégories<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="<?php echo WEBROOT.'book/category/all/'; ?>">Tous</a></li>
-						<li><a href="<?php echo WEBROOT.'book/category/'; ?>">Catégories</a></li>
-						<li class="divider"></li>
-						<?php foreach ($tab as $key => $value): ?>
-							<li><a href="<?php echo WEBROOT.'book/category/'.$value; ?>"><?php echo $value; ?></a></li>
-						<?php endforeach; ?>
-					</ul>
-				</li>
+				<!--
+					<li><a href="<?php echo WEBROOT ?>">Nouveauté</a></li>
+					<li><a href="<?php echo WEBROOT ?>">Populaire</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">Catégories<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="<?php echo WEBROOT.'book/category/all/'; ?>">Tous</a></li>
+							<li><a href="<?php echo WEBROOT.'book/category/'; ?>">Catégories</a></li>
+							<li class="divider"></li>
+							<?php foreach ($tab as $key => $value): ?>
+								<li><a href="<?php echo WEBROOT.'book/category/'.$value; ?>"><?php echo $value; ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</li>
+				-->
 			</ul>
 
-			<form class="navbar-form navbar-left">
-				<div class="form-group input-group">
-					<input type="text" placeholder="Recherche" class="form-control">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-				</div>
-			</form>
+			
 			
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(empty($user)){ ?>

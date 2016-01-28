@@ -6,7 +6,20 @@
 	</div>
 	<hr>
 	<div class="body">
-		<h4><?php echo $page['title'] ?: 'Page '.$page['id']; ?> 
+		<?php foreach ($previous as $key => $data): 
+			$p	= $data[0];
+			$a	= $data[1];?>
+
+			<h4><?php echo $p['title'] ?: ''; ?> 
+			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$p['creator']->GetID(); ?>"><?php echo $p['creator']->GetUserName(); ?></a></small></h4>
+
+			<p><?php echo $p['content']; ?></p>
+			<br>
+			<p><?php echo $a['content']; ?></p>
+			<br>
+		<?php endforeach ?>
+
+		<h4><?php echo $page['title'] ?: ''; ?> 
 		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$page['creator']->GetID(); ?>"><?php echo $page['creator']->GetUserName(); ?></a></small></h4>
 
 		<p><?php echo $page['content']; ?></p>
