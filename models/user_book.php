@@ -38,24 +38,18 @@ class model_user_book extends Model{
 		return $link;
 	}
 
-	public function Follow($user, $book, $tofollow){
-		$data = array(
-			'user'     	=> $user,
-			'book'     	=> $book,
-			'following'	=> $tofollow
-		);
+	public function Follow($user, $book, $tofollow=null){
+		$link = $this->GetLink($user, $book);
 
-		$this->save($data);
+		$link['following'] = $tofollow ?: !$link['following'];
+		$this->save($link['id'],$link);
 	}
 
-	public function Favorite($user, $book, $favorite){
-		$data = array(
-			'user'    	=> $user,
-			'book'    	=> $book,
-			'favorite'	=> $favorite
-		);
+	public function Favorite($user, $book, $favorite=null){
+		$link = $this->GetLink($user, $book);
 
-		$this->save($data);
+		$link['favorite'] = $favorite ?: !$link['favorite'];
+		$this->save($link['id'],$link);
 	}
 
 	public function AddPage($user, $book, $data){

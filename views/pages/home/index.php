@@ -1,7 +1,3 @@
-<?php
-$tab = array('Aventure', 'Action', 'Horreur', 'Sci-Fi');
-?>
-
 <div class="row">
 	<div class="col-sm-8">
 		<?php foreach ($books as $key => $book): ?>
@@ -55,7 +51,7 @@ $tab = array('Aventure', 'Action', 'Horreur', 'Sci-Fi');
 					<li><a href="<?php echo WEBROOT.'book/category/all/'; ?>">Tous</a></li>
 					<li><a href="<?php echo WEBROOT.'book/category/'; ?>">Catégories</a></li>
 					<li class="divider"></li>
-					<?php foreach ($tab as $key => $value): ?>
+					<?php foreach ($categories as $key => $value): ?>
 						<li><a href="<?php echo WEBROOT.'book/category/'.$value; ?>"><?php echo $value; ?></a></li>
 					<?php endforeach; ?>
 				</ul>

@@ -27,8 +27,6 @@
 		<?php if(isset($answers) & !empty($answers)){ ?>
 			<form id="page_answer" role="form" method="post">
 				<input name="formid" type="hidden" value="page_answer">
-				<input name="page" type="hidden" value="<?php echo $page['id']; ?>">
-				<input name="book" type="hidden" value="<?php echo $book['id']; ?>">
 			
 				<div class="form-group list-group">
 						<?php if(count($answers) == 1){ ?>

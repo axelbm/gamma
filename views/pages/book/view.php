@@ -7,10 +7,10 @@
 			<input name="formid" type="hidden" value="book_link">
 			<input name="book" type="hidden" value="<?php echo $book['id']; ?>">
 			<div class="btn-group">
-				<button type="submit" class="btn btn-info <?php echo empty($user)? 'disabled' : ''; ?>" value="follow" name="link"><span class="glyphicon glyphicon-paperclip"></span> 
+				<button type="submit" class="btn btn-info <?php echo empty($user)? 'disabled' : ''; ?>" value="follow" name="action"><span class="glyphicon glyphicon-paperclip"></span> 
 				<?php echo $link['following'] ? 'Se désabonner' : 'S\'abonner' ?>
 				</button>
-				<button type="submit" class="btn btn-danger <?php echo empty($user)? 'disabled' : ''; ?>" value="favorite" name="link"><span class="glyphicon glyphicon-heart"></span> 
+				<button type="submit" class="btn btn-danger <?php echo empty($user)? 'disabled' : ''; ?>" value="favorite" name="action"><span class="glyphicon glyphicon-heart"></span> 
 				<?php echo $link['favorite'] ? 'Retirer des favoris' : 'Ajouté aux favoris' ?>
 				</button>
 			</div>

@@ -4,13 +4,16 @@ class Form{
 	var $data = array();
 	var $isvalid = true;
 	var $success = false;
-	var $varname = '';
+	private $varname = '';
 	var $formfields = array();
 	var $formerror = '';
 	var $formsuccess = '';
 	var $result = '';
+	protected $Controller;
 
-	public function __construct($data=array()){
+	public function __construct($data, $controller){
+		$this->Controller = $controller; 
+
 		if(empty($this->formfields)){
 			foreach ($data as $key => $value) {
 				$this->data[$key] = array();
@@ -130,14 +133,14 @@ class Form{
 
 	}
 
-	static function load($formid, $data){
+	static function load($formid, $data, $controller){
 		$formfile = ROOT.'controllers/forms/'.$formid.'.php';
 
 		if(file_exists($formfile)){
 			$formclass = 'form_'.$formid;
 
 			require($formfile);
-			$form = new $formclass($data);
+			$form = new $formclass($data, $controller);
 			$form->id = $formid;
 			return $form;
 		}else{

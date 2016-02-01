@@ -41,6 +41,21 @@ class Controller{
 		$action = 'act_'.$this->action;
 		if(method_exists($this, $action)){
 			$this->init();
+
+			$formid = isset($_POST['formid']) ? $_POST['formid'] : null ;
+
+			if(isset($formid)){
+				unset($_POST['formid']);
+				
+				$form = Form::load($formid, $_POST, $this);
+
+				if(!empty($form)){
+					$this->form      	= $form;
+					$this->formdata  	= $form->GetData();
+					$this->formresult	= $form->result;
+				}
+			}
+
 			call_user_func_array(array($this, $action), $this->params);
 		}
 		else{

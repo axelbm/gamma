@@ -7,7 +7,11 @@ class Form_View{
 	private $formsuccess;
 	private $inhorizontalform;
 
-	function __construct($formid, $data=array()){
+	function __construct($formid, $data=array(), $horizontal=null){
+		$class = ($horizontal) ? 'form-horizontal' : '' ;
+		$this->inhorizontalform = $horizontal;
+
+		// $html = '<form class="'.$class.' '.$ac.'" id="'. $this->formid .'"" role="form" method="post">
 		if(empty($data)){
 			$lastform = Controller::$self->form;
 
@@ -35,6 +39,10 @@ class Form_View{
 		$this->formid 	= $formid;
 		// $this->data	= $data;
 
+		$html = '<form class="'.$class.'" id="'. $this->formid .'"" role="form" method="post">
+		';
+		echo $html;
+
 		$this->hidden('formid', $formid);
 	}
 
@@ -42,7 +50,8 @@ class Form_View{
 		$html = '<input name="'.$id.'" type="hidden" value="'.$value.'">
 		';
 
-		array_push($this->inputs, $html);		
+		// array_push($this->inputs, $html);		
+		echo $html;
 	}
 
 	function input($id, $value=null, $label=null, $type='text', $attributes=array()){
@@ -91,7 +100,8 @@ class Form_View{
 		</div>
 		';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function textarea($id, $value=null, $label=null, $attributes=array()){
@@ -144,7 +154,8 @@ class Form_View{
 		</div>
 		';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function select($id, $values=array(), $label=null, $value='', $attributes=array()){
@@ -207,7 +218,8 @@ class Form_View{
 		</div>
 		';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function checkbox($id, $label=''){
@@ -233,7 +245,8 @@ class Form_View{
 			</div>
 		</div>';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function submit($value,$style='default'){
@@ -246,7 +259,8 @@ class Form_View{
 			</div>
 		</div>';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function label($text, $h=null){
@@ -260,14 +274,17 @@ class Form_View{
 			</div>
 		</div>';
 
-		array_push($this->inputs, $html);
+		// array_push($this->inputs, $html);
+		echo $html;
 	}
 
 	function done($ac=''){
-		$class = ($this->inhorizontalform) ? 'form-horizontal' : '' ;
+		// $class = ($this->inhorizontalform) ? 'form-horizontal' : '' ;
 
-		$html = '<form class="'.$class.' '.$ac.'" id="'. $this->formid .'"" role="form" method="post">
-		';
+		// $html = '<form class="'.$class.' '.$ac.'" id="'. $this->formid .'"" role="form" method="post">
+		// ';
+
+		$html = '';
 
 		if(!empty($this->formerror)){
 			$html .= '<div class="alert alert-danger" style="padding:8px; margin-top:1px;">

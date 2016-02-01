@@ -47,19 +47,6 @@ $Controller = Controller::preload($controller, $action, $params, $data);
 // }
 
 
-$formid = isset($_POST['formid']) ? $_POST['formid'] : null ;
-unset($_POST['formid']);
-
-
-if(isset($formid)){
-	$form = Form::load($formid, $_POST);
-
-	if(!empty($form)){
-		$Controller->form      	= $form;
-		$Controller->formdata  	= $form->GetData();
-		$Controller->formresult	= $form->result;
-	}
-}
 
 $Controller->run();
 ?>

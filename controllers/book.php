@@ -1,5 +1,6 @@
 <?php
 class book extends Controller{
+	public $book;
 	private $Book;
 	private $Page;
 	private $Answer;
@@ -10,6 +11,8 @@ class book extends Controller{
 		$this->Page  	= $this->loadModel('page');
 		$this->Answer	= $this->loadModel('answer');
 		$this->Link  	= $this->loadModel('user_book');
+
+		$this->book = $this->Book->GetByID($this->params[2]);
 	}
 
 	// function act_index(){
@@ -30,9 +33,7 @@ class book extends Controller{
 
 	function act_view($bookid=null){
 		if(isset($bookid) & !empty($bookid)){
-			$book = $this->Book->GetByID($bookid);
-
-			if(!isset($book) | empty($book)){
+			if(!isset($this->book) | empty($this->book)){
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
@@ -42,7 +43,7 @@ class book extends Controller{
 			$this->Page->GetAuthors($bookid);
 
 			$this->set('link', $link);
-			$this->set('book', $book);
+			$this->set('book', $this->book);
 			$this->render();
 		}else{
 			$this->noaction();
@@ -52,8 +53,7 @@ class book extends Controller{
 	function act_read($bookid=null){
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
-				$book = $this->Book->GetByID($bookid);
-				if(!isset($book) | empty($book))
+				if(!isset($this->book) | empty($this->book))
 					Controller::weberror('404', 'La livre est introuvable.');
 
 				$link = $this->Link->GetLink($this->user->GetID(), $bookid);
@@ -62,13 +62,13 @@ class book extends Controller{
 				$data = array();
 
 				foreach ($progression as $key => $value) {
-					$page = $this->Page->GetByID($value[1]);
+					$page = $this->Page->GetByID($value[0]);
 					$answer = $this->Answer->GetByID($value[1]);
 					array_push($data, array($page, $answer));
 				}
 
 				if(count($data) == 0){
-					$pageid = $book['starting_page'];
+					$pageid = $this->book['starting_page'];
 				}else{
 					$pageid = $data[count($data)-1][1]['destination'];
 				}
@@ -80,7 +80,7 @@ class book extends Controller{
 				$answers = $this->Answer->GetByPageID($pageid);
 
 				$this->set('previous',	$data);
-				$this->set('book',    	$book);
+				$this->set('book',    	$this->book);
 				$this->set('page',    	$page);
 				$this->set('answers', 	$answers);
 				
@@ -99,6 +99,10 @@ class book extends Controller{
 
 	function act_create(){
 		if($this->user){
+			$Categories = $this->loadModel('categories');
+			$categories = $Categories->GetAll('FR');
+
+			$this->set('categories', $categories);
 			$this->render();
 		}else{
 			Controller::weberror('500', 'Vous devez vous cconnecter pour acceder à cette page.');

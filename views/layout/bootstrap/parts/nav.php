@@ -1,6 +1,3 @@
-<?php
-$tab = array('Aventure', 'Action', 'Horeure', 'Sci-Fi');
-?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
