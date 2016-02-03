@@ -1,5 +1,6 @@
 <?php
 class Model{
+	protected $Controller;
 	protected $table;
 	static $tablesname;
 	static $_instance = array();
@@ -20,6 +21,10 @@ class Model{
 			$req = $Database->query($sql);
 			$this->tablecolumns = array_column($req->fetchAll(), 0);
 		}
+	}
+
+	public function SetController($controller){
+		$this->Controller = $controller;
 	}
 
 	public function read($id, $fields=null){

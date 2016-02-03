@@ -24,9 +24,6 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller     	= Controller::$self;
-			$Member         	= $Controller->loadModel('member');
-			$data['creator']	= $Member->GetByID($data['creator']);
 			return $data;
 		}
 	}
@@ -39,13 +36,6 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller	= Controller::$self;
-			$Member    	= $Controller->loadModel('member');
-
-			foreach ($data as $id => $answer) {
-				$data[$id]['creator'] = $Member->GetByID($data[$id]['creator']);
-			}
-
 			return $data;
 		}
 	}

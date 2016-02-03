@@ -1,7 +1,7 @@
 <div>
 	<div class="heading">
 		<h1 class=""><?php echo $book['title']; ?> 
-		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']->GetID(); ?>"><?php echo $book['creator']->GetUserName(); ?></a></small></h1>
+		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></small></h1>
 		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book['publication_date']; ?></p>
 	</div>
 	<hr>
@@ -11,7 +11,7 @@
 			$a	= $data[1];?>
 
 			<h4><?php echo $p['title'] ?: ''; ?> 
-			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$p['creator']->GetID(); ?>"><?php echo $p['creator']->GetUserName(); ?></a></small></h4>
+			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$p['creator']; ?>"><?php echo $usersname[$p['creator']]; ?></a></small></h4>
 
 			<p><?php echo $p['content']; ?></p>
 			<br>
@@ -20,7 +20,7 @@
 		<?php endforeach ?>
 
 		<h4><?php echo $page['title'] ?: ''; ?> 
-		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$page['creator']->GetID(); ?>"><?php echo $page['creator']->GetUserName(); ?></a></small></h4>
+		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$page['creator']; ?>"><?php echo $usersname[$page['creator']]; ?></a></small></h4>
 
 		<p><?php echo $page['content']; ?></p>
 		<br>

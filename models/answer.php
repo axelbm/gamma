@@ -36,12 +36,6 @@ class model_answer extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller	= Controller::$self;
-			$Member    	= $Controller->loadModel('member');
-
-			foreach ($data as $id => $answer) {
-				$data[$id]['creator'] = $Member->GetByID($data[$id]['creator']);
-			}
 
 			return $data;
 		}

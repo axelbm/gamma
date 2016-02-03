@@ -13,9 +13,6 @@ class model_book extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
-			$data['creator'] = $Member->GetByID($data['creator']);
 			return $data;
 		}
 	}

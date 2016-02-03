@@ -38,26 +38,30 @@ class model_user_book extends Model{
 		return $link;
 	}
 
+	public function SaveLink($link){
+		$link['progression'] = json_encode($link['progression']);
+		$this->save($link['id'],$link);
+	}
+
 	public function Follow($user, $book, $tofollow=null){
 		$link = $this->GetLink($user, $book);
-
+		
 		$link['following'] = $tofollow ?: !$link['following'];
-		$this->save($link['id'],$link);
+		$this->SaveLink($link);
 	}
 
 	public function Favorite($user, $book, $favorite=null){
 		$link = $this->GetLink($user, $book);
 
 		$link['favorite'] = $favorite ?: !$link['favorite'];
-		$this->save($link['id'],$link);
+		$this->SaveLink($link);
 	}
 
 	public function AddPage($user, $book, $data){
 		$link = $this->GetLink($user, $book);
 
 		array_push($link['progression'], $data);
-		$link['progression'] = json_encode($link['progression']);
 
-		$this->save($link['id'],$link);
+		$this->SaveLink($link);
 	}
 }

@@ -19,7 +19,7 @@ class form_book_link extends Form{
 
 	function success(){
 		$action = $this->value('action');
-
+		
 		if($action == 'follow'){
 			$this->Link->Follow($this->user->GetID(), $this->book['id']);
 		}elseif($action == 'favorite'){
@@ -28,7 +28,7 @@ class form_book_link extends Form{
 			$this->fail();
 		}
 
-		// header("Location: " . $_SERVER['REQUEST_URI']);
-		// exit();
+		header("Location: " . $_SERVER['REQUEST_URI']);
+		exit();
 	}
 }

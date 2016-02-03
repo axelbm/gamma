@@ -156,6 +156,7 @@ class Controller{
 		if(file_exists($file)){
 			require_once($file);
 			$class = Model::Get('model_'.strtolower($name));
+			$class->SetController($this);
 			return $class;
 		}else{
 			Controller::weberror('404', 'Le model demandé n\'existe pas.');

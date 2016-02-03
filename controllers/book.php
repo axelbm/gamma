@@ -5,12 +5,14 @@ class book extends Controller{
 	private $Page;
 	private $Answer;
 	private $Link;
+	private $Member;
 
 	function init(){
 		$this->Book  	= $this->loadModel('book');
 		$this->Page  	= $this->loadModel('page');
 		$this->Answer	= $this->loadModel('answer');
 		$this->Link  	= $this->loadModel('user_book');
+		$this->Member	= $this->loadModel('member');
 
 		$this->book = $this->Book->GetByID($this->params[2]);
 	}
@@ -40,10 +42,14 @@ class book extends Controller{
 			$userid = $this->user ? $this->user->GetID() : 0;
 			$link = $this->Link->GetLink($userid, $bookid);
 			
-			$this->Page->GetAuthors($bookid);
+			$contributor = $this->Page->GetAuthors($bookid);
 
-			$this->set('link', $link);
-			$this->set('book', $this->book);
+			$usersname	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
+
+			$this->set('link',       	$link);
+			$this->set('book',       	$this->book);
+			$this->set('contributor',	$contributor);
+			$this->set('usersname',  	$usersname);
 			$this->render();
 		}else{
 			$this->noaction();
@@ -60,10 +66,13 @@ class book extends Controller{
 				$progression = $link['progression'];
 
 				$data = array();
+				$u = array();
 
 				foreach ($progression as $key => $value) {
 					$page = $this->Page->GetByID($value[0]);
 					$answer = $this->Answer->GetByID($value[1]);
+					array_push($u, $page['creator']);
+					array_push($u, $answer['creator']);
 					array_push($data, array($page, $answer));
 				}
 
@@ -79,10 +88,16 @@ class book extends Controller{
 
 				$answers = $this->Answer->GetByPageID($pageid);
 
-				$this->set('previous',	$data);
-				$this->set('book',    	$this->book);
-				$this->set('page',    	$page);
-				$this->set('answers', 	$answers);
+				array_push($u, $this->book['creator']);
+				array_push($u, $page['creator']);
+
+				$usersname	= $this->Member->GetBasic($u);
+
+				$this->set('previous', 	$data);
+				$this->set('book',     	$this->book);
+				$this->set('page',     	$page);
+				$this->set('answers',  	$answers);
+				$this->set('usersname',	$usersname);
 				
 				$this->render();
 			}else{

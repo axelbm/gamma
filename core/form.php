@@ -1,23 +1,23 @@
 <?php
 class Form{
-	var $id;
-	var $data = array();
-	var $isvalid = true;
-	var $success = false;
-	private $varname = '';
-	var $formfields = array();
-	var $formerror = '';
-	var $formsuccess = '';
-	var $result = '';
 	protected $Controller;
+	protected $varname;
+	var $id;
+	var $data       	= array();
+	var $isvalid    	= true;
+	var $success    	= false;
+	var $formfields 	= array();
+	var $formerror  	= '';
+	var $formsuccess	= '';
+	var $result     	= '';
 
 	public function __construct($data, $controller){
 		$this->Controller = $controller; 
 
 		if(empty($this->formfields)){
 			foreach ($data as $key => $value) {
-				$this->data[$key] = array();
-				$this->data[$key]['value'] = $value;
+				$this->data[$key]         	= array();
+				$this->data[$key]['value']	= $value;
 			}
 		}else{
 			foreach ($this->formfields as $key) {
