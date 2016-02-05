@@ -46,6 +46,7 @@ class book extends Controller{
 
 			$usersname	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
 
+			$this->set('pagescount', 	65);
 			$this->set('link',       	$link);
 			$this->set('book',       	$this->book);
 			$this->set('contributor',	$contributor);

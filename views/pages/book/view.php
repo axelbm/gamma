@@ -30,6 +30,9 @@
 		<div >
 
 			<div class="list-group">
+				<p href="#" class="list-group-item">
+					<span class="text-primary">Nombre de pages</span>: <?php echo $pagescount; ?>
+				</p>
 				<a href="#" class="list-group-item">
 					<span class="text-primary">Langue</span>: <?php echo 'Français'; ?>
 				</a>
