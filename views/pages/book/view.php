@@ -6,14 +6,14 @@
 			<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book['publication_date']; ?></p>
 			
 			<form id="book_link" class="form-inline" role="form" method="post">
-				<input name="formid" type="hidden" value="book_link">
-				<input name="book" type="hidden" value="<?php echo $book['id']; ?>">
-				<div class="btn-group">
+				<input name="formid" type="hidden" value="book_action">
 					<button type="submit" class="btn btn-info <?php echo empty($user)? 'disabled' : ''; ?>" value="follow" name="action"><span class="glyphicon glyphicon-paperclip"></span> 
 						<?php echo $link['following'] ? 'Se désabonner' : 'S\'abonner' ?>
 					</button>
-					<button type="submit" class="btn btn-danger <?php echo empty($user)? 'disabled' : ''; ?>" value="favorite" name="action"><span class="glyphicon glyphicon-heart"></span> 
-						<?php echo $link['favorite'] ? 'Retirer des favoris' : 'Ajouté aux favoris' ?>
+				<div class="btn-group">
+					<button type="submit" class="btn btn-<?php echo $link['dislike'] ? 'danger' : 'default'; ?> <?php echo empty($user)? 'disabled' : ''; ?>" value="dislike" name="action"><span class="glyphicon glyphicon-thumbs-down"></span>
+					</button>
+					<button type="submit" class="btn btn-<?php echo $link['like'] ? 'success' : 'default'; ?> <?php echo empty($user)? 'disabled' : ''; ?>" value="like" name="action"><span class="glyphicon glyphicon-thumbs-up"></span>
 					</button>
 				</div>
 			</form>
@@ -23,13 +23,25 @@
 			<p><?php echo $book['description']; ?></p>
 			<hr>
 			<a class="btn btn-primary <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/read/'.$book['id']; ?>">Commencer à lire <span class="glyphicon glyphicon-chevron-right"></span></a>
+			<br>
+			<br>
 		</div>
 	</div>
 
 	<div class="col-sm-4">
 		<div >
-
 			<div class="list-group">
+				<a class="list-group-item" data-toggle="tooltip" title="<?php echo $stats['rate'].'% des '.$stats['total'].' notes sont positives.'; ?>">
+					<span class="text-primary">Note</span>: 
+					<span style="color:#FFB300;">
+					<?php for ($i=0; $i < $stats['stars']; $i++): ?>
+						<span class="glyphicon glyphicon-star"></span>
+					<?php endfor;
+					for ($i=0; $i < 5-$stats['stars']; $i++):?>
+						<span class="glyphicon glyphicon-star-empty"></span>
+					<?php endfor ?>
+					</span>
+				</a>
 				<p href="#" class="list-group-item">
 					<span class="text-primary">Nombre de pages</span>: <?php echo $pagescount; ?>
 				</p>
@@ -49,3 +61,9 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>

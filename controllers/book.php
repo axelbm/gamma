@@ -40,14 +40,18 @@ class book extends Controller{
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
-			$userid = $this->user ? $this->user->GetID() : 0;
-			$link = $this->Link->GetLink($userid, $bookid);
+			$userid	= $this->user ? $this->user->GetID() : 0;
+			$link  	= $this->Link->GetLink($userid, $bookid);
 			
-			$contributor = $this->Page->GetAuthors($bookid);
+			$contributor   	= $this->Page->GetAuthors($bookid);
+			$usersname     	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
+			$pagecount     	= $this->Page->Count($bookid);
+			$stats         	= $this->Link->GetStats($bookid);
+			$stats['rate'] 	= round($stats['likerate']*100, 2);
+			$stats['stars']	= round($stats['likerate']*5);
 
-			$usersname	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
-
-			$this->set('pagescount', 	65);
+			$this->set('stats',      	$stats);
+			$this->set('pagescount', 	$pagecount);
 			$this->set('link',       	$link);
 			$this->set('book',       	$this->book);
 			$this->set('contributor',	$contributor);

@@ -28,7 +28,8 @@ class model_user_book extends Model{
 		}else{
 			$link = array(
 				'following'  	=> 0,
-				'favorite'   	=> 0,
+				'like'       	=> 0,
+				'dislike'    	=> 0,
 				'progression'	=> '[]'
 			);
 		}
@@ -50,10 +51,19 @@ class model_user_book extends Model{
 		$this->SaveLink($link);
 	}
 
-	public function Favorite($user, $book, $favorite=null){
+	public function Like($user, $book, $like=null){
 		$link = $this->GetLink($user, $book);
 
-		$link['favorite'] = $favorite ?: !$link['favorite'];
+		$link['like']   	= $like ?: !$link['like'];
+		$link['dislike']	= false;
+		$this->SaveLink($link);
+	}
+
+	public function Dislike($user, $book, $dislike=null){
+		$link = $this->GetLink($user, $book);
+
+		$link['like']   	= false;
+		$link['dislike']	= $dislike ?: !$link['dislike'];
 		$this->SaveLink($link);
 	}
 
@@ -61,6 +71,34 @@ class model_user_book extends Model{
 		$link = $this->GetLink($user, $book);
 
 		array_push($link['progression'], $data);
+
+		$this->SaveLink($link);
+	}
+
+	public function GetStats($book){
+		$table	= $this->table;
+		$sql  	= "SELECT SUM(`like`) AS `like`, SUM(`dislike`) AS `dislike`, COUNT(`user`) AS `view`, SUM(`following`) AS `following` FROM $table WHERE `book`='$book'";
+		$data 	= $this->run($sql);
+
+		$data['total'] = $data['like'] + $data['dislike'];
+
+		if($data['like'] > 0)
+			$data['likerate'] = $data['like'] / ($data['like'] + $data['dislike']);
+		else
+			$data['likerate'] = 0;
+
+		if($data['dislike'] > 0)
+			$data['dislikerate'] = $data['dislike'] / ($data['like'] + $data['dislike']);
+		else
+			$data['dislikerate'] = 0;
+
+		return $data;
+	}
+
+	public function RemoveProgression($user, $book){
+		$link = $this->GetLink($user, $book);
+
+		$link['progression'] = array();
 
 		$this->SaveLink($link);
 	}

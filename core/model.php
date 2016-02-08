@@ -26,6 +26,13 @@ class Model{
 	public function SetController($controller){
 		$this->Controller = $controller;
 	}
+	
+	public function run($sql){
+		global $Database;
+		$req = $Database->query($sql);
+		$data = $req->fetch(PDO::FETCH_ASSOC);
+		return $data;
+	}
 
 	public function read($id, $fields=null){
 		return self::_read($this->table, $id, $fields);
@@ -109,14 +116,14 @@ class Model{
 			if(isset($id) and !empty($id)){
 				$sql = "UPDATE $table SET";
 				foreach ($data as $key => $value) {
-					$sql .= " $key = '$value',";
+					$sql .= " `$key` = '$value',";
 				}
 				$sql = substr($sql, 0, -1);
 				$sql .= " WHERE id=$id";
 			}else{
 				$sql = "INSERT INTO ".$table." (";
 				foreach ($data as $key => $value) {
-					$sql .= "$key, ";
+					$sql .= "`$key`, ";
 				}
 				$sql = substr($sql, 0, -2);
 				$sql .= ") VALUES (";

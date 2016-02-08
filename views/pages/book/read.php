@@ -3,6 +3,15 @@
 		<h1 class=""><?php echo $book['title']; ?> 
 		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></small></h1>
 		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book['publication_date']; ?></p>
+		<div>
+
+			<form id="book_link" class="form-inline" role="form" method="post">
+				<input name="formid" type="hidden" value="book_action">
+
+				<a class="btn btn-default btn-sm" href="<?php echo WEBROOT.'book/view/'.$book['id']; ?>">Retour</a>
+				<button type="submit" class="btn btn-default btn-sm" value="restart" name="action">Recommencer</button>
+			</form>
+		</div>
 	</div>
 	<hr>
 	<div class="body">
@@ -10,7 +19,7 @@
 			$p	= $data[0];
 			$a	= $data[1];?>
 
-			<h4><?php echo $p['title'] ?: ''; ?> 
+			<h4><?php echo $p['title'] ?: 'Page '.$p['id']; ?> 
 			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$p['creator']; ?>"><?php echo $usersname[$p['creator']]; ?></a></small></h4>
 
 			<p><?php echo $p['content']; ?></p>

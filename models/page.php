@@ -40,6 +40,11 @@ class model_page extends Model{
 		}
 	}
 
+	public function Count($id){
+		$sql = "SELECT COUNT(id) AS count FROM ".$this->table." WHERE book=".$id;
+		return $this->run($sql)['count'];
+	}
+
 	public function GetAuthors($book){
 		$data = $this->find(array(
 			'fields' => 'DISTINCT creator',

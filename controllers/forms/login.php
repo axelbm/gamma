@@ -56,7 +56,8 @@ class form_login extends Form{
 				if($account->GetPassword() == $password){
 					$Controller = Controller::$self;
 					$Controller->UserLogin($account);
-					header('Location: ');
+					header("Location: " . $_SERVER['REQUEST_URI']);
+					exit;
 				}
 			}
 		}

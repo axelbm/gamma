@@ -63,13 +63,6 @@ class user extends Controller{
 
 	}
 
-	function act_login(){
-		if($this->user)
-			Controller::weberror('404', 'La page est invalide.');
-
-		$this->render();
-	}
-
 	function act_logout(){
 		unset($_SESSION['user_id']);
 		header('Location: '.WEBROOT);

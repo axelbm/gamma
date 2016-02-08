@@ -1,5 +1,5 @@
 <?php
-class form_book_link extends Form{
+class form_book_action extends Form{
 	var $formfields = array('action');
 	private $Link;
 	private $user;
@@ -14,7 +14,13 @@ class form_book_link extends Form{
 		}else{
 			$this->formerror('L\'utilisateur est introuvable.');
 			$this->fail();
+			exit;
 		}
+	}
+
+	function fail(){
+		header("Location: " . $_SERVER['REQUEST_URI']);
+		exit;
 	}
 
 	function success(){
@@ -22,9 +28,17 @@ class form_book_link extends Form{
 		
 		if($action == 'follow'){
 			$this->Link->Follow($this->user->GetID(), $this->book['id']);
-		}elseif($action == 'favorite'){
-			$this->Link->Favorite($this->user->GetID(), $this->book['id']);
-		}else{
+		}
+		elseif($action == 'like'){
+			$this->Link->Like($this->user->GetID(), $this->book['id']);
+		}
+		elseif($action == 'dislike'){
+			$this->Link->Dislike($this->user->GetID(), $this->book['id']);
+		}
+		elseif($action == 'restart'){
+			$this->Link->RemoveProgression($this->user->GetID(), $this->book['id']);
+		}
+		else{
 			$this->fail();
 		}
 
