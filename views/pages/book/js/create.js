@@ -8,6 +8,7 @@ $(document).ready(function(){
 			return obj;
 		}, {});
 
+		console.log(form.group);
 		if(form.group){
 			$('#group_coll').collapse("show");
 		}else{

@@ -4,8 +4,7 @@ class form_edit_profil extends Form{
 	var $user;
 
 	function init(){
-		$Controller = Controller::$self;
-		$user = $Controller->user;
+		$user = $this->Controller->user;
 
 		if(!empty($user)){
 			$this->user = $user;

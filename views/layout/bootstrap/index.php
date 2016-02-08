@@ -50,6 +50,7 @@
 					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</div>
 			</div>
+			-->
 			<hr>
 			<div>
 				<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
@@ -67,7 +68,6 @@
 					</div>
 				</div>
 			</div> 
-			-->
 		</div>
 		<?php foreach ($jsfiles as $key => $jsfile): ?>
 			<script src="<?php echo ($jsfile); ?>"></script>

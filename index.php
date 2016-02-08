@@ -34,10 +34,8 @@ $controller	= $params[0];
 $action    	= isset($params[1]) ? $params[1] : null ;
 unset($params[0]); unset($params[1]);
 
-$data        	= array();
-$data['post']	= $_POST;
 
-$Controller = Controller::preload($controller, $action, $params, $data);
+$Controller = Controller::preload($controller, $action, $params);
 
 
 // if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){

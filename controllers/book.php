@@ -14,7 +14,8 @@ class book extends Controller{
 		$this->Link  	= $this->loadModel('user_book');
 		$this->Member	= $this->loadModel('member');
 
-		$this->book = $this->Book->GetByID($this->params[2]);
+		if(isset($this->params[2]) & !empty($this->params[2]))
+			$this->book = $this->Book->GetByID($this->params[2]);
 	}
 
 	// function act_index(){

@@ -7,12 +7,10 @@ class Controller{
 	var $data = array();
 	var $user = null;
 	var $form = null;
-	var $formdata = null;
 	var $title;
 	var $error;
 	var $js = array();
 	var $jsvars = array();
-	var $userid = 0;
 
 	static $self;
 	static $controllername = '';
@@ -51,7 +49,6 @@ class Controller{
 
 				if(!empty($form)){
 					$this->form      	= $form;
-					$this->formdata  	= $form->GetData();
 					$this->formresult	= $form->result;
 				}
 			}

@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<?php
-				$form = new Form_View('delete_account');
+				$form = new Form_View('delete_account', array(), true);
 				$form->hidden('id', $user->GetID());
 				$form->input('pwd', '', 'Mot de passe:', 'password');
 				$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
@@ -36,7 +36,7 @@
 				$data = array('username' => $user->GetUsername(), 'country' => $user->GetCountry(), 'birtdate' => $user->GetBirtdate());
 				//ssdccxxsdf - Julie
 
-				$form = new Form_View('edit_profil', $data);
+				$form = new Form_View('edit_profil', $data, true);
 				$form->horizontal();
 				$form->label('Profil', 3);
 				$form->input('username', '', 'Nom', 'text');
@@ -47,7 +47,7 @@
 				?>
 				<hr>
 				<?php
-				$form = new Form_View('change_pwd');
+				$form = new Form_View('change_pwd', array(), true);
 				$form->horizontal();
 				$form->label('Changement de mot de passe', 3);
 				$form->input('pwd', '', 'Mot de passe', 'password');
@@ -62,7 +62,7 @@
 				$language_list = array('FR' => 'Français', 'EN' => 'English');
 				$style_list = array('default' => 'Défaut');
 				
-				$form = new Form_View('user_setting', $data);
+				$form = new Form_View('user_setting', $data, true);
 				$form->horizontal();
 				$form->label('Parametre', 3);
 				$form->select('language', $language_list, 'Langage');

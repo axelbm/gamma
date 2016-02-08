@@ -2,11 +2,11 @@
 class Form{
 	protected $Controller;
 	protected $varname;
+	protected $formfields;
 	var $id;
 	var $data       	= array();
 	var $isvalid    	= true;
 	var $success    	= false;
-	var $formfields 	= array();
 	var $formerror  	= '';
 	var $formsuccess	= '';
 	var $result     	= '';
@@ -36,16 +36,28 @@ class Form{
 		$this->init();
 
 		foreach ($this->data as $key => $value) {
-			$value = $value['value'];
-			$method = 'check_'.$key;
-			$feedback = false;
 			$this->varname = $key;
+			$value = $value['value'];
+			$a = array();
+			$keys = explode('_', $key);
+			
 
-			if(method_exists($this, $method)){
-				$feedback = $this->$method($value);
-			}else{
-				$feedback = $this->varcheck($value);
+			for ($i=count($keys); $i > 0; $i--) { 
+				$k = implode('_', array_slice($keys, 0, $i));
+				$m = 'check_'.$k;
+
+				if(method_exists($this, $m)){
+					$method = $m;
+					$a = array_slice($keys, $i, count($keys));
+					break;
+				}else{
+					$method = 'varcheck';
+					$a = array($keys);
+				}
 			}
+
+			array_unshift($a, $value);
+			$feedback = call_user_func_array(array($this, $method), $a);
 
 			if($feedback == false){
 				$this->isvalid = false;

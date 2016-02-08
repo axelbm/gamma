@@ -158,7 +158,7 @@ class Form_View{
 		echo $html;
 	}
 
-	function select($id, $values=array(), $label=null, $value='', $attributes=array()){
+	function select($id, $values=array(), $label=null, $preset=null,$value='', $attributes=array()){
 		if(isset($this->data[$id]))
 			$data = $this->data[$id];
 
@@ -192,10 +192,14 @@ class Form_View{
 			$val = $value;
 		}
 
+		if(isset($preset) & !empty($preset)){
+			$html .= '<option value="">'.$preset.'</option>
+			';
+		}
 
 		foreach ($values as $key => $value) {
 			$s = '';
-			if($val == $key)
+			if(isset($val) & $val == $key)
 				$s = ' selected="selected"';
 
 			$html .= '<option value="'.$key.'" '.$s.'>'.$value.'</option>
@@ -222,16 +226,20 @@ class Form_View{
 		echo $html;
 	}
 
-	function checkbox($id, $label=''){
+	function checkbox($id, $label='', $checked=null){
 		if(isset($this->data[$id]))
 			$data = $this->data[$id];
+
+		if(isset($data['value']))
+			$checked = true;
+		
 		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
 
 		$html = '
 		<div class="form-group">
 			<div class="'.$class.'">
 				<div class="checkbox">
-					<label><input type="checkbox" name="'.$id.'">'.$label.'</label>
+					<label><input type="checkbox" name="'.$id.'" value="true" '.($checked?'checked':'').'>'.$label.'</label>
 						';
 
 					if(isset($data['error'])){

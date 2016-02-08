@@ -6,14 +6,14 @@ class model_categories extends Model{
 
 	public function GetAll($lang){
 		$data = $this->find(array(
-			'fields' => $lang
+			'fields' => "id, $lang"
 		));
-
+		$d = array();
 		foreach ($data as $key => $value) {
-			$data[$key] = $value[$lang];
+			$d[$value['id']] = $value[$lang];
 		}
 
-		return $data;
+		return $d;
 	}
 }
 ?>
