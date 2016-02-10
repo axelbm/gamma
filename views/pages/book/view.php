@@ -21,44 +21,49 @@
 		<hr>
 		<div class="body">
 			<p><?php echo $book['description']; ?></p>
+			<?php if($pagescount){ ?>
 			<hr>
-			<a class="btn btn-primary <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/read/'.$book['id']; ?>">Commencer à lire <span class="glyphicon glyphicon-chevron-right"></span></a>
+			<a class="btn btn-primary <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/read/'.$book['id']; ?>">
+				<?php echo empty($link['progression']) ? 'Commencer à lire' : 'Continuer'; ?> 
+				<span class="glyphicon glyphicon-chevron-right"></span></a>
 			<br>
 			<br>
+			<?php } ?>
 		</div>
 	</div>
 
 	<div class="col-sm-4">
-		<div >
-			<div class="list-group">
-				<a class="list-group-item" data-toggle="tooltip" title="<?php echo $stats['rate'].'% des '.$stats['total'].' notes sont positives.'; ?>">
-					<span class="text-primary">Note</span>: 
-					<span style="color:#FFB300;">
-					<?php for ($i=0; $i < $stats['stars']; $i++): ?>
-						<span class="glyphicon glyphicon-star"></span>
-					<?php endfor;
-					for ($i=0; $i < 5-$stats['stars']; $i++):?>
-						<span class="glyphicon glyphicon-star-empty"></span>
-					<?php endfor ?>
-					</span>
-				</a>
-				<p href="#" class="list-group-item">
-					<span class="text-primary">Nombre de pages</span>: <?php echo $pagescount; ?>
-				</p>
-				<a href="#" class="list-group-item">
-					<span class="text-primary">Langue</span>: <?php echo 'Français'; ?>
-				</a>
-				<a href="#" class="list-group-item">
-					<span class="text-primary">Categorie</span>: <?php echo 'Action'; ?>
-				</a>
-				<div class="list-group-item">
-					<span class="text-primary">Contributeur</span>: 
-					<?php foreach ($contributor as $key => $member): ?>
-						<a role="button" class="btn btn-primary btn-xs" href="<?php echo WEBROOT.'user/profil/'.$member; ?>"><?php echo $usersname[$member]; ?></a>
-					<?php endforeach ?>
-				</div>
+		<div class="list-group">
+			<a class="list-group-item" data-toggle="tooltip" title="<?php echo $stats['rate'].'% des '.$stats['total'].' notes sont positives.'; ?>">
+				<span class="text-primary">Note</span>: 
+				<span style="color:#FFB300;">
+				<?php for ($i=0; $i < $stats['stars']; $i++): ?>
+					<span class="glyphicon glyphicon-star"></span>
+				<?php endfor;
+				for ($i=0; $i < 5-$stats['stars']; $i++):?>
+					<span class="glyphicon glyphicon-star-empty"></span>
+				<?php endfor ?>
+				</span>
+			</a>
+			<p href="#" class="list-group-item">
+				<span class="text-primary">Nombre de pages</span>: <?php echo $pagescount; ?>
+			</p>
+			<a href="#" class="list-group-item">
+				<span class="text-primary">Langue</span>: <?php echo 'Français'; ?>
+			</a>
+			<a href="#" class="list-group-item">
+				<span class="text-primary">Categorie</span>: <?php echo $book_category; ?>
+			</a>
+			<div class="list-group-item">
+				<span class="text-primary">Contributeur</span>: 
+				<?php foreach ($contributor as $key => $member): ?>
+					<a role="button" class="btn btn-primary btn-xs" href="<?php echo WEBROOT.'user/profil/'.$member; ?>"><?php echo $usersname[$member]; ?></a>
+				<?php endforeach ?>
 			</div>
 		</div>
+
+		<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/edit/'.$book['id']; ?>">
+			<span class="glyphicon glyphicon-plus-sign"></span> Éditer ce livre</a>
 	</div>
 </div>
 

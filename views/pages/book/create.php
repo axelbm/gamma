@@ -5,7 +5,7 @@
 	</div>
 
 	<?php
-	$language	= array('FR' => 'Français', 'EN' => 'Anglais');
+	$language	= array('FR' => 'Français', 'EN' => 'Anglais', 'LT' => 'Latin');
 	$perm    	= array('Aucune', 'Lire', 'Lire et écrire', 'Lire, écrire et modifier');
 
 	$form = new Form_View('create_book', array(), true);
@@ -20,6 +20,16 @@
 		</div>
 	</div>
 	<div id="permission_coll" class="collapse">
+
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<div class="alert alert-info">
+					<p>
+						Les permissions restreignent l'accès aux utilisateurs.
+					</p>
+				</div>
+			</div>
+		</div>
 		<?php
 		$form->select('perm_all', $perm, 'Tout le monde', null,1);
 		$form->select('perm_members', $perm, 'Les membres', null, 2);
@@ -36,9 +46,9 @@
 		?>
 	</div>
 	<?php
-	$form->label('Premiere page', 3);
-	$form->input('page_title', '', 'Titre', 'text');
-	$form->textarea('page_content', '', 'Contenue');
+	// $form->label('Première page', 3);
+	// $form->input('page_title', '', 'Titre', 'text');
+	// $form->textarea('page_content', '', 'Contenue');
 
 	$form->submit('Envoyer');
 	$form->done();

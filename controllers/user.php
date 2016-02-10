@@ -1,9 +1,8 @@
 <?php
 class user extends Controller{
-	private $Member;
 
 	function init(){
-		$this->Member = $this->loadModel('member');
+		
 	}
 
 

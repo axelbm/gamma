@@ -7,6 +7,7 @@ class model_answer extends Model{
 	public function Create($data){
 		$answer = array(
 			'page'       	=> $data['page'],
+			'book'       	=> $data['book'],
 			'destination'	=> $data['destination'],
 			'content'    	=> $data['content'],
 			'creator'    	=> $data['creator']
@@ -31,6 +32,19 @@ class model_answer extends Model{
 	public function GetByPageID($id){
 		$data = $this->find(array(
 			'conditions' => 'page='.$id
+		));
+
+		if(empty($data)){
+			return null;
+		}else{
+
+			return $data;
+		}
+	}
+
+	public function GetByBookID($id){
+		$data = $this->find(array(
+			'conditions' => 'book='.$id
 		));
 
 		if(empty($data)){

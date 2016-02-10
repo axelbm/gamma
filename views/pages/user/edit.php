@@ -41,7 +41,7 @@
 				$form->label('Profil', 3);
 				$form->input('username', '', 'Nom', 'text');
 				$form->select('country', $country_list, 'Pays');
-				$form->input('birtdate', '', 'Date de naissence', 'date');
+				$form->input('birtdate', '', 'Date de naissence', 'datetime');
 				$form->submit('Envoyer');
 				$form->done();
 				?>

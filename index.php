@@ -32,11 +32,9 @@ session_start();
 $params    	= explode("/", $_GET['p']);
 $controller	= $params[0];
 $action    	= isset($params[1]) ? $params[1] : null ;
-unset($params[0]); unset($params[1]);
+$params = array_slice($params, 2);
 
-
-$Controller = Controller::preload($controller, $action, $params);
-
+$Controller = Controller::load($controller, $action, $params);
 
 // if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
 //	$user_account = Member::GetByID($_SESSION['user_id']);
@@ -44,7 +42,4 @@ $Controller = Controller::preload($controller, $action, $params);
 
 // }
 
-
-
-$Controller->run();
 ?>

@@ -4,13 +4,11 @@ class Controller{
 	var $layout = DEFAULT_LAYOUT;
 	var $action;
 	var $params = array();
-	var $data = array();
 	var $user = null;
-	var $form = null;
-	var $title;
 	var $error;
 	var $js = array();
 	var $jsvars = array();
+	var $models = array();
 
 	static $self;
 	static $controllername = '';
@@ -26,38 +24,20 @@ class Controller{
 		$this->data  	= $data;
 
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-			$Member = $this->loadModel('member');
-			$this->user = $Member->GetByID($_SESSION['user_id']);
+			$this->user = $this->Member->GetByID($_SESSION['user_id']);
+		}
+	}
+
+	function __get($name){
+		$fc = substr($name, 0, 1);
+		if(ctype_upper($fc)){
+			$this->$name = $this->loadModel($name);
+			return $this->$name;
 		}
 	}
 
 	function init(){
 
-	}
-
-	function run(){
-		$action = 'act_'.$this->action;
-		if(method_exists($this, $action)){
-			$this->init();
-
-			$formid = isset($_POST['formid']) ? $_POST['formid'] : null ;
-
-			if(isset($formid)){
-				unset($_POST['formid']);
-				
-				$form = Form::load($formid, $_POST, $this);
-
-				if(!empty($form)){
-					$this->form      	= $form;
-					$this->formresult	= $form->result;
-				}
-			}
-
-			call_user_func_array(array($this, $action), $this->params);
-		}
-		else{
-			$this->noaction($this->action, $this->params);
-		}
 	}
 
 	function set($vars, $value=null){
@@ -100,7 +80,7 @@ class Controller{
 
 		if(file_exists($viewfile)){
 			if(file_exists(ROOT.'/controllers/layout/'.$this->layout.'.php')){
-				include(ROOT.'/controllers/layout/'.$this->layout.'.php');
+				require_once(ROOT.'/controllers/layout/'.$this->layout.'.php');
 				$name = 'layout_'.$this->layout;
 				$layout = new $name;
 				$this->set($layout->getvars());
@@ -124,7 +104,7 @@ class Controller{
 			$jsvars = json_encode($this->jsvars);
 
 			ob_start();
-			require($viewfile);
+			require_once($viewfile);
 			$content_for_layout = ob_get_clean();
 
 			if($this->layout == false){
@@ -132,9 +112,9 @@ class Controller{
 			}else{
 				$path = ROOT.'views/layout/'.$this->layout.'/';
 				if(file_exists($path.$filename.'.php')){
-					require($path.$filename.'.php');
+					require_once($path.$filename.'.php');
 				}else{
-					require($path.'index'.'.php');
+					require_once($path.'index'.'.php');
 				}
 			}
 		}else{
@@ -176,7 +156,32 @@ class Controller{
 		return false;
 	}
 
-	static function preload($controller=null, $action=null, $params=array(), $data=array()){
+	function run(){
+		$action = 'act_'.$this->action;
+		if(method_exists($this, $action)){
+			$this->init();
+
+			$formid = isset($_POST['formid']) ? $_POST['formid'] : null;
+
+			if(isset($formid)){
+				unset($_POST['formid']);
+				
+				$form = Form::load($formid, $_POST, $this);
+
+				if(!empty($form)){
+					$this->form      	= $form;
+					$this->formresult	= $form->result;
+				}
+			}
+
+			call_user_func_array(array($this, $action), $this->params);
+		}
+		else{
+			$this->noaction($this->action, $this->params);
+		}
+	}
+
+	static function load($controller=null, $action=null, $params=null, $data=null){
 		if(!isset($controller) or empty($controller))
 			$controller = DEFAULT_CONTROLLER;
 
@@ -186,17 +191,13 @@ class Controller{
 		if(file_exists($filename)){
 			require_once($filename);
 			$controller = new $controller($action, $params, $data);
-
+			$controller->run();
+			
 			return $controller;
 		}
 		else{
 			return Controller::weberror('404', 'Le controller demandé n\'existe pas.');
 		}
-	}
-
-	static function load($controller=null, $action=null, $params=null, $data=null){
-		$controller = self::preload($controller, $action, $params, $data);
-		return $controller->run();
 	}
 
 	static function get(){

@@ -15,5 +15,21 @@ class model_categories extends Model{
 
 		return $d;
 	}
+
+	public function GetByID($id, $lang){
+		$data = $this->read($id, $lang);
+
+		return $data[$lang];
+	}
+
+	public function Check($id){
+		$data = $this->read($id);
+
+		if(!empty($data)){
+			return $data;
+		}else{
+			return false;
+		}
+	}
 }
 ?>

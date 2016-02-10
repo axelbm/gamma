@@ -87,7 +87,7 @@ class Model{
 			if($fields==null)
 				$fields='*';
 
-			$sql = "SELECT $fields FROM $table WHERE id=$id";
+			$sql = "SELECT $fields FROM $table WHERE id='$id'";
 			$req = $Database->query($sql);
 
 			$data = $req->fetch(PDO::FETCH_ASSOC);

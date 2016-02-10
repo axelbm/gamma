@@ -73,6 +73,10 @@ class Form{
 		}
 	}
 
+	function __get($name){
+		return $this->Controller->$name;
+	}
+
 	protected function init(){
 
 	} 

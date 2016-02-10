@@ -1,21 +1,15 @@
 <?php
 class book extends Controller{
 	public $book;
-	private $Book;
-	private $Page;
-	private $Answer;
-	private $Link;
-	private $Member;
 
 	function init(){
-		$this->Book  	= $this->loadModel('book');
-		$this->Page  	= $this->loadModel('page');
-		$this->Answer	= $this->loadModel('answer');
-		$this->Link  	= $this->loadModel('user_book');
-		$this->Member	= $this->loadModel('member');
 
-		if(isset($this->params[2]) & !empty($this->params[2]))
-			$this->book = $this->Book->GetByID($this->params[2]);
+		if(isset($this->params[0]) & !empty($this->params[0])){
+			$bookid = $this->params[0];
+			if(is_numeric($bookid)){
+				$this->book = $this->Book->GetByID($this->params[0]);
+			}
+		}
 	}
 
 	// function act_index(){
@@ -34,41 +28,50 @@ class book extends Controller{
 
 	// }
 
-	function act_view($bookid=null){
+	function act_view(){
+		$bookid = $this->book['id'];
+
 		if(isset($bookid) & !empty($bookid)){
 			if(!isset($this->book) | empty($this->book)){
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
 			$userid	= $this->user ? $this->user->GetID() : 0;
-			$link  	= $this->Link->GetLink($userid, $bookid);
+			$link  	= $this->User_book->GetLink($userid, $bookid);
 			
-			$contributor   	= $this->Page->GetAuthors($bookid);
+			$contributor	= $this->Page->GetAuthors($bookid);
+			array_push($contributor, $this->book['creator']);
+
 			$usersname     	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
 			$pagecount     	= $this->Page->Count($bookid);
-			$stats         	= $this->Link->GetStats($bookid);
+			$stats         	= $this->User_book->GetStats($bookid);
 			$stats['rate'] 	= round($stats['likerate']*100, 2);
 			$stats['stars']	= round($stats['likerate']*5);
 
-			$this->set('stats',      	$stats);
-			$this->set('pagescount', 	$pagecount);
-			$this->set('link',       	$link);
-			$this->set('book',       	$this->book);
-			$this->set('contributor',	$contributor);
-			$this->set('usersname',  	$usersname);
+			$category = $this->Categories->GetByID($this->book['category'], 'FR');
+
+			$this->set('book_category',	$category);
+			$this->set('stats',        	$stats);
+			$this->set('pagescount',   	$pagecount);
+			$this->set('link',         	$link);
+			$this->set('book',         	$this->book);
+			$this->set('contributor',  	$contributor);
+			$this->set('usersname',    	$usersname);
 			$this->render();
 		}else{
 			$this->noaction();
 		}
 	}
 
-	function act_read($bookid=null){
+	function act_read(){
+		$bookid = $this->book['id'];
+
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
 				if(!isset($this->book) | empty($this->book))
 					Controller::weberror('404', 'La livre est introuvable.');
 
-				$link = $this->Link->GetLink($this->user->GetID(), $bookid);
+				$link = $this->User_book->GetLink($this->user->GetID(), $bookid);
 				$progression = $link['progression'];
 
 				$data = array();
@@ -114,9 +117,43 @@ class book extends Controller{
 		}
 	}
 
-	// function act_edit($id){
+	function act_edit($id){
+		$bookid = $this->book['id'];
 
-	// }
+		if($this->user){
+			if(isset($bookid) & !empty($bookid)){
+
+				$pages  	= $this->Page->GetByBookID($bookid);
+				$answers	= $this->Answer->GetByBookID($bookid);
+				$categories = $this->Categories->GetAll('FR');
+
+				$pages_title = array();
+
+				foreach ($pages as $key => $page) {
+					$pages_title[$page['id']] = $page['title']?:'Page '.$page['id'];
+				}
+
+				$u = array($this->book['creator']);
+				foreach ($pages  	as $key => $p) { array_push($u, $p['creator']); }
+				foreach ($answers	as $key => $a) { array_push($u, $a['creator']); }
+
+				$usersname	= $this->Member->GetBasic($u);
+
+				$this->set('pages_title',	$pages_title);
+				$this->set('book',       	$this->book);
+				$this->set('pages',      	$pages);
+				$this->set('answers',    	$answers);
+				$this->set('usersname',  	$usersname);
+				$this->set('categories', 	$categories);
+
+				$this->render();
+			}else{
+				$this->noaction();
+			}
+		}else{
+			Controller::weberror('500', 'Vous devez vous cconnecter pour acceder à cette page.');
+		}
+	}
 
 	function act_create(){
 		if($this->user){

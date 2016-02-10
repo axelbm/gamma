@@ -1,13 +1,7 @@
 <?php
 class page extends Controller{
-	private $Book;
-	private $Page;
-	private $Answer;
 
 	function init(){
-		$this->Book  	= $this->loadModel('book');
-		$this->Page  	= $this->loadModel('page');
-		$this->Answer	= $this->loadModel('answer');
 	}
 
 	function act_add($id=null){

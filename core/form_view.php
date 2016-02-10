@@ -230,7 +230,7 @@ class Form_View{
 		if(isset($this->data[$id]))
 			$data = $this->data[$id];
 
-		if(isset($data['value']))
+		if(isset($data['value']) & !empty($data['value']))
 			$checked = true;
 		
 		$class = ($this->inhorizontalform) ? 'col-lg-offset-2 col-lg-10' : '';
