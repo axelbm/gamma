@@ -41,6 +41,7 @@ class book extends Controller{
 			
 			$contributor	= $this->Page->GetAuthors($bookid);
 			array_push($contributor, $this->book['creator']);
+			$contributor	= array_unique($contributor);
 
 			$usersname     	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
 			$pagecount     	= $this->Page->Count($bookid);
@@ -123,9 +124,9 @@ class book extends Controller{
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
 
-				$pages  	= $this->Page->GetByBookID($bookid);
-				$answers	= $this->Answer->GetByBookID($bookid);
-				$categories = $this->Categories->GetAll('FR');
+				$pages  	= $this->Page->GetByBookID($bookid) ?: array();
+				$answers	= $this->Answer->GetByBookID($bookid) ?: array();
+				$categories = $this->Categories->GetAll('FR') ?: array();
 
 				$pages_title = array();
 
