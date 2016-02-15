@@ -42,7 +42,6 @@ class Member{
 	public function GetCountry(){
 		return $this->country;
 	}
-
 	public function GetRegistrationDate(){
 		return $this->registration_date;
 	}
@@ -52,30 +51,32 @@ class Member{
 	public function GetConfirmationToken(){
 		return $this->confirmation_token;
 	}
+	public function GetConnectionToken(){
+		return $this->connection_token;
+	}
 
 
 	public function Confirm(){
 		$this->confirmed = 1;
 		$this->confirmation_token = '';
-
-		$data = array('confirmed' => 1, 'confirmation_token' => '');
-		Model::_save('member', $this->GetID(), $data);
+		
+		// $this->Save();
 	}
 
-	public function Save(){
-		$data = array(
-			'username' => $this->GetUserName(),
-			'email' => $this->GetEmail(),
-			'password' => $this->GetPassword(),
-			'birtdate' => $this->GetPassword(),
-			'country' => $this->GetCountry()
-		);
+	// public function Save(){
+	//	$data = array(
+	//		'username'          	=> $this->GetUserName(),
+	//		'email'             	=> $this->GetEmail(),
+	//		'password'          	=> $this->GetPassword(),
+	//		'birtdate'          	=> $this->GetPassword(),
+	//		'country'           	=> $this->GetCountry(),
+	//		'confirmed'         	=> $this->IsConfirmed(),
+	//		'confirmation_token'	=> $this->GetConfirmationToken()
+	//	);
 
-
-		$Controller = Controller::$self;
-		$Member = $Controller->loadModel('member');
-		$Member->save($this->GetID(), $data);
-	}
+	//	$Controller = Controller::$self;
+	//	$Controller->Member->save($this->GetID(), $data);
+	// }
 
 	// public function Login(){
 	//	$_SESSION['user_id'] = $this->id;

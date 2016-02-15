@@ -1,19 +1,31 @@
 <?php
-class home extends Controller{
+class controller_home extends Controller{
 	function act_index(){
-		$data	= $this->Book->find();
+		$count = 5;
+
+		$offset	= isset($_GET['p'])&!empty($_GET['p'])?$_GET['p']:0;
+		$books 	= $this->Book->GetList($count, $offset)?:array();
 
 		$categories = $this->Categories->GetAll('FR');
 
 		$getcreator = function($book){
-			return $book['creator'];
+			return $book->Creator();
 		};
 
-		$ids      	= array_unique(array_map($getcreator, $data));
+		$ids = array();
+		if(!empty($books)){
+			$ids	= array_unique(array_map($getcreator, $books));
+		}
 		$usersname	= $this->Member->GetBasic($ids);
+
+		$next = $offset-$count>=0 ? $offset-$count : -1;
+		$previous = $this->Book->GetList(1, $offset+$count)? $offset+$count : -1;
 		
+		$this->set('offset',    	$offset);
+		$this->set('next',      	$next);
+		$this->set('previous',  	$previous);
 		$this->set('categories',	$categories);
-		$this->set('books',     	$data);
+		$this->set('books',     	$books);
 		$this->set('usersname', 	$usersname);
 		$this->render();
 	}

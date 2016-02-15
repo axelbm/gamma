@@ -1,5 +1,5 @@
 <?php
-class user extends Controller{
+class controller_user extends Controller{
 
 	function init(){
 		
@@ -51,6 +51,7 @@ class user extends Controller{
 
 		if(!$user->IsConfirmed()){
 			$user->Confirm();
+			$this->Member->Update($user);
 
 			$d = array('member' => $user, 'success' => true);
 
@@ -63,7 +64,13 @@ class user extends Controller{
 	}
 
 	function act_logout(){
-		unset($_SESSION['user_id']);
+		if($this->user){
+			$this->user->connection_token = null;
+			$this->Member->Update($this->user);
+			setcookie('connection_token', null, -1, '/');
+
+			unset($_SESSION['user_id']);
+		}
 		header('Location: '.WEBROOT);
 	}
 

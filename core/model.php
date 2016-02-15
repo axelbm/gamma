@@ -34,21 +34,21 @@ class Model{
 		return $data;
 	}
 
-	public function read($id, $fields=null){
-		return self::_read($this->table, $id, $fields);
-	}
+	// public function read($id, $fields=null){
+	//	return self::_read($this->table, $id, $fields);
+	// }
 
-	public function save($id, $data=null){
-		return self::_save($this->table, $id, $data);
-	}
+	// public function save($id, $data=null){
+	//	return self::_save($this->table, $id, $data);
+	// }
 
-	public function find($data=array()){
-		return self::_find($this->table, $data);
-	}
+	// public function find($data=array()){
+	//	return self::_find($this->table, $data);
+	// }
 
-	public function delete($id){
-		return self::_delete($this->table, $id);
-	}
+	// public function delete($id){
+	//	return self::_delete($this->table, $id);
+	// }
 
 	static function getTables(){
 		if(isset(self::$tablesname) && !empty(self::$tablesname)){
@@ -79,8 +79,9 @@ class Model{
 		}
 	}
 
+	public function read($id, $fields=null){
+		$table = $this->table;
 
-	static function _read($table, $id, $fields=null){
 		if(self::validTable($table)){
 			global $Database;
 
@@ -98,7 +99,9 @@ class Model{
 		}
 	}
 
-	static function _save($table, $id, $data=null){
+	public function save($id, $data=null){
+		$table = $this->table;
+		
 		if(self::validTable($table)){
 			global $Database;
 
@@ -146,38 +149,47 @@ class Model{
 		}
 	}
 
-	static function _find($table, $data=array()){
+	public function find($data=array()){
+		$table = $this->table;
+		
 		if(self::validTable($table)){
 			global $Database;
 
 			$conditions = "1";
 			$fields = "*";
 			$limit = "";
-			$order = "id ASC";
+			$order = "";
 			$single = false;
+			$offset = "";
 			if(isset($data['conditions'])){	$conditions = $data['conditions'];}
 			if(isset($data['fields'])){    		$fields	= $data['fields'];}
 			if(isset($data['limit'])){     		$limit 		= "LIMIT ".$data['limit'];}
-			if(isset($data['order'])){     		$order 		= $data['order'];}
+			if(isset($data['offset'])){    		$offset		= "OFFSET ".$data['offset'];}
+			if(isset($data['order'])){     		$order 		= "ORDER BY ".$data['order'];}
 			if(isset($data['single'])){    		$single		= $data['single'];}
 
-			$sql = "SELECT $fields FROM $table WHERE $conditions ORDER BY $order $limit";
+			$sql = "SELECT $fields FROM $table WHERE $conditions $order $limit $offset";
 			$req = $Database->query($sql);
 
-			if($single){
-				$data = $req->fetch(PDO::FETCH_ASSOC);
-			}else{
-				$data = $req->fetchAll(PDO::FETCH_ASSOC);
-			}
+
+			if($req){
+				if($single){
+					$data = $req->fetch(PDO::FETCH_ASSOC);
+				}else{
+					$data = $req->fetchAll(PDO::FETCH_ASSOC)?:array();
+				}
 			
-			return $data;
+				return $data;
+			}
 		}
 		else{
 			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
 		}
 	}
 
-	static function _delete($table, $id){
+	public function delete($id){
+		$table = $this->table;
+		
 		if(self::validTable($table)){
 			global $Database;
 
@@ -188,8 +200,6 @@ class Model{
 		}
 	}
 
-
-
 	public static function Get($name) {
 		if(!isset(Model::$_instance[$name]) | empty(Model::$_instance[$name])) {
 			Model::$_instance[$name] = new $name();
@@ -197,5 +207,6 @@ class Model{
 
 		return Model::$_instance[$name];
 	}
+
 }
 ?>

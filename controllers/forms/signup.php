@@ -1,11 +1,9 @@
 <?php
 class form_signup extends Form{
 	var $formfields = array('username', 'email', 'pwd', 'pwd_conf', 'country', 'birtdate', 'aggre');
-	private $Member;
 
 	function init(){
-		$Controller  	= Controller::$self;
-		$this->Member	= $Controller->loadModel('member');
+
 	}
 
 	function check_username($username){
@@ -102,7 +100,7 @@ class form_signup extends Form{
 	}
 
 	function check_aggre($aggre){
-		if($aggre == 'on'){
+		if(isset($aggre) & !empty($aggre)){
 			return true;
 		}else{
 			$this->formerror('Vous devez accepter les condition d\'utilisateur.');

@@ -28,7 +28,7 @@ class form_page_answer extends Form{
 	function check_answer($answer){
 		if(isset($answer) & !empty($answer)){
 			$answer = intval($answer);
-			$bookid = $this->book['id'];
+			$bookid = $this->book->ID();
 			$link	= $this->Link->GetLink($this->user->GetID(), $bookid);
 			$progression = $link['progression'];
 
@@ -37,7 +37,7 @@ class form_page_answer extends Form{
 				$an = $this->Answer->GetByID($id);
 				$this->cpage = $this->Page->GetByID($an['destination']);
 			}else{
-				$id = $this->Book->GetByID($bookid)['starting_page'];
+				$id = $this->Book->GetByID($bookid)->StartingPage();
 				$this->cpage = $this->Page->GetByID($id);
 			}
 
@@ -67,7 +67,7 @@ class form_page_answer extends Form{
 	function success(){
 		$id = $this->page['id'];
 		$pageid = $this->cpage['id'];
-		$bookid = $this->book['id'];
+		$bookid = $this->book->ID();
 
 		$data = array($pageid, $this->answer['id']);
 

@@ -73,7 +73,8 @@ class form_edit_profil extends Form{
 		if(!empty($this->value('birtdate')))
 			$this->user->SetBirtdate($this->value('birtdate'));
 
-		$this->user->Save();
+		$this->Member->Update($this->user);
+		// $this->user->Save();
 
 		$this->formsuccess('Les paramètres on été enregistrés');
 

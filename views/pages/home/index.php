@@ -5,15 +5,15 @@
 			<div class="caption">
 				<div class="heading">
 					<h2>
-						<a href="<?php echo WEBROOT.'book/view/'.$book['id']; ?>"><?php echo $book['title']; ?></a>
+						<a href="<?php echo WEBROOT.'book/view/'.$book->ID(); ?>"><?php echo $book->Title(); ?></a>
 					</h2>
-					<p class="lead">Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></p>
-					<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book['publication_date']; ?></p>
+					<p class="lead">Par <a href="<?php echo WEBROOT.'user/profil/'.$book->Creator(); ?>"><?php echo $usersname[$book->Creator()]; ?></a></p>
+					<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book->PublicationDate(); ?></p>
 				</div>
 				<hr>
 				<div class="body">
-					<p><?php echo $book['description']; ?></p>
-					<a class="btn btn-primary" href="<?php echo WEBROOT.'book/view/'.$book['id']; ?>">
+					<p><?php echo $book->Description(); ?></p>
+					<a class="btn btn-primary" href="<?php echo WEBROOT.'book/view/'.$book->ID(); ?>">
 						Voir le livre
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
@@ -23,12 +23,14 @@
 		<?php endforeach; ?>
 
 
-		<?php if (count($books) >= 5) { ?>
-			<ul class="pager">
-				<li class="previous"><a href="#">Previous</a></li>
-				<li class="next"><a href="#">Next</a></li>
-			</ul>
+		<ul class="pager">
+		<?php if($previous >= 0){ ?>
+			<li class="previous"><a href="?p=<?php echo $previous; ?>">Previous</a></li>
 		<?php } ?>
+		<?php if($next >= 0){ ?>
+			<li class="next"><a href="?p=<?php echo $next; ?>">Next</a></li>
+		<?php } ?>
+		</ul>
 	</div>
 
 	<div class="col-sm-4">

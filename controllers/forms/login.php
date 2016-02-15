@@ -54,8 +54,12 @@ class form_login extends Form{
 		if(!empty($account)){
 			if($account->IsConfirmed()){
 				if($account->GetPassword() == $password){
-					$Controller = Controller::$self;
-					$Controller->UserLogin($account);
+					$this->Controller->UserLogin($account);
+
+					if($this->value('remember')){
+						$this->Member->AutoReconnect($account);
+					}
+
 					header("Location: " . $_SERVER['REQUEST_URI']);
 					exit;
 				}

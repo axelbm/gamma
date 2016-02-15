@@ -1,14 +1,14 @@
 <div>
 	<div class="heading">
-		<h1 class=""><?php echo $book['title']; ?> 
-		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></small></h1>
-		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book['publication_date']; ?></p>
+		<h1 class=""><?php echo $book->Title(); ?> 
+		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book->Creator(); ?>"><?php echo $usersname[$book->Creator()]; ?></a></small></h1>
+		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book->PublicationDate(); ?></p>
 		<div>
 
 			<form id="book_link" class="form-inline" role="form" method="post">
 				<input name="formid" type="hidden" value="book_action">
 
-				<a class="btn btn-default btn-sm" href="<?php echo WEBROOT.'book/view/'.$book['id']; ?>">Retour</a>
+				<a class="btn btn-default btn-sm" href="<?php echo WEBROOT.'book/view/'.$book->ID(); ?>">Retour</a>
 				<button type="submit" class="btn btn-default btn-sm" value="restart" name="action">Recommencer</button>
 			</form>
 		</div>

@@ -13,8 +13,46 @@ class model_book extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			return $data;
+			$book = new Book($data);
+			return $book;
 		}
+	}
+
+	public function GetList($count, $offset, $user=null){
+		$data = $this->find(array(
+			'limit' => $count,
+			'offset' => $offset
+		));
+
+		if($data){
+			$books = array();
+			foreach ($data as $key => $value) {
+				$book = new Book($value);
+				array_push($books, $book);
+			}
+
+			return $books;
+		}
+	}
+
+	public function Create($data){
+		$bookdata = array(
+			'title'      	=> $data['title'],
+			'description'	=> $data['description'],
+			'language'   	=> $data['language'],
+			'category'   	=> $data['category'],
+			'adult'      	=> $data['adult'],
+			'creator'    	=> $data['creator'],
+			'permition'  	=> $data['permition']
+		);
+
+		$id = $this->save($bookdata);
+
+		return $id;
+	}
+
+	public function Update($id, $data){
+
 	}
 }
 ?>

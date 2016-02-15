@@ -107,11 +107,13 @@ class form_create_book extends Form{
 			'permition'  	=> '777'
 		);
 
-		$id = $this->Book->save($data);
+		$id = $this->Book->Create($data);
 
-
-		header("Location: ".WEBROOT.'book/view/'.$id);
-
-		echo Util::SublimTab($data);
+		if($id){
+			header("Location: ".WEBROOT.'book/view/'.$id);
+		}else{
+			$this->formerror('Erreur');
+			$this->fail();
+		}
 	}
 }

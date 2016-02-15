@@ -1,5 +1,5 @@
 <?php
-class book extends Controller{
+class controller_book extends Controller{
 	public $book;
 
 	function init(){
@@ -29,7 +29,7 @@ class book extends Controller{
 	// }
 
 	function act_view(){
-		$bookid = $this->book['id'];
+		$bookid = $this->book->ID();
 
 		if(isset($bookid) & !empty($bookid)){
 			if(!isset($this->book) | empty($this->book)){
@@ -40,16 +40,16 @@ class book extends Controller{
 			$link  	= $this->User_book->GetLink($userid, $bookid);
 			
 			$contributor	= $this->Page->GetAuthors($bookid);
-			array_push($contributor, $this->book['creator']);
+			array_push($contributor, $this->book->Creator());
 			$contributor	= array_unique($contributor);
 
-			$usersname     	= $this->Member->GetBasic(array_merge($contributor, array($this->book['creator'])));
+			$usersname     	= $this->Member->GetBasic(array_merge($contributor, array($this->book->Creator())));
 			$pagecount     	= $this->Page->Count($bookid);
 			$stats         	= $this->User_book->GetStats($bookid);
 			$stats['rate'] 	= round($stats['likerate']*100, 2);
 			$stats['stars']	= round($stats['likerate']*5);
 
-			$category = $this->Categories->GetByID($this->book['category'], 'FR');
+			$category = $this->Categories->GetByID($this->book->Category()?:'OT', 'FR');
 
 			$this->set('book_category',	$category);
 			$this->set('stats',        	$stats);
@@ -65,7 +65,7 @@ class book extends Controller{
 	}
 
 	function act_read(){
-		$bookid = $this->book['id'];
+		$bookid = $this->book->ID();
 
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
@@ -87,7 +87,7 @@ class book extends Controller{
 				}
 
 				if(count($data) == 0){
-					$pageid = $this->book['starting_page'];
+					$pageid = $this->book->StartingPage();
 				}else{
 					$pageid = $data[count($data)-1][1]['destination'];
 				}
@@ -98,7 +98,7 @@ class book extends Controller{
 
 				$answers = $this->Answer->GetByPageID($pageid);
 
-				array_push($u, $this->book['creator']);
+				array_push($u, $this->book->Creator());
 				array_push($u, $page['creator']);
 
 				$usersname	= $this->Member->GetBasic($u);
@@ -114,12 +114,12 @@ class book extends Controller{
 				$this->noaction();
 			}
 		}else{
-			Controller::weberror('500', 'Vous devez vous cconnecter pour acceder à cette page.');
+			Controller::weberror('402', 'Vous devez vous cconnecter pour acceder à cette page.');
 		}
 	}
 
 	function act_edit($id){
-		$bookid = $this->book['id'];
+		$bookid = $this->book->ID();
 
 		if($this->user){
 			if(isset($bookid) & !empty($bookid)){
@@ -134,7 +134,7 @@ class book extends Controller{
 					$pages_title[$page['id']] = $page['title']?:'Page '.$page['id'];
 				}
 
-				$u = array($this->book['creator']);
+				$u = array($this->book->Creator());
 				foreach ($pages  	as $key => $p) { array_push($u, $p['creator']); }
 				foreach ($answers	as $key => $a) { array_push($u, $a['creator']); }
 
@@ -152,7 +152,7 @@ class book extends Controller{
 				$this->noaction();
 			}
 		}else{
-			Controller::weberror('500', 'Vous devez vous cconnecter pour acceder à cette page.');
+			Controller::weberror('402', 'Vous devez vous cconnecter pour acceder à cette page.');
 		}
 	}
 

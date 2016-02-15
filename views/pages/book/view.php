@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-sm-8">
 		<div class="heading">
-			<h2><?php echo $book['title']; ?>
-			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book['creator']; ?>"><?php echo $usersname[$book['creator']]; ?></a></small></h2>
-			<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book['publication_date']; ?></p>
+			<h2><?php echo $book->Title(); ?>
+			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book->Creator(); ?>"><?php echo $usersname[$book->Creator()]; ?></a></small></h2>
+			<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book->PublicationDate(); ?></p>
 			
 			<form id="book_link" class="form-inline" role="form" method="post">
 				<input name="formid" type="hidden" value="book_action">
@@ -20,10 +20,10 @@
 		</div>
 		<hr>
 		<div class="body">
-			<p><?php echo $book['description']; ?></p>
+			<p><?php echo $book->Description(); ?></p>
 			<?php if($pagescount){ ?>
 			<hr>
-			<a class="btn btn-primary <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/read/'.$book['id']; ?>">
+			<a class="btn btn-primary <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/read/'.$book->ID(); ?>">
 				<?php echo empty($link['progression']) ? 'Commencer à lire' : 'Continuer'; ?> 
 				<span class="glyphicon glyphicon-chevron-right"></span></a>
 			<br>
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 
-		<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/edit/'.$book['id']; ?>">
+		<a role="button" class="btn btn-success btn-block <?php echo empty($user)? 'disabled' : ''; ?>" href="<?php echo WEBROOT.'book/edit/'.$book->ID(); ?>">
 			<span class="glyphicon glyphicon-plus-sign"></span> Éditer ce livre</a>
 	</div>
 </div>

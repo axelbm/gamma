@@ -22,6 +22,16 @@ class model_categories extends Model{
 		return $data[$lang];
 	}
 
+	public function FindByName($name, $lang){
+		$data = $this->find(array(
+			'fields'    	=> 'id',
+			'conditions'	=> '`$lang` = "$name"',
+			'single'    	=> true
+		));
+
+		echo $data;
+	}
+
 	public function Check($id){
 		$data = $this->read($id);
 

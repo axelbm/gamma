@@ -1,5 +1,5 @@
 <?php
-class error extends Controller{
+class controller_error extends Controller{
 
 	function run(){
 		$code = $this->action;

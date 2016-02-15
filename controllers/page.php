@@ -1,5 +1,5 @@
 <?php
-class page extends Controller{
+class controller_page extends Controller{
 
 	function init(){
 	}

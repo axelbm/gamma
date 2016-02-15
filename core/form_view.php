@@ -11,8 +11,14 @@ class Form_View{
 		$class = ($horizontal) ? 'form-horizontal' : '' ;
 		$this->inhorizontalform = $horizontal;
 
+		foreach ($data as $key => $value) {
+			if(!isset($this->data[$key]) | empty($this->data[$key])){
+				$this->data[$key] = array('error'=>null, 'value'=>$value);
+			}
+		}
+
 		// $html = '<form class="'.$class.' '.$ac.'" id="'. $this->formid .'"" role="form" method="post">
-		if(empty($data)){
+		// if(empty($data)){
 			$lastform = Controller::$self->form;
 
 			if(isset($lastform) & !empty($lastform)){
@@ -28,13 +34,7 @@ class Form_View{
 					}
 				}
 			}
-		}
-
-		foreach ($data as $key => $value) {
-			if(!isset($this->data[$key]) | empty($this->data[$key])){
-				$this->data[$key] = array('error'=>null, 'value'=>$value);
-			}
-		}
+		// }
 
 		$this->formid 	= $formid;
 		// $this->data	= $data;

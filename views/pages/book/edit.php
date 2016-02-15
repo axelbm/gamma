@@ -5,12 +5,12 @@
 	$perm    	= array('Aucune', 'Lire', 'Lire et écrire', 'Lire, écrire et modifier');
 
 	$data = array(
-		'title'        	=> $book['title'],
-		'description'  	=> $book['description'],
-		'language'     	=> $book['language'],
-		'category'     	=> $book['category'],
-		'starting_page'	=> $book['starting_page'],
-		'adult'        	=> $book['adult'],
+		'title'        	=> $book->Title(),
+		'description'  	=> $book->Description(),
+		'language'     	=> $book->Language(),
+		'category'     	=> $book->Category(),
+		'starting_page'	=> $book->StartingPage(),
+		'adult'        	=> $book->Adult(),
 	);
 
 	$form = new Form_View('edit_book', $data, true);
@@ -30,11 +30,11 @@
 	<div class="col-sm-4">
 
 		<div class="list-group">
-			<a href="<?php echo WEBROOT.'user/profil/'.$book['creator'] ?>" class="list-group-item">
-				<span class="text-primary">Créateur</span>: <?php echo $usersname[$book['creator']]; ?>
+			<a href="<?php echo WEBROOT.'user/profil/'.$book->Creator ?>" class="list-group-item">
+				<span class="text-primary">Créateur</span>: <?php echo $usersname[$book->Creator()]; ?>
 			</a>
 			<div class="list-group-item">
-				<span class="text-primary">Date de publication</span>: <?php echo $book['publication_date']; ?>
+				<span class="text-primary">Date de publication</span>: <?php echo $book->PublicationDate(); ?>
 			</div>
 		</div>
 	</div>

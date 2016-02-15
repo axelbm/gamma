@@ -2,6 +2,7 @@
 class Controller{
 	var $vars = array();
 	var $layout = DEFAULT_LAYOUT;
+	var $controller;
 	var $action;
 	var $params = array();
 	var $user = null;
@@ -25,6 +26,10 @@ class Controller{
 
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
 			$this->user = $this->Member->GetByID($_SESSION['user_id']);
+		}else{
+			if(isset($_COOKIE['connection_token']) & !empty($_COOKIE['connection_token'])){
+				$this->user = $this->Member->GetByConnectionToken($_COOKIE['connection_token']);
+			}
 		}
 	}
 
@@ -76,7 +81,7 @@ class Controller{
 		if(empty($filename))
 			$filename = $this->action;
 
-		$viewfile = ROOT.'views/pages/'.get_class($this).'/'.$filename.'.php';
+		$viewfile = ROOT.'views/pages/'.$this->controller.'/'.$filename.'.php';
 
 		if(file_exists($viewfile)){
 			if(file_exists(ROOT.'/controllers/layout/'.$this->layout.'.php')){
@@ -89,10 +94,10 @@ class Controller{
 
 			extract($this->vars);
 
-			$this->addjs('views/pages/'.get_class($this).'/js/javascript.js');
-			$this->addjs('views/pages/'.get_class($this).'/js/'.$filename.'.js');
+			$this->addjs('views/pages/'.$this->controller.'/js/javascript.js');
+			$this->addjs('views/pages/'.$this->controller.'/js/'.$filename.'.js');
 			$this->addjs('views/layout/'.$this->layout.'/js/javascript.js');
-			$this->addjs('views/pages/'.get_class($this).'/js/'.get_class($this).'.js');
+			$this->addjs('views/pages/'.$this->controller.'/js/'.$this->controller.'.js');
 
 			$jsfiles = array();
 			foreach ($this->js as $js) {
@@ -173,7 +178,7 @@ class Controller{
 					$this->formresult	= $form->result;
 				}
 			}
-
+			
 			call_user_func_array(array($this, $action), $this->params);
 		}
 		else{
@@ -186,11 +191,15 @@ class Controller{
 			$controller = DEFAULT_CONTROLLER;
 
 		self::$controllername = $controller;
+		$cn = $controller;
 
 		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
-			$controller = new $controller($action, $params, $data);
+			$class = 'controller_'.$controller;
+
+			$controller = new $class($action, $params, $data);
+			$controller->controller = $cn;
 			$controller->run();
 			
 			return $controller;

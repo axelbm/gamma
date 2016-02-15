@@ -16,11 +16,12 @@ require ROOT.'core/form.php';
 require ROOT.'core/layout.php';
 
 require ROOT.'core/member.php';
+require ROOT.'core/book.php';
 require ROOT.'core/form_view.php';
 
 try{
 	$Database = new PDO('mysql:host=localhost;dbname='.DB_NAME, DB_NAME, DB_PSW);
-	$Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	// $Database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 	$Database->exec("set names utf8");
 }
 catch(PDOException $e){
@@ -29,7 +30,7 @@ catch(PDOException $e){
 
 session_start();
 
-$params    	= explode("/", $_GET['p']);
+$params    	= explode("/", $_GET['params']);
 $controller	= $params[0];
 $action    	= isset($params[1]) ? $params[1] : null ;
 $params = array_slice($params, 2);
