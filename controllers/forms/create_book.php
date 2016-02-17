@@ -103,7 +103,7 @@ class form_create_book extends Form{
 			'language'   	=> $this->value('language'),
 			'category'   	=> $this->value('category'),
 			'adult'      	=> $this->value('adult')?1:0,
-			'creator'    	=> $this->user->GetID(),
+			'creator'    	=> $this->user->ID(),
 			'permition'  	=> '777'
 		);
 

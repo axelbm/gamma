@@ -1,8 +1,0 @@
-<?php
-class Form_View{
-
-
-	function __construct($formid){
-		
-	}
-}

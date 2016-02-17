@@ -20,7 +20,7 @@ class form_change_pwd extends Form{
 			if(isset($pwd) & !empty($pwd)){
 				$pwd = md5($pwd);
 				
-				if($pwd == $this->user->GetPassword()){
+				if($pwd == $this->user->Password()){
 					return true;
 				}else{
 					$this->error('Le mot de passe est invalide.');
@@ -71,8 +71,8 @@ class form_change_pwd extends Form{
 	}
 
 	function success(){
-		$pwd = md5($this->value('new_pwd'));
-		$this->user->SetPassword($pwd);
+		$pwd = $this->value('new_pwd');
+		$this->user->ChangePassword($pwd);
 		$this->user->Save();
 
 		$this->data = array();

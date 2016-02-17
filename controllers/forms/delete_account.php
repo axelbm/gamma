@@ -27,7 +27,7 @@ class form_delete_account extends Form{
 			if(isset($pwd) & !empty($pwd)){
 				$pwd = md5($pwd);
 				
-				if($pwd == $this->user->GetPassword()){
+				if($pwd == $this->user->Password()){
 					return true;
 				}else{
 					$this->error('Le mot de passe est invalide.');

@@ -1,5 +1,16 @@
 <?php 
 class Book{
+	private $id;
+	private $title;
+	private $description;
+	private $language;
+	private $category;
+	private $starting_page;
+	private $creator;
+	private $publication_date;
+	private $permission;
+	private $group;
+	private $adult;
 
 	public function __construct($data){
 		if(!empty($data)){

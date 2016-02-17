@@ -1,21 +1,14 @@
 <?php
 class form_page_answer extends Form{
 	var $formfields = array('answer');
-	private $Page;
-	private $Book;
-	private $Link;
 	private $page;
 	private $cpage;
 	private $answer;
 	private $book;
 
 	function init(){
-		$this->Page  	= $this->Controller->loadModel('page');
-		$this->Book  	= $this->Controller->loadModel('book');
-		$this->Answer	= $this->Controller->loadModel('answer');
-		$this->Link  	= $this->Controller->loadModel('user_book');
-		$this->book  	= $this->Controller->book;
-		$user        	= $this->Controller->user;
+		$this->book	= $this->Controller->book;
+		$user      	= $this->Controller->user;
 
 		if(!empty($user)){
 			$this->user = $user;
@@ -29,7 +22,7 @@ class form_page_answer extends Form{
 		if(isset($answer) & !empty($answer)){
 			$answer = intval($answer);
 			$bookid = $this->book->ID();
-			$link	= $this->Link->GetLink($this->user->GetID(), $bookid);
+			$link	= $this->User_book->GetLink($this->user->GetID(), $bookid);
 			$progression = $link['progression'];
 
 			if($progression){
@@ -45,7 +38,7 @@ class form_page_answer extends Form{
 			$page = $this->Page->GetByID($answer['destination']);
 
 			if(!empty($page)){
-				if($answer['page'] == $this->cpage['id']){
+				if($answer['page'] == $this->cpage->ID()){
 					$this->answer	= $answer;
 					$this->page  	= $page;
 					return true;
@@ -65,13 +58,13 @@ class form_page_answer extends Form{
 	}
 
 	function success(){
-		$id = $this->page['id'];
-		$pageid = $this->cpage['id'];
+		$id = $this->page->ID();
+		$pageid = $this->cpage->ID();
 		$bookid = $this->book->ID();
 
 		$data = array($pageid, $this->answer['id']);
 
-		$this->Link->AddPage($this->user->GetID(), $bookid, $data);
+		$this->User_book->AddPage($this->user->ID(), $bookid, $data);
 
 		header("Location: " . $_SERVER['REQUEST_URI']);
 		exit();

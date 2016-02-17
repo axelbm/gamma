@@ -36,7 +36,7 @@ class controller_book extends Controller{
 				Controller::weberror('404', 'La livre est introuvable.');
 			}
 
-			$userid	= $this->user ? $this->user->GetID() : 0;
+			$userid	= $this->user ? $this->user->ID() : 0;
 			$link  	= $this->User_book->GetLink($userid, $bookid);
 			
 			$contributor	= $this->Page->GetAuthors($bookid);
@@ -72,7 +72,7 @@ class controller_book extends Controller{
 				if(!isset($this->book) | empty($this->book))
 					Controller::weberror('404', 'La livre est introuvable.');
 
-				$link = $this->User_book->GetLink($this->user->GetID(), $bookid);
+				$link = $this->User_book->GetLink($this->user->ID(), $bookid);
 				$progression = $link['progression'];
 
 				$data = array();
@@ -81,7 +81,7 @@ class controller_book extends Controller{
 				foreach ($progression as $key => $value) {
 					$page = $this->Page->GetByID($value[0]);
 					$answer = $this->Answer->GetByID($value[1]);
-					array_push($u, $page['creator']);
+					array_push($u, $page->Creator());
 					array_push($u, $answer['creator']);
 					array_push($data, array($page, $answer));
 				}
@@ -99,7 +99,7 @@ class controller_book extends Controller{
 				$answers = $this->Answer->GetByPageID($pageid);
 
 				array_push($u, $this->book->Creator());
-				array_push($u, $page['creator']);
+				array_push($u, $page->Creator());
 
 				$usersname	= $this->Member->GetBasic($u);
 

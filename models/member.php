@@ -92,24 +92,24 @@ class model_member extends Model{
 
 	public function Update($user){
 		$data = array(
-			'username'          	=> $user->GetUserName(),
-			'email'             	=> $user->GetEmail(),
-			'password'          	=> $user->GetPassword(),
-			'birtdate'          	=> $user->GetPassword(),
-			'country'           	=> $user->GetCountry(),
-			'confirmed'         	=> $user->IsConfirmed(),
-			'confirmation_token'	=> $user->GetConfirmationToken(),
-			'connection_token'  	=> $user->GetConnectionToken()
+			'username'          	=> $user->Username(),
+			'email'             	=> $user->Email(),
+			'password'          	=> $user->Password(),
+			'birtdate'          	=> $user->Password(),
+			'country'           	=> $user->Country(),
+			'confirmed'         	=> $user->Confirmed(),
+			'confirmation_token'	=> $user->ConfirmationToken(),
+			'connection_token'  	=> $user->ConnectionToken()
 		);
 
-		$this->save($user->GetID(), $data);
+		$this->save($user->ID(), $data);
 	}
 
 	public function AutoReconnect($user){
-		$token = md5(uniqid($user->GetID(), true));
+		$token = md5(uniqid($user->ID(), true));
 		$user->connection_token = $token;
 
-		setcookie('connection_token', $token);
+		setcookie('connection_token', $token, time() + 86400*30);
 
 		$this->Update($user);
 	}

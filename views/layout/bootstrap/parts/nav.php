@@ -39,7 +39,7 @@
 				}else{  ?>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">
-							<b><?php echo $user->GetUsername() ?></b> 
+							<b><?php echo $user->Username() ?></b> 
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">

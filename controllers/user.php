@@ -49,7 +49,7 @@ class controller_user extends Controller{
 		if(empty($user))
 			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
 
-		if(!$user->IsConfirmed()){
+		if(!$user->Confirmed()){
 			$user->Confirm();
 			$this->Member->Update($user);
 

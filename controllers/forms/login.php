@@ -52,8 +52,8 @@ class form_login extends Form{
 		$this->password	= $password;
 
 		if(!empty($account)){
-			if($account->IsConfirmed()){
-				if($account->GetPassword() == $password){
+			if($account->Confirmed()){
+				if($account->Password() == $password){
 					$this->Controller->UserLogin($account);
 
 					if($this->value('remember')){

@@ -137,6 +137,12 @@ class Controller{
 		
 		if(file_exists($file)){
 			require_once($file);
+
+			$obj_file = ROOT.'objects/'.strtolower($name).'.php';
+
+			if(file_exists($obj_file))
+				require_once $obj_file;
+
 			$class = Model::Get('model_'.strtolower($name));
 			$class->SetController($this);
 			return $class;
@@ -151,7 +157,7 @@ class Controller{
 
 	function UserLogin($user){
 		$this->user = $user;
-		$_SESSION['user_id'] = $user->GetID();
+		$_SESSION['user_id'] = $user->ID();
 	}
 
 	function HasError(){

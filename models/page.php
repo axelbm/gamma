@@ -24,7 +24,8 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			return $data;
+			$page = new Page($data);
+			return $page;
 		}
 	}
 
@@ -36,6 +37,11 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
+			$books = array();
+			foreach ($data as $key => $value) {
+				$page = new Page($value);
+				array_push($books, $page);
+			}
 			return $data;
 		}
 	}

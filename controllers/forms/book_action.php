@@ -27,16 +27,16 @@ class form_book_action extends Form{
 		$action = $this->value('action');
 		
 		if($action == 'follow'){
-			$this->User_book->Follow($this->user->GetID(), $this->book->ID());
+			$this->User_book->Follow($this->user->ID(), $this->book->ID());
 		}
 		elseif($action == 'like'){
-			$this->User_book->Like($this->user->GetID(), $this->book->ID());
+			$this->User_book->Like($this->user->ID(), $this->book->ID());
 		}
 		elseif($action == 'dislike'){
-			$this->User_book->Dislike($this->user->GetID(), $this->book->ID());
+			$this->User_book->Dislike($this->user->ID(), $this->book->ID());
 		}
 		elseif($action == 'restart'){
-			$this->User_book->RemoveProgression($this->user->GetID(), $this->book->ID());
+			$this->User_book->RemoveProgression($this->user->ID(), $this->book->ID());
 		}
 		else{
 			$this->fail();

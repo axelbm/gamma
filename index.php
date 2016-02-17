@@ -14,9 +14,6 @@ require ROOT.'core/model.php';
 require ROOT.'core/controller.php';
 require ROOT.'core/form.php';
 require ROOT.'core/layout.php';
-
-require ROOT.'core/member.php';
-require ROOT.'core/book.php';
 require ROOT.'core/form_view.php';
 
 try{

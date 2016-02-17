@@ -82,7 +82,7 @@ class form_add_page extends Form{
 				'book'   	=> $this->value('book'),
 				'title'  	=> $this->value('title')?: null,
 				'content'	=> $this->value('content'),
-				'creator'	=> $this->user->GetID()
+				'creator'	=> $this->user->ID()
 			);
 
 			$id = $this->Page->Create($page);
@@ -91,7 +91,7 @@ class form_add_page extends Form{
 				'page'       	=> $this->value('pageid'),
 				'destination'	=> $id,
 				'content'    	=> $this->value('answer'),
-				'creator'    	=> $this->user->GetID()
+				'creator'    	=> $this->user->ID()
 			);
 
 			$this->Answer->Create($answer);
@@ -100,7 +100,7 @@ class form_add_page extends Form{
 				'page'       	=> $this->value('pageid'),
 				'destination'	=> $this->selected_page,
 				'content'    	=> $this->value('answer'),
-				'creator'    	=> $this->user->GetID()
+				'creator'    	=> $this->user->ID()
 			);
 
 			$this->Answer->Create($answer);
