@@ -1,5 +1,7 @@
 <?php
 class model_member extends Model{
+	static private $_members = array();
+	
 	protected function load(){
 		$this->setTable('member');
 	}
@@ -21,16 +23,21 @@ class model_member extends Model{
 	}
 
 	public function GetByID($id){
-		$data = $this->find(array(
-			'conditions' => 'id='.$id,
-			'single' => true
-		));
-
-		if(empty($data)){
-			return null;
+		if(array_key_exists(sef::$_members, $id)){
+			return self::$_members[$id];
 		}else{
-			$member = new Member($data);
-			return $member;
+			$data = $this->find(array(
+				'conditions' => 'id='.$id,
+				'single' => true
+			));
+	
+			if(empty($data)){
+				return null;
+			}else{
+				$member = new Member($data);
+				self::$_members[$member->ID()] = $member;
+				return $member;
+			}
 		}
 	}
 
@@ -44,6 +51,7 @@ class model_member extends Model{
 			return null;
 		}else{
 			$member = new Member($data);
+			self::$_members[$member->ID()] = $member;
 			return $member;
 		}
 	}
@@ -58,6 +66,7 @@ class model_member extends Model{
 			return null;
 		}else{
 			$member = new Member($data);
+			self::$_members[$member->ID()] = $member;
 			return $member;
 		}
 	}
@@ -72,6 +81,7 @@ class model_member extends Model{
 			return null;
 		}else{
 			$member = new Member($data);
+			self::$_members[$member->ID()] = $member;
 			return $member;
 		}
 	}
