@@ -1,7 +1,21 @@
 <?php
 class model_categories extends Model{
+
+
 	protected function load(){
 		$this->setTable('categories');
+	}
+
+	protected function InitTable(){
+		$this->run("
+			CREATE TABLE IF NOT EXISTS `categories` (
+				`id` varchar(2) NOT NULL,
+				`FR` varchar(64) NOT NULL,
+
+				UNIQUE (`id`), 
+				PRIMARY KEY (`id`)
+			);
+		");
 	}
 
 	public function GetAll($lang){

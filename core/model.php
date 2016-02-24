@@ -20,6 +20,19 @@ class Model{
 			$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='".$table."'";
 			$req = $Database->query($sql);
 			$this->tablecolumns = array_column($req->fetchAll(), 0);
+
+			return true;
+		}else{
+			if(method_exists($this, 'InitTable')){
+				$this->InitTable();
+
+				if(self::validTable($table)){
+					$this->setTable($table);
+					return true;
+				}else{
+					Controller::weberror('500', "La table `$table` n'a pas plus être généré.");
+				}
+			}
 		}
 	}
 
@@ -27,40 +40,13 @@ class Model{
 		$this->Controller = $controller;
 	}
 	
-	public function run($sql){
-		global $Database;
-		$req = $Database->query($sql);
-		$data = $req->fetch(PDO::FETCH_ASSOC);
-		return $data;
-	}
-
-	// public function read($id, $fields=null){
-	//	return self::_read($this->table, $id, $fields);
-	// }
-
-	// public function save($id, $data=null){
-	//	return self::_save($this->table, $id, $data);
-	// }
-
-	// public function find($data=array()){
-	//	return self::_find($this->table, $data);
-	// }
-
-	// public function delete($id){
-	//	return self::_delete($this->table, $id);
-	// }
-
 	static function getTables(){
-		if(isset(self::$tablesname) && !empty(self::$tablesname)){
-			return self::$tablesname;
-		}else{
-			global $Database;
-			$sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."'";
-			$req = $Database->query($sql);
+		global $Database;
+		$sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."'";
+		$req = $Database->query($sql);
 
-			self::$tablesname = array_column($req->fetchAll(), 0);
-			return self::$tablesname;
-		}
+		$tablesname = array_column($req->fetchAll(), 0);
+		return $tablesname;
 	}
 
 	static function getColumns($table){
@@ -79,6 +65,69 @@ class Model{
 		}
 	}
 
+	public static function Get($name) {
+		if(!isset(Model::$_instance[$name]) | empty(Model::$_instance[$name])) {
+			Model::$_instance[$name] = new $name();
+		}
+
+		return Model::$_instance[$name];
+	}
+	
+
+	// public function createTable($name, $tab, $index=null, $constraints=array()){
+	//	$sql = "CREATE TABLE IF NOT EXISTS `$name` (";
+	//	$col = array();
+	//	$const = array();
+	//	$table_name = $name;
+
+	//	foreach ($tab as $k => $v) {
+	//		$name   	= $v['name'];
+	//		$type   	= $v['type'];
+	//		$size   	= empty($v['size']) ? '' : '('.$v['size'].')';
+	//		$default	= isset($v['default']) & !empty($v['default']) ? " DEFAULT ".$v['default'] : '';
+	//		$notnull	= isset($v['notnull']) & !empty($v['notnull']) ? ' NOT NULL' : '';
+	//		$autoinc	= isset($v['autoinc']) & !empty($v['autoinc']) ? ' AUTO_INCREMENT' : '';
+
+	//		$s = "`$name` $type$size$notnull$default$autoinc";
+	//		array_push($col, $s);
+	//	}
+
+	//	foreach ($constraints as $k => $v) {
+	//		$name  	= isset($v['name']) & !empty($v['name']) ? 'CONSTRAINT `'.$v['name'].'` ' : '';
+	//		$type  	= strtoupper($v['type']);
+	//		$cols  	= '(`'.implode('`, `', $v['cols']).'`)';
+	//		$option	= isset($v['option']) & !empty($v['option']) ? ' '.$v['option'] : '';
+
+	//		$s = "$name$type $cols$option";
+	//		array_push($const, $s);
+	//	}
+
+	//	$sql .= implode(", ", $col);
+	//	if(!empty($const))
+	//		$sql .= ", ".implode(", ", $const);
+	//	$sql .= ");";
+
+	//	if(isset($index) & !empty($index)){
+	//		$v     	= $index;
+	//		$name  	= $v['name'];
+	//		$unique	= isset($v['unique']) & !empty($v['unique']) ? ' UNIQUE' : '';
+	//		$cols  	= '`'.implode('`, `', $v['cols']).'`';
+
+	//		$sql .= " CREATE$unique INDEX `$name` ON $table_name ($cols);";
+	//	}
+
+	//	// global $Database;
+	//	// $req = $Database->query($sql);
+	//	echo $sql;
+	// }
+
+	public function run($sql){
+		global $Database;
+		$req = $Database->query($sql);
+		//$data = $req->fetch(PDO::FETCH_ASSOC);
+		return $req;
+	}
+
 	public function read($id, $fields=null){
 		$table = $this->table;
 
@@ -95,7 +144,7 @@ class Model{
 			return $data;
 		}
 		else{
-			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
+			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}
 	}
 
@@ -145,7 +194,7 @@ class Model{
 			}
 		}
 		else{
-			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
+			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}
 	}
 
@@ -169,6 +218,7 @@ class Model{
 			if(isset($data['single'])){    		$single		= $data['single'];}
 
 			$sql = "SELECT $fields FROM $table WHERE $conditions $order $limit $offset";
+			// echo $sql . '<br>';
 			$req = $Database->query($sql);
 
 
@@ -183,7 +233,7 @@ class Model{
 			}
 		}
 		else{
-			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
+			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}
 	}
 
@@ -196,17 +246,10 @@ class Model{
 			$sql = "DELETE FROM ".$table." WHERE id=$id";
 			$req = $Database->query($sql);
 		}else{
-			Controller::weberror('500', 'La table de la base de donnée n\'a pas été spécifié.');
+			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}
 	}
 
-	public static function Get($name) {
-		if(!isset(Model::$_instance[$name]) | empty(Model::$_instance[$name])) {
-			Model::$_instance[$name] = new $name();
-		}
-
-		return Model::$_instance[$name];
-	}
 
 }
 ?>

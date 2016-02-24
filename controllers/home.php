@@ -20,7 +20,7 @@ class controller_home extends Controller{
 
 		$next = $offset-$count>=0 ? $offset-$count : -1;
 		$previous = $this->Book->GetList(1, $offset+$count)? $offset+$count : -1;
-		
+
 		$this->set('offset',    	$offset);
 		$this->set('next',      	$next);
 		$this->set('previous',  	$previous);
