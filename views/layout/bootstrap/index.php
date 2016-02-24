@@ -28,30 +28,9 @@
 				include 'parts/connection_modal.php'; ?>
 
 			<?php echo $content_for_layout; ?>
-			<!--
-			<div>
-				<h2 style="margin:5px;">Nouveautés</h2>
-				<hr>
 
-				<div style="padding:0 20px;">
-					<h4>Lorem ipsum</h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<hr>
-
-					<h4>Lorem ipsum</h4>
-					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-					<hr>
-					
-					<h4>Lorem ipsum</h4>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-					<hr>
-					
-					<h4>Lorem ipsum</h4>
-					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				</div>
-			</div>
-			-->
 			<hr>
+			
 			<div>
 				<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
 				<div id="debug-value-container" class="collapse">

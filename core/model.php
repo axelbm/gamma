@@ -1,32 +1,27 @@
 <?php
 class Model{
 	protected $Controller;
-	protected $table;
-	static $tablesname;
-	static $_instance = array();
-	protected $tablecolumns;
-	static $self;
+	protected $Database;
+	public $table;
+	protected $columns;
+	private $checked = false;
 
-	private function __construct(){
-		$this->load();
+	public function __construct(){
+
 	}
 
 	public function setTable($table){
-		if(self::validTable($table)){
-			global $Database;
-			
-			$this->table = $table;
-			
-			$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='".$table."'";
-			$req = $Database->query($sql);
-			$this->tablecolumns = array_column($req->fetchAll(), 0);
+		$this->table = $table;
+
+		if($this->isValide()){
+			$this->tablecolumns = $this->getColumns();
 
 			return true;
 		}else{
 			if(method_exists($this, 'InitTable')){
 				$this->InitTable();
 
-				if(self::validTable($table)){
+				if($this->isValide($table)){
 					$this->setTable($table);
 					return true;
 				}else{
@@ -39,40 +34,40 @@ class Model{
 	public function SetController($controller){
 		$this->Controller = $controller;
 	}
+
+	public function SetDatabase($database){
+		$this->Database = $database;
+	}
 	
-	static function getTables(){
-		global $Database;
-		$sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."'";
-		$req = $Database->query($sql);
 
-		$tablesname = array_column($req->fetchAll(), 0);
-		return $tablesname;
+
+	private function getColumns(){
+		$table = $this->table;
+
+		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='$table'";
+		$req = $this->Database->query($sql);
+		$this->columns = array_column($req->fetchAll(), 0);
 	}
 
-	static function getColumns($table){
-		global $Database;
+	private function isValide($table=null){
+		if(empty($table)){
+			if($this->checked)
+				return true;
 
-		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='".$table."'";
-		$req = $Database->query($sql);
-		return array_column($req->fetchAll(), 0);
-	}
+			$table = $this->table;
+		}
 
-	static function validTable($table){
-		if(in_array($table, self::getTables())){
+		$sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='$table'";
+		$data = $this->Database->query($sql)->fetchAll();
+
+		if($data){
+			if($this->table == $table)
+				$this->checked = true;
+
 			return true;
-		}else{
-			return false;
-		}
-	}
-
-	public static function Get($name) {
-		if(!isset(Model::$_instance[$name]) | empty(Model::$_instance[$name])) {
-			Model::$_instance[$name] = new $name();
 		}
 
-		return Model::$_instance[$name];
 	}
-	
 
 	// public function createTable($name, $tab, $index=null, $constraints=array()){
 	//	$sql = "CREATE TABLE IF NOT EXISTS `$name` (";
@@ -122,23 +117,19 @@ class Model{
 	// }
 
 	public function run($sql){
-		global $Database;
-		$req = $Database->query($sql);
-		//$data = $req->fetch(PDO::FETCH_ASSOC);
+		$req = $this->Database->query($sql);
 		return $req;
 	}
 
 	public function read($id, $fields=null){
 		$table = $this->table;
 
-		if(self::validTable($table)){
-			global $Database;
-
+		if($this->isValide()){
 			if($fields==null)
 				$fields='*';
 
 			$sql = "SELECT $fields FROM $table WHERE id='$id'";
-			$req = $Database->query($sql);
+			$req = $this->Database->query($sql);
 
 			$data = $req->fetch(PDO::FETCH_ASSOC);
 			return $data;
@@ -151,16 +142,14 @@ class Model{
 	public function save($id, $data=null){
 		$table = $this->table;
 		
-		if(self::validTable($table)){
-			global $Database;
-
+		if($this->isValide()){
 			if($data == null){
 				$data = $id;
 				$id = null;
 			}
 
 			foreach ($data as $key => $value) {
-				if(!in_array($key, self::getColumns($table))){
+				if(!in_array($key, $this->columns)){
 					unset($data[$key]);
 				}
 			}
@@ -185,12 +174,12 @@ class Model{
 				$sql = substr($sql, 0, -2);
 				$sql .= ")";
 			}
-			$req = $Database->query($sql);
+			$req = $this->Database->query($sql);
 
 			if(isset($id)){
 				return $id;
 			}else{
-				return $Database->lastInsertId();
+				return $this->Database->lastInsertId();
 			}
 		}
 		else{
@@ -201,9 +190,7 @@ class Model{
 	public function find($data=array()){
 		$table = $this->table;
 		
-		if(self::validTable($table)){
-			global $Database;
-
+		if($this->isValide()){
 			$conditions = "1";
 			$fields = "*";
 			$limit = "";
@@ -219,7 +206,7 @@ class Model{
 
 			$sql = "SELECT $fields FROM $table WHERE $conditions $order $limit $offset";
 			// echo $sql . '<br>';
-			$req = $Database->query($sql);
+			$req = $this->Database->query($sql);
 
 
 			if($req){
@@ -240,11 +227,9 @@ class Model{
 	public function delete($id){
 		$table = $this->table;
 		
-		if(self::validTable($table)){
-			global $Database;
-
+		if($this->isValide()){
 			$sql = "DELETE FROM ".$table." WHERE id=$id";
-			$req = $Database->query($sql);
+			$req = $this->Database->query($sql);
 		}else{
 			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}

@@ -1,5 +1,15 @@
 <?php
 class Member{
+	private $id;
+	private $email;
+	private $username;
+	private $password;
+	private $birtdate;
+	private $country;
+	private $registration_date;
+	private $confirmed;
+	private $confirmation_token;
+	private $connection_token;
 
 	// Methodes
 	public function __construct($data){
@@ -9,51 +19,6 @@ class Member{
 			}
 		}
 	}
-
-	public function SetUserName($username){
-		$this->username = $username;
-	}
-	public function SetPassword($pwd){
-		$this->password = $pwd;
-	}
-	public function SetBirtdate($birtdate){
-		$this->birtdate = $birtdate;
-	}
-	public function SetCountry($country){
-		$this->country = $country;
-	}
-
-	// Getter
-	// public function GetID(){
-	//	return $this->id;
-	// }
-	// public function GetUserName(){
-	//	return $this->username;
-	// }
-	// public function GetEmail(){
-	//	return $this->email;
-	// }
-	// public function GetPassword(){
-	//	return $this->password;
-	// }
-	// public function GetBirtdate(){
-	//	return $this->birtdate;
-	// }
-	// public function GetCountry(){
-	//	return $this->country;
-	// }
-	// public function GetRegistrationDate(){
-	//	return $this->registration_date;
-	// }
-	// public function IsConfirmed(){
-	//	return $this->confirmed;
-	// }
-	// public function GetConfirmationToken(){
-	//	return $this->confirmation_token;
-	// }
-	// public function GetConnectionToken(){
-	//	return $this->connection_token;
-	// }
 
 	public function ID(){
 		return $this->id;
@@ -132,7 +97,9 @@ class Member{
 	}
 
 
-
+	public function RemoveConnectionToken(){
+		$this->connection_token = null;
+	}
 
 	public function ChangePassword($password){
 		$pwd = md5($password);

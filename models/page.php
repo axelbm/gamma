@@ -2,7 +2,7 @@
 class model_page extends Model{
 
 
-	protected function load(){
+	public function load(){
 		$this->setTable('pages');
 	}
 

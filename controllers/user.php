@@ -5,7 +5,6 @@ class controller_user extends Controller{
 		
 	}
 
-
 	function act_signup($message=null){
 		if($this->user)
 			Controller::weberror('404', 'La page est invalide.');
@@ -65,7 +64,7 @@ class controller_user extends Controller{
 
 	function act_logout(){
 		if($this->user){
-			$this->user->connection_token = null;
+			$this->user->RemoveConnectionToken();
 			$this->Member->Update($this->user);
 			setcookie('connection_token', null, -1, '/');
 

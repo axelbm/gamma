@@ -10,6 +10,7 @@ class Controller{
 	var $js = array();
 	var $jsvars = array();
 	var $models = array();
+	var $Database;
 
 	static $self;
 	static $controllername = '';
@@ -23,6 +24,8 @@ class Controller{
 		$this->action	= $action;
 		$this->params	= $params;
 		$this->data  	= $data;
+
+		$this->Database = new Database('localhost', DB_NAME, DB_NAME, DB_PSW);
 
 		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
 			$this->user = $this->Member->GetByID($_SESSION['user_id']);
@@ -143,9 +146,19 @@ class Controller{
 			if(file_exists($obj_file))
 				require_once $obj_file;
 
-			$class = Model::Get('model_'.strtolower($name));
-			$class->SetController($this);
-			return $class;
+			$modelname = 'model_'.strtolower($name);
+
+			if(!isset($this->models[$modelname]) | empty($this->models[$modelname])) {
+				$model = new $modelname();
+				$model->SetDatabase($this->Database);
+				$model->SetController($this);
+
+				$model->load();
+
+				$this->models[$modelname] = $model;
+			}
+
+			return $this->models[$modelname];
 		}else{
 			Controller::weberror('404', 'Le model demandé n\'existe pas.');
 		}

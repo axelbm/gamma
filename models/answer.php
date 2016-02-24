@@ -2,7 +2,7 @@
 class model_answer extends Model{
 
 
-	protected function load(){
+	public function load(){
 		$this->setTable('answers');
 	}
 

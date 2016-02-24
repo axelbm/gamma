@@ -2,7 +2,7 @@
 class model_book extends Model{
 
 
-	protected function load(){
+	public function load(){
 		$this->setTable('books');
 	}
 

@@ -2,7 +2,7 @@
 class model_member extends Model{
 	static private $_members = array();
 	
-	protected function load(){
+	public function load(){
 		$this->setTable('members');
 	}
 
@@ -26,27 +26,6 @@ class model_member extends Model{
 
 			CREATE UNIQUE INDEX `User_Id` ON members (`id`); 
 		");
-
-		// $this->createTable("member",
-		//	array(
-		//		array('name'=>'id',                	'type'=>'int',      	'size'=>11,	'notnull'=>true, 'autoinc'=>true, ''),
-		//		array('name'=>'email',             	'type'=>'varchar',  	'size'=>64,	'notnull'=>true),
-		//		array('name'=>'username',          	'type'=>'varchar',  	'size'=>32,	'notnull'=>true),
-		//		array('name'=>'password',          	'type'=>'varchar',  	'size'=>32,	'notnull'=>true),
-		//		array('name'=>'birtdate',          	'type'=>'date',     	'notnull'=>true),
-		//		array('name'=>'country',           	'type'=>'varchar',  	'size'=>2,	'notnull'=>true),
-		//		array('name'=>'registration_date', 	'type'=>'timestamp',	'notnull'=>true, 'default'=>'CURRENT_TIMESTAMP'),
-		//		array('name'=>'confirmed',         	'type'=>'tinyint',  	'size'=>1,	'notnull'=>true, 'default'=>"'0'"),
-		//		array('name'=>'confirmation_token',	'type'=>'varchar',  	'size'=>32),
-		//		array('name'=>'connection_token',  	'type'=>'varchar',  	'size'=>32)
-		//	),
-		//	array(
-		//		'name'=>'User_Id', 'cols'=>array('id')
-		//	),
-		//	array(
-		//		array('type'=>'unique', 'cols'=>array('id', 'email')),
-		//		array('type'=>'primary key', 'cols'=>array('id'))
-		//	));
 	}
 
 	public function GetBasic($ids=array()){
@@ -170,7 +149,7 @@ class model_member extends Model{
 
 	public function AutoReconnect($user){
 		$token = md5(uniqid($user->ID(), true));
-		$user->connection_token = $token;
+		$user->ConnectionToken($token);
 
 		setcookie('connection_token', $token, time() + 86400*30);
 

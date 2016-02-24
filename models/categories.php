@@ -2,7 +2,7 @@
 class model_categories extends Model{
 
 
-	protected function load(){
+	public function load(){
 		$this->setTable('categories');
 	}
 
