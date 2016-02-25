@@ -8,9 +8,9 @@ class controller_page extends Controller{
 		if($this->user){
 			if(isset($id) & !empty($id)){
 				$page   	= $this->Page->GetByID($id);
-				$book   	= $this->Book->GetByID($page['book']);
+				$book   	= $this->Book->GetByID($page->Book());
 				$answers	= $this->Answer->GetByPageID($id);
-				$pages  	= $this->Page->GetByBookID($page['book']);
+				$pages  	= $this->Page->GetByBookID($page->Book());
 
 				if(empty($page)){
 					Controller::weberror('404', 'La page est introuvable.');

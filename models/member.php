@@ -2,12 +2,12 @@
 class model_member extends Model{
 	static private $_members = array();
 	
-	public function load(){
+	public function Init(){
 		$this->setTable('members');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `members` (
 				`id`                	int(11)    	NOT NULL AUTO_INCREMENT, 
 				`email`             	varchar(64)	NOT NULL, 

@@ -78,9 +78,8 @@ class form_edit_profil extends Form{
 
 		$this->formsuccess('Les paramètres on été enregistrés');
 
-		$Controller = Controller::$self;
-		$Controller->setjs('user_edit_tab', 'profil');
-		$Controller->setjs('hash', 'edit_profil');
+		$this->Controller->setjs('user_edit_tab', 'profil');
+		$this->Controller->setjs('hash', 'edit_profil');
 	}
 }
 ?>

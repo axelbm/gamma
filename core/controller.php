@@ -42,6 +42,7 @@ class Controller{
 			$this->$name = $this->loadModel($name);
 			return $this->$name;
 		}
+		
 	}
 
 	function init(){
@@ -153,7 +154,7 @@ class Controller{
 				$model->SetDatabase($this->Database);
 				$model->SetController($this);
 
-				$model->load();
+				$model->Init();
 
 				$this->models[$modelname] = $model;
 			}

@@ -13,16 +13,39 @@
 			'adult'        	=> $book->Adult(),
 		);
 
-		$form = new Form_View('edit_book', $data, true);
-		$form->input('title', '', 'Titre', 'text');
-		$form->textarea('description', '', 'Description', array('rows'=>8));
-		$form->select('language', $language, 'Langue', 'Choisissez la langue');
-		$form->select('category', $categories, 'Catégorie', 'Choisissez la categorie');
-		$form->select('starting_page', $pages_title, 'Première page', 'Choisissez la page de commencement');
-		$form->checkbox('adult', 'Contenu adulte.');
-		$form->submit('Envoyer');
-		$form->done();
-	?>
+		?>
+
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<ul class="nav nav-tabs">
+					<li><a data-toggle="tab" href="#tab_book">Livre</a></li>
+					<li><a data-toggle="tab" href="#tab_pages">Pages</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div id="tab_book" class="tab-pane fade">
+						<?php
+						$form = new Form_View('edit_book', $data, true);
+						$form->label('Information du livre', 3);
+						$form->input('title', '', 'Titre', 'text');
+						$form->textarea('description', '', 'Description', array('rows'=>8));
+						$form->select('language', $language, 'Langue', 'Choisissez la langue');
+						$form->select('category', $categories, 'Catégorie', 'Choisissez la categorie');
+						$form->select('starting_page', $pages_title, 'Première page', 'Choisissez la page de commencement');
+						$form->checkbox('adult', 'Contenu adulte.');
+						$form->submit('Envoyer');
+						$form->done();
+						?>
+					</div>
+					<div id="tab_pages" class="tab-pane fade">
+						<?php
+							var_dump($pages);
+						?>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-sm-4">

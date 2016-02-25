@@ -2,12 +2,12 @@
 class model_answer extends Model{
 
 
-	public function load(){
+	public function Init(){
 		$this->setTable('answers');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `answers` (
 				`id`              	int(11)  	NOT NULL AUTO_INCREMENT,
 				`page`            	int(11)  	NOT NULL,
@@ -50,7 +50,8 @@ class model_answer extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			return $data;
+			$answer = new Answer($data);
+			return $answer;
 		}
 	}
 
@@ -62,8 +63,12 @@ class model_answer extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-
-			return $data;
+			$answers = array();
+			foreach ($data as $key => $value) {
+				$answer = new Answer($value);
+				array_push($answers, $answer);
+			}
+			return $answers;
 		}
 	}
 
@@ -75,8 +80,12 @@ class model_answer extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-
-			return $data;
+			$answers = array();
+			foreach ($data as $key => $value) {
+				$answer = new Answer($value);
+				array_push($answers, $answer);
+			}
+			return $answers;
 		}
 	}
 }

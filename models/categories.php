@@ -2,12 +2,12 @@
 class model_categories extends Model{
 
 
-	public function load(){
+	public function Init(){
 		$this->setTable('categories');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `categories` (
 				`id` varchar(2) NOT NULL,
 				`FR` varchar(64) NOT NULL,

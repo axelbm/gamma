@@ -110,5 +110,13 @@ class Member{
 		$this->confirmed = 1;
 		$this->confirmation_token = '';
 	}
+
+	public function HasAccess($obj){
+		if(method_exists($obj, 'UserAccess')){
+			$obj->UserAccess($this);
+		}else{
+			
+		}
+	}
 }
 ?>

@@ -2,12 +2,12 @@
 class model_book extends Model{
 
 
-	public function load(){
+	public function Init(){
 		$this->setTable('books');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `books` (
 				`id`              	int(11)     	NOT NULL AUTO_INCREMENT,
 				`title`           	varchar(256)	NOT NULL,

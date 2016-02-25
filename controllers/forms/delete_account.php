@@ -6,8 +6,7 @@ class form_delete_account extends Form{
 	function check_id($id){
 		if(isset($id) & !empty($id)){
 			$Controller = Controller::$self;
-			$Member = $Controller->loadModel('member');
-			$user = $Member->GetByID($id);
+			$user = $this->Member->GetByID($id);
 
 			if(!empty($user)){
 				$this->user = $user;
@@ -53,9 +52,8 @@ class form_delete_account extends Form{
 	}
 
 	function fail(){
-		$Controller = Controller::$self;
-		$Controller->setjs('user_edit_tab', 'security');
-		$Controller->setjs('delete_account_modal', true);
+		$this->Controller->setjs('user_edit_tab', 'security');
+		$this->Controller->setjs('delete_account_modal', true);
 	}
 
 	function success(){

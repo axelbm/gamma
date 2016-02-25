@@ -2,12 +2,12 @@
 class model_user_book extends Model{
 
 
-	public function load(){
+	public function Init(){
 		$this->setTable('user_book');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `user_book` (
 				`id`         	int(11)   	NOT NULL AUTO_INCREMENT,
 				`user`       	int(11)   	NOT NULL,
@@ -99,7 +99,7 @@ class model_user_book extends Model{
 	public function GetStats($book){
 		$table	= $this->table;
 		$sql  	= "SELECT SUM(`like`) AS `like`, SUM(`dislike`) AS `dislike`, COUNT(`user`) AS `view`, SUM(`following`) AS `following` FROM $table WHERE `book`='$book'";
-		$req  	= $this->run($sql);
+		$req  	= $this->query($sql);
 		$data 	= $req->fetch(PDO::FETCH_ASSOC);
 
 		$data['total'] = $data['like'] + $data['dislike'];

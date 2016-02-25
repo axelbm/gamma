@@ -28,7 +28,7 @@
 			<p><?php echo $p->Content(); ?></p>
 			<br>
 				<p><span class="glyphicon glyphicon-chevron-right"></span>
-				<?php echo $a['content']; ?></p>
+				<?php echo $a->Content(); ?></p>
 			<br>
 		<?php endforeach ?>
 
@@ -47,12 +47,12 @@
 				<div class="form-group list-group">
 						<?php if(count($answers) == 1){ 
 							$answer = $answers[0];?>
-							<input type="hidden" name="answer" value="<?php echo $answers[0]['id']; ?>">
-							<label class="list-group-item" style="font-weight:500;"><?php echo $answers[0]['content']; ?></label>
+							<input type="hidden" name="answer" value="<?php echo $answers[0]->ID(); ?>">
+							<label class="list-group-item" style="font-weight:500;"><?php echo $answers[0]->Content(); ?></label>
 						<?php }elseif(count($answers) > 1){ ?>
 							<?php foreach ($answers as $i => $answer): ?>
-								<label class="list-group-item" style="font-weight:500;"><input type="radio" name="answer" value="<?php echo $answer['id']; ?>"> 
-									<?php echo $answer['content']; ?></label>
+								<label class="list-group-item" style="font-weight:500;"><input type="radio" name="answer" value="<?php echo $answer->ID(); ?>"> 
+									<?php echo $answer->Content(); ?></label>
 							<?php endforeach ?>
 						<?php } ?>
 				</div>

@@ -22,23 +22,23 @@ class form_page_answer extends Form{
 		if(isset($answer) & !empty($answer)){
 			$answer = intval($answer);
 			$bookid = $this->book->ID();
-			$link	= $this->User_book->GetLink($this->user->GetID(), $bookid);
+			$link	= $this->User_book->GetLink($this->user->ID(), $bookid);
 			$progression = $link['progression'];
 
 			if($progression){
 				$id = $progression[count($progression)-1][1];
 				$an = $this->Answer->GetByID($id);
-				$this->cpage = $this->Page->GetByID($an['destination']);
+				$this->cpage = $this->Page->GetByID($an->Destination());
 			}else{
 				$id = $this->Book->GetByID($bookid)->StartingPage();
 				$this->cpage = $this->Page->GetByID($id);
 			}
 
 			$answer = $this->Answer->GetByID($answer);
-			$page = $this->Page->GetByID($answer['destination']);
+			$page = $this->Page->GetByID($answer->Destination());
 
 			if(!empty($page)){
-				if($answer['page'] == $this->cpage->ID()){
+				if($answer->Page() == $this->cpage->ID()){
 					$this->answer	= $answer;
 					$this->page  	= $page;
 					return true;
@@ -62,7 +62,7 @@ class form_page_answer extends Form{
 		$pageid = $this->cpage->ID();
 		$bookid = $this->book->ID();
 
-		$data = array($pageid, $this->answer['id']);
+		$data = array($pageid, $this->answer->ID());
 
 		$this->User_book->AddPage($this->user->ID(), $bookid, $data);
 

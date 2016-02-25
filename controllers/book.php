@@ -82,14 +82,14 @@ class controller_book extends Controller{
 					$page = $this->Page->GetByID($value[0]);
 					$answer = $this->Answer->GetByID($value[1]);
 					array_push($u, $page->Creator());
-					array_push($u, $answer['creator']);
+					array_push($u, $answer->Creator());
 					array_push($data, array($page, $answer));
 				}
 
 				if(count($data) == 0){
 					$pageid = $this->book->StartingPage();
 				}else{
-					$pageid = $data[count($data)-1][1]['destination'];
+					$pageid = $data[count($data)-1][1]->Destination();
 				}
 
 				$page = $this->Page->GetByID($pageid);
@@ -131,12 +131,12 @@ class controller_book extends Controller{
 				$pages_title = array();
 
 				foreach ($pages as $key => $page) {
-					$pages_title[$page['id']] = $page['title']?:'Page '.$page['id'];
+					$pages_title[$page->ID()] = $page->Title()?:'Page '.$page->ID();
 				}
 
 				$u = array($this->book->Creator());
-				foreach ($pages  	as $key => $p) { array_push($u, $p['creator']); }
-				foreach ($answers	as $key => $a) { array_push($u, $a['creator']); }
+				foreach ($pages  	as $key => $p) { array_push($u, $p->Creator()); }
+				foreach ($answers	as $key => $a) { array_push($u, $a->Creator()); }
 
 				$usersname	= $this->Member->GetBasic($u);
 
@@ -158,8 +158,7 @@ class controller_book extends Controller{
 
 	function act_create(){
 		if($this->user){
-			$Categories = $this->loadModel('categories');
-			$categories = $Categories->GetAll('FR');
+			$categories = $this->Categories->GetAll('FR');
 
 			$this->set('categories', $categories);
 			$this->render();

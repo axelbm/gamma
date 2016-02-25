@@ -2,12 +2,12 @@
 class model_page extends Model{
 
 
-	public function load(){
+	public function Init(){
 		$this->setTable('pages');
 	}
 
 	protected function InitTable(){
-		$this->run("
+		$this->query("
 			CREATE TABLE IF NOT EXISTS `pages` (
 				`id`              	int(11)     	NOT NULL AUTO_INCREMENT,
 				`book`            	int(11)     	NOT NULL,
@@ -62,18 +62,18 @@ class model_page extends Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$books = array();
+			$pages = array();
 			foreach ($data as $key => $value) {
 				$page = new Page($value);
-				array_push($books, $page);
+				array_push($pages, $page);
 			}
-			return $data;
+			return $pages;
 		}
 	}
 
 	public function Count($id){
 		$sql = "SELECT COUNT(id) AS count FROM ".$this->table." WHERE book=".$id;
-		$req = $this->run($sql);
+		$req = $this->query($sql);
 		return $req->fetch(PDO::FETCH_ASSOC)['count'];
 	}
 

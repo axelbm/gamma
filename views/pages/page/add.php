@@ -1,11 +1,11 @@
 <div>
-	<h1><?php echo $book['title'] ?> <small> - <?php echo $page['title']?: 'Page '.$page['id']; ?></small></h1>
+	<h1><?php echo $book->Title() ?> <small> - <?php echo $page->Title()?: 'Page '.$page->ID(); ?></small></h1>
 	<hr>
-	<p><?php echo $page['content']; ?></p>
+	<p><?php echo $page->Content(); ?></p>
 	<?php if(isset($answers) & !empty($answers)){ ?>
 		<ul class="list-group">
 			<?php foreach ($answers as $key => $answer): ?>
-				<li class="list-group-item"><?php echo $answer['id'].': '.$answer['content']; ?></li>
+				<li class="list-group-item"><?php echo $answer->ID().': '.$answer->Content(); ?></li>
 			<?php endforeach ?>
 		</ul>
 	<?php } ?>
@@ -35,11 +35,11 @@
 						<div class="form-group" style="margin-bottom:0;">
 							<div id="page_list" class="list-group">
 								<?php foreach($pages as $key => $p): ?>
-									<a id="page_<?php echo $p['id']; ?>" class="list-group-item">
-										<h4 class="list-group-item-heading"><?php echo $p['title'] ?: 'Page '.$p['id']; ?></h4>
+									<a id="page_<?php echo $p->ID(); ?>" class="list-group-item">
+										<h4 class="list-group-item-heading"><?php echo !empty($p->Title()) ? $p->Title(): 'Page '.$p->ID(); ?></h4>
 										
 										<div class="collapse">
-											<p class="list-group-item-text"><?php echo $p['content']; ?></p>
+											<p class="list-group-item-text"><?php echo $p->Content(); ?></p>
 										</div>
 									</a>
 								<?php endforeach ?>
@@ -59,8 +59,8 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="book" value="<?php echo $book['id']; ?>">
-		<input type="hidden" name="pageid" value="<?php echo $page['id']; ?>">
+		<input type="hidden" name="book" value="<?php echo $book->ID(); ?>">
+		<input type="hidden" name="pageid" value="<?php echo $page->ID(); ?>">
 		<input id="action_input" type="hidden" name="action" value="">
 		<input id="page_input" type="hidden" name="page" value="">
 		<button type="submit" class="btn btn-success btn-block">Envoyer</button>

@@ -10,6 +10,11 @@ class Model{
 
 	}
 
+	public function query($sql){
+		// echo '['.$this->table.']' . $sql . '<br>';
+		return $this->Database->query($sql);
+	}
+
 	public function setTable($table){
 		$this->table = $table;
 
@@ -45,7 +50,7 @@ class Model{
 		$table = $this->table;
 
 		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='$table'";
-		$req = $this->Database->query($sql);
+		$req = $this->query($sql);
 		$this->columns = array_column($req->fetchAll(), 0);
 	}
 
@@ -58,7 +63,7 @@ class Model{
 		}
 
 		$sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='".DB_NAME."' AND TABLE_NAME='$table'";
-		$data = $this->Database->query($sql)->fetchAll();
+		$data = $this->query($sql)->fetchAll();
 
 		if($data){
 			if($this->table == $table)
@@ -117,7 +122,7 @@ class Model{
 	// }
 
 	public function run($sql){
-		$req = $this->Database->query($sql);
+		$req = $this->query($sql);
 		return $req;
 	}
 
@@ -129,7 +134,7 @@ class Model{
 				$fields='*';
 
 			$sql = "SELECT $fields FROM $table WHERE id='$id'";
-			$req = $this->Database->query($sql);
+			$req = $this->query($sql);
 
 			$data = $req->fetch(PDO::FETCH_ASSOC);
 			return $data;
@@ -174,7 +179,7 @@ class Model{
 				$sql = substr($sql, 0, -2);
 				$sql .= ")";
 			}
-			$req = $this->Database->query($sql);
+			$req = $this->query($sql);
 
 			if(isset($id)){
 				return $id;
@@ -206,7 +211,7 @@ class Model{
 
 			$sql = "SELECT $fields FROM $table WHERE $conditions $order $limit $offset";
 			// echo $sql . '<br>';
-			$req = $this->Database->query($sql);
+			$req = $this->query($sql);
 
 
 			if($req){
@@ -229,7 +234,7 @@ class Model{
 		
 		if($this->isValide()){
 			$sql = "DELETE FROM ".$table." WHERE id=$id";
-			$req = $this->Database->query($sql);
+			$req = $this->query($sql);
 		}else{
 			Controller::weberror('500', "La table `$table` n'est pas valide.");
 		}
