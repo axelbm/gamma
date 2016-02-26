@@ -17,11 +17,11 @@ class Page{
 		}
 	}
 
-	function ID(){
+	public function ID(){
 		return $this->id;
 	}
 
-	function Book($book=null){
+	public function Book($book=null){
 		if(isset($book) & !empty($book)){
 			$this->book = $book;
 		}
@@ -29,7 +29,7 @@ class Page{
 		return $this->book;
 	}
 
-	function Title($title=null){
+	public function Title($title=null){
 		if(isset($title) & !empty($title)){
 			$this->title = $title;
 		}
@@ -37,7 +37,7 @@ class Page{
 		return $this->title;
 	}
 
-	function Content($content=null){
+	public function Content($content=null){
 		if(isset($content) & !empty($content)){
 			$this->content = $content;
 		}
@@ -45,11 +45,11 @@ class Page{
 		return $this->content;
 	}
 
-	function Creator(){
+	public function Creator(){
 		return $this->creator;
 	}
 
-	function Updater($updater){
+	public function Updater($updater){
 		if(isset($updater) & !empty($updater)){
 			$this->updater = $updater;
 		}
@@ -57,11 +57,11 @@ class Page{
 		return $this->updater;
 	}
 
-	function PublicationDate(){
+	public function PublicationDate(){
 		return $this->publication_date;
 	}
 
-	function UpdateDate($update_date=null){
+	public function UpdateDate($update_date=null){
 		if(isset($update_date) & !empty($update_date)){
 			$this->update_date = $update_date;
 		}

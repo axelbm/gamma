@@ -20,11 +20,11 @@ class Book{
 		}
 	}
 
-	function ID(){
+	public function ID(){
 		return $this->id;
 	}
 
-	function Title($title=null){
+	public function Title($title=null){
 		if(isset($title) & !empty($title)){
 			$this->title = $title;
 		}
@@ -32,7 +32,7 @@ class Book{
 		return $this->title;
 	}
 
-	function Description($description=null){
+	public function Description($description=null){
 		if(isset($description) & !empty($description)){
 			$this->description = $description;
 		}
@@ -40,7 +40,7 @@ class Book{
 		return $this->description;
 	}
 
-	function Language($language=null){
+	public function Language($language=null){
 		if(isset($language) & !empty($language)){
 			$this->language = $language;
 		}
@@ -48,7 +48,7 @@ class Book{
 		return $this->language;
 	}
 
-	function Category($category = null){
+	public function Category($category = null){
 		if(isset($category) & !empty($category)){
 			$this->category = $category;
 		}
@@ -56,7 +56,7 @@ class Book{
 		return $this->category;
 	}
 
-	function StartingPage($starting_page=null){
+	public function StartingPage($starting_page=null){
 		if(isset($starting_page) & !empty($starting_page)){
 			$this->starting_page = $starting_page;
 		}
@@ -64,15 +64,15 @@ class Book{
 		return $this->starting_page;
 	}
 
-	function Creator(){
+	public function Creator(){
 		return $this->creator;
 	}
 
-	function PublicationDate(){
+	public function PublicationDate(){
 		return $this->publication_date;
 	}
 
-	function Permission($permission=null){
+	public function Permission($permission=null){
 		if(isset($permission) & !empty($permission)){
 			$this->permission = $permission;
 		}
@@ -80,7 +80,7 @@ class Book{
 		return $this->permission;
 	}
 
-	function Group($group=null){
+	public function Group($group=null){
 		if(isset($group) & !empty($group)){
 			$this->group = $group;
 		}
@@ -88,7 +88,7 @@ class Book{
 		return $this->group;
 	}
 
-	function Adult($adult=null){
+	public function Adult($adult=null){
 		if(isset($adult) & !empty($adult)){
 			$this->adult = $adult;
 		}
