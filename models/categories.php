@@ -6,18 +6,6 @@ class model_categories extends Model{
 		$this->setTable('categories');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `categories` (
-				`id` varchar(2) NOT NULL,
-				`FR` varchar(64) NOT NULL,
-
-				UNIQUE (`id`), 
-				PRIMARY KEY (`id`)
-			);
-		");
-	}
-
 	public function GetAll($lang){
 		$data = $this->find(array(
 			'fields' => "id, $lang"

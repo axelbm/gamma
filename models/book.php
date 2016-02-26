@@ -6,30 +6,6 @@ class model_book extends Model{
 		$this->setTable('books');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `books` (
-				`id`              	int(11)     	NOT NULL AUTO_INCREMENT,
-				`title`           	varchar(256)	NOT NULL,
-				`description`     	text        	NOT NULL,
-				`language`        	varchar(2)  	NOT NULL,
-				`category`        	varchar(2)  	NOT NULL,
-				`starting_page`   	int(11)     	NOT NULL,
-				`creator`         	int(11)     	NOT NULL,
-				`publication_date`	timestamp   	NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`permission`      	varchar(3)  	NOT NULL,
-				`group`           	int(11)     	DEFAULT NULL,
-				`adult`           	tinyint(1)  	NOT NULL DEFAULT '0',
-
-				UNIQUE (`id`), 
-				PRIMARY KEY (`id`),
-				FOREIGN KEY (`creator`)	REFERENCES members(`id`)
-			);
-
-			CREATE UNIQUE INDEX `Answer_ID` ON answers (`id`, `page`, `book`); 
-		");
-	}
-
 	public function GetByID($id){
 		$data = $this->find(array(
 			'conditions' => 'id='.$id,

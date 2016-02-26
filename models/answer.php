@@ -6,29 +6,6 @@ class model_answer extends Model{
 		$this->setTable('answers');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `answers` (
-				`id`              	int(11)  	NOT NULL AUTO_INCREMENT,
-				`page`            	int(11)  	NOT NULL,
-				`book`            	int(11)  	NOT NULL,
-				`destination`     	int(11)  	NOT NULL,
-				`content`         	text     	NOT NULL,
-				`creator`         	int(11)  	NOT NULL,
-				`publication_date`	timestamp	NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-				UNIQUE (`id`), 
-				PRIMARY KEY (`id`),
-				FOREIGN KEY (`page`)       	REFERENCES pages(`id`),
-				FOREIGN KEY (`destination`)	REFERENCES pages(`id`),
-				FOREIGN KEY (`book`)       	REFERENCES books(`id`),
-				FOREIGN KEY (`creator`)    	REFERENCES members(`id`)
-			);
-
-			CREATE UNIQUE INDEX `Answer_ID` ON answers (`id`, `page`, `book`); 
-		");
-	}
-
 	public function Create($data){
 		$answer = array(
 			'page'       	=> $data['page'],

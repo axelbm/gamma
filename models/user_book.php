@@ -6,25 +6,6 @@ class model_user_book extends Model{
 		$this->setTable('user_book');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `user_book` (
-				`id`         	int(11)   	NOT NULL AUTO_INCREMENT,
-				`user`       	int(11)   	NOT NULL,
-				`book`       	int(11)   	NOT NULL,
-				`like`       	tinyint(1)	NOT NULL DEFAULT '0',
-				`dislike`    	tinyint(1)	NOT NULL DEFAULT '0',
-				`following`  	tinyint(1)	NOT NULL DEFAULT '0',
-				`progression`	text,
-
-				UNIQUE (`id`), 
-				PRIMARY KEY (`id`),
-				FOREIGN KEY (`user`)	REFERENCES members(`id`),
-				FOREIGN KEY (`book`)	REFERENCES books(`id`)
-			);
-		");
-	}
-
 	public function GetLink($user, $book){
 		if(!empty($user)){
 			$link = $this->find(array(

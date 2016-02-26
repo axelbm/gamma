@@ -6,29 +6,6 @@ class model_page extends Model{
 		$this->setTable('pages');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `pages` (
-				`id`              	int(11)     	NOT NULL AUTO_INCREMENT,
-				`book`            	int(11)     	NOT NULL,
-				`title`           	varchar(256)	DEFAULT NULL,
-				`content`         	text        	NOT NULL,
-				`creator`         	int(11)     	NOT NULL,
-				`updator`         	int(11)     	DEFAULT NULL,
-				`publication_date`	timestamp   	NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`update_date`     	timestamp   	NULL DEFAULT NULL,
-
-				UNIQUE (`id`), 
-				PRIMARY KEY (`id`),
-				FOREIGN KEY (`book`)   	REFERENCES books(`id`),
-				FOREIGN KEY (`creator`)	REFERENCES members(`id`),
-				FOREIGN KEY (`updator`)	REFERENCES members(`id`)
-			);
-
-			CREATE UNIQUE INDEX `Page_ID` ON pages (`id`, `book`); 
-		");
-	}
-
 	public function Create($data){
 		$page = array(
 			'book'   	=> $data['book'],

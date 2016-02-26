@@ -6,28 +6,6 @@ class model_member extends Model{
 		$this->setTable('members');
 	}
 
-	protected function InitTable(){
-		$this->query("
-			CREATE TABLE IF NOT EXISTS `members` (
-				`id`                	int(11)    	NOT NULL AUTO_INCREMENT, 
-				`email`             	varchar(64)	NOT NULL, 
-				`username`          	varchar(32)	NOT NULL, 
-				`password`          	varchar(32)	NOT NULL, 
-				`birtdate`          	date       	NOT NULL, 
-				`country`           	varchar(2) 	NOT NULL, 
-				`registration_date` 	timestamp  	NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-				`confirmed`         	tinyint(1) 	NOT NULL DEFAULT '0', 
-				`confirmation_token`	varchar(32), 
-				`connection_token`  	varchar(32), 
-
-				UNIQUE (`id`, `email`), 
-				PRIMARY KEY (`id`)
-			); 
-
-			CREATE UNIQUE INDEX `User_Id` ON members (`id`); 
-		");
-	}
-
 	public function GetBasic($ids=array()){
 		if(!empty($ids)){
 			$data = $this->find(array(

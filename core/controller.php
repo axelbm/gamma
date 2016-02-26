@@ -152,7 +152,6 @@ class Controller{
 			if(!isset($this->models[$modelname]) | empty($this->models[$modelname])) {
 				$model = new $modelname();
 				$model->SetDatabase($this->Database);
-				$model->SetController($this);
 
 				$model->Init();
 
