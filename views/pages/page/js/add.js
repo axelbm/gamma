@@ -3,9 +3,9 @@ $(document).ready(function(){
 	var active_item;
 
 	if(phpvar.page_add_tab){
-		$('#'+phpvar.page_add_tab).tab("show")
+		$('#'+phpvar.page_add_tab).tab("show");
 	}else{
-		$('#nav_retake').tab("show")
+		$('#nav_retake').tab("show");
 	}
 
 	$('#action_nav a').on('shown.bs.tab', function(event){

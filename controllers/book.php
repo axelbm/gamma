@@ -81,6 +81,7 @@ class controller_book extends Controller{
 				foreach ($progression as $key => $value) {
 					$page = $this->Page->GetByID($value[0]);
 					$answer = $this->Answer->GetByID($value[1]);
+					
 					array_push($u, $page->Creator());
 					array_push($u, $answer->Creator());
 					array_push($data, array($page, $answer));

@@ -2,7 +2,7 @@
 class form_change_pwd extends Form{
 	var $formfields = array('pwd', 'new_pwd', 'new_pwd_conf');
 	var $user;
-
+	
 	function init(){
 		$Controller	= Controller::$self;
 		$user      	= $Controller->user;

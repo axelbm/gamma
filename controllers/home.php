@@ -29,5 +29,9 @@ class controller_home extends Controller{
 		$this->set('usersname', 	$usersname);
 		$this->render();
 	}
+
+	function act_test(){
+		$this->render();
+	}
 }
 ?>

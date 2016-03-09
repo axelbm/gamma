@@ -1,5 +1,5 @@
 
-if(phpvar.connection_modal == true){
+if(phpvar.connection_modal === true){
 	$("#connection_modal").modal("show");
 }
 
