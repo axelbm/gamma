@@ -115,7 +115,7 @@ class model_member extends Model{
 			'username'          	=> $user->Username(),
 			'email'             	=> $user->Email(),
 			'password'          	=> $user->Password(),
-			'birtdate'          	=> $user->Password(),
+			'birtdate'          	=> $user->Birtdate(),
 			'country'           	=> $user->Country(),
 			'confirmed'         	=> $user->Confirmed(),
 			'confirmation_token'	=> $user->ConfirmationToken(),

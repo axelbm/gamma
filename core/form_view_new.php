@@ -44,7 +44,7 @@ class Form_View_New{
 				break;
 		}
 
-		return "<div class=\"form-group{$status}\">\n$html</div>\n";
+		return "<div class=\"form-group{$status}\">$html</div>";
 	}
 
 	protected function inline($bool=true){
@@ -82,17 +82,17 @@ class Form_View_New{
 	public function inputlabel($id, $text){
 		$horizontal = $this->horizontal ? 'col-sm-2 ' : '';
 
-		return $html = "<label id=\"label_{$this->id}_{$id}\" for=\"input_{$this->id}_{$id}\" class=\"{$horizontal}control-label\">$text</label>\n";
+		return $html = "<label id=\"label_{$this->id}_{$id}\" for=\"input_{$this->id}_{$id}\" class=\"{$horizontal}control-label\">$text</label>";
 	}
 
 	public function help($text){
-		return $html = "<p class=\"help-block\">$text</p>\n";
+		return $html = "<p class=\"help-block\">$text</p>";
 	}
 
 	public function start($display=true){
 		$horizontal = $this->horizontal ? 'form-horizontal' : '';
 
-		$html  = "\n<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">\n";
+		$html  = "<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">";
 		$html .= $this->hidden('formid', $this->id, false);
 		$html .= $this->hidden('newform', true, false);
 
@@ -103,7 +103,7 @@ class Form_View_New{
 	}
 
 	public function end($display=true){
-		$html = "</form>\n";
+		$html = "</form>";
 
 		if($display)
 			echo $html;
@@ -132,7 +132,7 @@ class Form_View_New{
 
 		if($type == "submit"){
 			if($horizontal)
-				$html .= "<div class=\"col-sm-offset-2 col-sm-10\">\n";
+				$html .= "<div class=\"col-sm-offset-2 col-sm-10\">";
 
 			$class	= !empty($class)      	? $class       	: ["btn","btn-default"];
 			$label	= isset($opt['label'])	? $opt['label']	: 'Submit';
@@ -174,11 +174,11 @@ class Form_View_New{
 			//Horizontal condition
 			if($horizontal){
 				$offset = isset($label) ? '' : 'col-sm-offset-2 ';
-				$html .= "<div class=\"{$offset}col-sm-10\">\n";
+				$html .= "<div class=\"{$offset}col-sm-10\">";
 			}
 
 			if($type=="checkbox" or $type=="radio")
-				$html .= "<div class=\"checkbox\">\n<label>\n";
+				$html .= "<div class=\"checkbox\"><label>";
 
 			//Input
 			if($formcontrol)
@@ -222,7 +222,7 @@ class Form_View_New{
 
 			$html_attributes = " ".implode(" ", $html_attributes);
 
-			$html .= "<$tag {$html_attributes}>\n";
+			$html .= "<$tag {$html_attributes}>";
 
 			if($type == "select"){
 				$values	= isset($opt['values'])	? $opt['values']	: array();
@@ -234,7 +234,7 @@ class Form_View_New{
 
 				foreach ($values as $key => $val) {
 					$selected = (string)$value === (string)$key ? " selected" : "";
-					$html .= "<option value=\"$key\"$selected>$val</option>\n";
+					$html .= "<option value=\"$key\"$selected>$val</option>";
 				}
 			}
 
@@ -242,14 +242,14 @@ class Form_View_New{
 				if($type=="textarea")
 					$value = $this->Value($name) !== null? $this->Value($name):$value;
 
-				$html .= "$value\n";
+				$html .= "$value";
 			}
 
 			if($type == "textarea" | $type == "select" | $type == "label")
-				$html .= "</$tag>\n";
+				$html .= "</$tag>";
 
 			if($type=="checkbox" or $type=="radio")
-				$html .= "$afterlabel</label>\n</div>\n";
+				$html .= "$afterlabel</label></div>";
 
 			//Help
 			$help = $this->Message($name) !== null? $this->Message($name):$help;
@@ -260,7 +260,7 @@ class Form_View_New{
 
 		//Horizontal end
 		if($horizontal)
-			$html .= "</div>\n";
+			$html .= "</div>";
 
 		if($surround==true){
 			$status = $this->Status($name) !== null? $this->Status($name):$status;
