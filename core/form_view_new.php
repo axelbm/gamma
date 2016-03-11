@@ -47,6 +47,10 @@ class Form_View_New{
 		return "<div class=\"form-group{$status}\">\n$html</div>\n";
 	}
 
+	protected function inline($bool=true){
+		$this->inline = $bool;
+	}
+
 	protected function Value($index){
 		if(isset($this->data[$index])){
 			return $this->data[$index]->Value();
@@ -75,11 +79,7 @@ class Form_View_New{
 		$this->horizontal = $bool;
 	}
 
-	public function inline($bool=true){
-		$this->inline = $bool;
-	}
-
-	public function label($id, $text){
+	public function inputlabel($id, $text){
 		$horizontal = $this->horizontal ? 'col-sm-2 ' : '';
 
 		return $html = "<label id=\"label_{$this->id}_{$id}\" for=\"input_{$this->id}_{$id}\" class=\"{$horizontal}control-label\">$text</label>\n";
@@ -93,8 +93,8 @@ class Form_View_New{
 		$horizontal = $this->horizontal ? 'form-horizontal' : '';
 
 		$html  = "\n<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">\n";
-		$html .= $this->input(['id'=>'formid', 'value'=>$this->id, 'type'=>'hidden'], false);
-		$html .= $this->input(['id'=>'newform', 'value'=>true, 'type'=>'hidden'], false);
+		$html .= $this->hidden('formid', $this->id, false);
+		$html .= $this->hidden('newform', true, false);
 
 		if($display)
 			echo $html;
@@ -113,7 +113,7 @@ class Form_View_New{
     
 
 	public function input($opt, $display=true){
-		$id        	= $opt['id'];
+		$id        	= isset($opt['id'])        	? $opt['id']                             	: '';
 		$name      	= isset($opt['name'])      	? $opt['name']                           	: $id;
 		$label     	= isset($opt['label'])     	? $opt['label']                          	: null;
 		$type      	= isset($opt['type'])      	? $opt['type']                           	: 'text';
@@ -145,7 +145,7 @@ class Form_View_New{
 		}else{
 			$formcontrol = true;
 
-			if($type=="file"){
+			if($type=="file" | $type=="label"){
 				$formcontrol = false;
 			}elseif($type=="checkbox" or $type=="radio"){
 				$afterlabel 	= $label;
@@ -169,7 +169,7 @@ class Form_View_New{
 
 			//Label
 			if(isset($label))
-				$html .= $this->label($id, $label);
+				$html .= $this->inputlabel($id, $label);
 
 			//Horizontal condition
 			if($horizontal){
@@ -185,26 +185,68 @@ class Form_View_New{
 				array_push($class, 'form-control');
 
 
-			if($required)     	{array_push($attributes, 'required');}
-			if(isset($value)) 	{$attributes["value"]      	= $value ;}
-			if(isset($holder))	{$attributes["placeholder"]	= $holder ;}
-			if(!empty($class))	{$attributes["class"]      	= implode(' ', $class) ;}
-			if(isset($type))  	{$attributes["type"]       	= $type ;}
+			if($required)      	{array_push($attributes, 'required');}
+			if(isset($inputid))	{$attributes["id"]         	= $inputid ;}
+			if(isset($name))   	{$attributes["name"]       	= $name ;}
+			if(isset($value))  	{$attributes["value"]      	= $value ;}
+			if(isset($holder)) 	{$attributes["placeholder"]	= $holder ;}
+			if(!empty($class)) 	{$attributes["class"]      	= implode(' ', $class) ;}
+			if(isset($type))   	{$attributes["type"]       	= $type ;}
 
 
+			if($type == "textarea" | $type == "select" | $type == "label"){
+				unset($attributes['type']);
+				unset($attributes['value']);
 
-			$html_attributes	= array();
+				if($type == "label"){
+					unset($attributes['name']);
+					unset($attributes['id']);
 
-			foreach ($attributes as $key => $value) {
+					$size = isset($opt['size'])	? $opt['size']	: 0;
+					$tag = ($size >= 1 and $size <=6) ? 'h'.$size : 'label';
+				}else{
+					$tag = $type;
+				}
+			}else{
+				$tag = "input";
+			}
+
+			$html_attributes = array();
+
+			foreach ($attributes as $key => $val) {
 				if(is_numeric($key))
-					array_push($html_attributes, $value);
+					array_push($html_attributes, $val);
 				else
-					array_push($html_attributes, "$key=\"$value\"");
+					array_push($html_attributes, "$key=\"$val\"");
 			}
 
 			$html_attributes = " ".implode(" ", $html_attributes);
 
-			$html .= "<input id=\"$inputid\" name=\"$name\"{$html_attributes}>\n";
+			$html .= "<$tag {$html_attributes}>\n";
+
+			if($type == "select"){
+				$values	= isset($opt['values'])	? $opt['values']	: array();
+
+				if(!empty($holder))
+					$html .= "<option value=\"\">$holder</option>";
+
+				$value = $this->Value($name) !== null? $this->Value($name):$value;
+
+				foreach ($values as $key => $val) {
+					$selected = (string)$value === (string)$key ? " selected" : "";
+					$html .= "<option value=\"$key\"$selected>$val</option>\n";
+				}
+			}
+
+			if($type == "textarea" | $type == "label"){
+				if($type=="textarea")
+					$value = $this->Value($name) !== null? $this->Value($name):$value;
+
+				$html .= "$value\n";
+			}
+
+			if($type == "textarea" | $type == "select" | $type == "label")
+				$html .= "</$tag>\n";
 
 			if($type=="checkbox" or $type=="radio")
 				$html .= "$afterlabel</label>\n</div>\n";
@@ -231,17 +273,29 @@ class Form_View_New{
 		return $html;
 	}
 
-	public function text($id, $value=null, $label=null, $type='text', $attributes=array()){
-		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>$type, 'attributes'=>$attributes]);
+	public function text($id, $value=null, $label=null, $type='text', $attributes=array(), $display=true){
+		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>$type, 'attributes'=>$attributes], $display);
 	}
 
-	public function checkbox($id, $label='', $checked=null){
+	public function hidden($id, $value, $display=true){
+		return $this->input(['id'=>$id, 'value'=>$value, 'type'=>'hidden'], $display);
+	}
+
+	public function checkbox($id, $label='', $checked=null, $display=true){
 		$checked = $checked ? "on" : null;
-		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>'checkbox', 'value'=>$checked]);
+		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>'checkbox', 'value'=>$checked], $display);
 	}
 
-	public function submit($label){
-		return $this->input(['id'=>'submit', 'type'=>'submit', 'label'=>$label]);
+	public function submit($label, $display=true){
+		return $this->input(['id'=>'submit', 'type'=>'submit', 'label'=>$label], $display);
+	}
+
+	public function select($id, $values=array(), $label=null, $preset=null, $value='', $attributes=array(), $display=true){
+		return $this->input(['id'=>$id, 'type'=>'select', 'label'=>$label, 'holder'=>$preset, 'value'=>$value, 'values'=>$values, 'attributes'=>$attributes], $display);
+	}
+
+	public function label($text, $size=0, $display=true){
+		return $this->input(['type'=>'label', 'value'=>$text, 'size'=>$size], $display);
 	}
 
 	public function checkboxs($opt, $checkboxs, $display=true){

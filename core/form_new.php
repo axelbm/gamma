@@ -48,6 +48,8 @@ class Form_New {
 			$this->successful = true;
 			$this->Successful();
 		}
+
+		$this->End();
 	}
 
 	function __get($name){
@@ -83,6 +85,10 @@ class Form_New {
 	}
 
 	protected function Failed(){
+
+	}
+
+	protected function End(){
 
 	}
 
@@ -133,7 +139,17 @@ class Form_New {
 
 	//Tool
 
+	function Value($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
+		return $obj->Value();
+	}
+
 	function IsEmail($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
 		$str = $obj->Value();
 
 		if(filter_var($str, FILTER_VALIDATE_EMAIL))
@@ -143,11 +159,21 @@ class Form_New {
 	}
 
 	function ValidString($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
 		$str = $obj->Value();
 
 		if(!empty($str))
 			return true;
 
 		return false;
+	}
+
+	function HTMLEscape($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+		
+		return htmlspecialchars($obj->Value());
 	}
 }

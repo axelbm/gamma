@@ -6,7 +6,7 @@ class form_test extends Form_New{
 	}
 
 	protected function check_email($obj){
-		if($this->IsEmail($obj->Value())){
+		if($this->IsEmail($obj)){
 			$obj->Status(1);
 			$obj->Message("Valid Email");
 			$obj->Valid();
@@ -14,5 +14,9 @@ class form_test extends Form_New{
 			$obj->Status(3);
 			$obj->Message("Invalid Email");
 		}
+	}
+
+	protected function End(){
+		var_dump($this);
 	}
 }

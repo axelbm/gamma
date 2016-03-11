@@ -11,7 +11,6 @@ class form_user_login extends Form_New{
 	protected function check_email($obj){
 		if($this->IsEmail($obj)){
 			$obj->Status(1);
-			$obj->Message("Valid Email");
 			$obj->Valid();
 		}else{
 			$obj->Status(3);
@@ -22,7 +21,6 @@ class form_user_login extends Form_New{
 	protected function check_password($obj){
 		if($this->ValidString($obj)){
 			$obj->Status(1);
-			$obj->Message("Valid Password");
 			$obj->Valid();
 		}else{
 			$obj->Status(3);
@@ -35,15 +33,15 @@ class form_user_login extends Form_New{
 	}
 
 	protected function Successful(){
-		$user = $this->Member->GetByEmail($this->Object('email')->Value());
+		$user = $this->Member->GetByEmail($this->Value('email'));
 
 		if($user){
-			$password = $this->Object('password')->Value();
+			$password = $this->Value('password');
 
 			if($user->CheckPassword($password)){
 				$this->Controller->UserLogin($user);
 
-				if($this->Object('remember')->Value()){
+				if($this->Value('remember')){
 					$this->Object('remember')->Status(1);
 					$this->Member->AutoReconnect($user);
 				}
