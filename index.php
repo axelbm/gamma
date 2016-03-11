@@ -16,9 +16,12 @@ require ROOT.'core/form_view.php';
 require ROOT.'core/layout.php';
 require ROOT.'core/model.php';
 require ROOT.'core/util.php';
-require ROOT.'core/form_new.php';
-require ROOT.'core/form_view_new.php';
-require ROOT.'core/form_object.php';
+
+require ROOT.'core/form/main.php';
+require ROOT.'core/form/view.php';
+require ROOT.'core/form/object.php';
+require ROOT.'core/form/message.php';
+require ROOT.'core/form/result.php';
 
 session_start();
 

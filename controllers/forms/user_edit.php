@@ -78,8 +78,6 @@ class form_user_edit extends Form_New {
 
 		$this->Member->Update($this->user);
 
-		// $this->formsuccess('Les paramètres on été enregistrés');
-
 		$this->Controller->setjs('user_edit_tab', 'profil');
 		$this->Controller->setjs('hash', 'edit_profil');
 	}

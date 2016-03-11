@@ -6,6 +6,7 @@ class Form_New {
 	private $blacklisted_items	= array();
 	private $action;
 	private $objects = array();
+	private $message = array();
 	protected $Controller;
 
 	public function __construct($id, $data, $controller){
@@ -50,6 +51,10 @@ class Form_New {
 		}
 
 		$this->End();
+	}
+
+	public function Analize(){
+		
 	}
 
 	function __get($name){
@@ -122,6 +127,48 @@ class Form_New {
 		}
 	}
 
+	//Tool
+
+	public function Value($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
+		return $obj->Value();
+	}
+
+	public function IsEmail($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
+		$str = $obj->Value();
+
+		if(filter_var($str, FILTER_VALIDATE_EMAIL))
+			return true;
+
+		return false;
+	}
+
+	public function ValidString($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+
+		$str = $obj->Value();
+
+		if(!empty($str))
+			return true;
+
+		return false;
+	}
+
+	public function HTMLEscape($obj){
+		if(is_string($obj))
+			$obj = $this->Object($obj);
+		
+		return htmlspecialchars($obj->Value());
+	}
+
+	///
+
 	static function load($id, $data, $controller){
 		$formfile = ROOT.'controllers/forms/'.$id.'.php';
 
@@ -134,46 +181,5 @@ class Form_New {
 		}else{
 			return null;
 		}
-	}
-
-
-	//Tool
-
-	function Value($obj){
-		if(is_string($obj))
-			$obj = $this->Object($obj);
-
-		return $obj->Value();
-	}
-
-	function IsEmail($obj){
-		if(is_string($obj))
-			$obj = $this->Object($obj);
-
-		$str = $obj->Value();
-
-		if(filter_var($str, FILTER_VALIDATE_EMAIL))
-			return true;
-
-		return false;
-	}
-
-	function ValidString($obj){
-		if(is_string($obj))
-			$obj = $this->Object($obj);
-
-		$str = $obj->Value();
-
-		if(!empty($str))
-			return true;
-
-		return false;
-	}
-
-	function HTMLEscape($obj){
-		if(is_string($obj))
-			$obj = $this->Object($obj);
-		
-		return htmlspecialchars($obj->Value());
 	}
 }
