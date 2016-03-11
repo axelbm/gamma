@@ -16,7 +16,9 @@ require ROOT.'core/form_view.php';
 require ROOT.'core/layout.php';
 require ROOT.'core/model.php';
 require ROOT.'core/util.php';
+require ROOT.'core/form_new.php';
 require ROOT.'core/form_view_new.php';
+require ROOT.'core/form_object.php';
 
 session_start();
 

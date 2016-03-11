@@ -160,7 +160,7 @@ class Controller{
 
 			return $this->models[$modelname];
 		}else{
-			Controller::weberror('404', 'Le model demandé n\'existe pas.');
+			//Controller::weberror('404', 'Le model demandé n\'existe pas.');
 		}
 	}
 
@@ -186,15 +186,14 @@ class Controller{
 			$this->init();
 
 			$formid = isset($_POST['formid']) ? $_POST['formid'] : null;
+			$newform = isset($_POST['newform']) ? true : false;
 
 			if(isset($formid)){
-				unset($_POST['formid']);
-				
-				$form = Form::load($formid, $_POST, $this);
-
-				if(!empty($form)){
-					$this->form      	= $form;
-					$this->formresult	= $form->result;
+				if($newform){
+					$this->newform = Form_New::load($formid, $_POST, $this);
+				}else{
+					unset($_POST['formid']);
+					$this->form = Form::load($formid, $_POST, $this);
 				}
 			}
 			

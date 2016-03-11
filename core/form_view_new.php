@@ -10,19 +10,58 @@ class Form_View_New{
 
 	public function __construct($id, $data=array()){
 		$this->id = $id;
-		$this->data = $data;
 
-		$this->data = $_POST;
+		$lastform = Controller::$self->newform;
 
+		if(isset($lastform) & !empty($lastform)){
+			if($lastform->ID() == $id){
+				$this->data = $lastform->Objects();
+			}
+		}
+
+		if(empty($this->data)){
+			foreach ($data as $id => $value) {
+				$obj = new Form_Object($id, $value);
+				$this->data[$id] = $obj;
+			}
+		}
 	}
 
-	protected function surround($html){
-		return "<div class=\"form-group\">\n$html</div>\n";
+	protected function surround($html, $status=0){
+		switch ($status) {
+			case 1:
+				$status = " has-success";
+				break;
+			case 2:
+				$status = " has-warning";
+				break;
+			case 3:
+				$status = " has-error";
+				break;
+			
+			default:
+				$status = "";
+				break;
+		}
+
+		return "<div class=\"form-group{$status}\">\n$html</div>\n";
 	}
 
-	protected function get($index){
+	protected function Value($index){
 		if(isset($this->data[$index])){
-			return $this->data[$index];
+			return $this->data[$index]->Value();
+		}
+	}
+
+	protected function Message($index){
+		if(isset($this->data[$index])){
+			return $this->data[$index]->Message();
+		}
+	}
+
+	protected function Status($index){
+		if(isset($this->data[$index])){
+			return $this->data[$index]->Status();
 		}
 	}
 
@@ -55,6 +94,7 @@ class Form_View_New{
 
 		$html  = "\n<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">\n";
 		$html .= $this->input(['id'=>'formid', 'value'=>$this->id, 'type'=>'hidden'], false);
+		$html .= $this->input(['id'=>'newform', 'value'=>true, 'type'=>'hidden'], false);
 
 		if($display)
 			echo $html;
@@ -84,6 +124,7 @@ class Form_View_New{
 		$surround  	= isset($opt['surround'])  	? $opt['surround']                       	: true;
 		$attributes	= isset($opt['attributes'])	? $opt['attributes']                     	: array();
 		$value     	= isset($opt['value'])     	? $opt['value']                          	: null;
+		$status    	= isset($opt['status'])    	? $opt['status']                         	: 0;
 
 		$horizontal	= $this->horizontal;
 		$inputid   	= "input_{$this->id}_{$id}";
@@ -111,9 +152,11 @@ class Form_View_New{
 				$label      	= null;
 				$formcontrol	= false;
 
-				$value = isset($value) ? $value : 'on';
-				if($value == $this->get($name))
+				if($this->Value($name)){
 					array_push($attributes, 'checked');
+				}elseif(!empty($value)){
+					array_push($attributes, 'checked');
+				}
 			}
 			elseif($type=="hidden"){
 				$horizontal	= false;
@@ -121,7 +164,7 @@ class Form_View_New{
 				$help      	= null;
 				$surround  	= false;
 			}else{
-				$value = $this->get($name)?:$value;
+				$value = $this->Value($name) !== null? $this->Value($name):$value;
 			}
 
 			//Label
@@ -167,7 +210,9 @@ class Form_View_New{
 				$html .= "$afterlabel</label>\n</div>\n";
 
 			//Help
-			if(isset($help))
+			$help = $this->Message($name) !== null? $this->Message($name):$help;
+
+			if(isset($help) and !empty($help))
 				$html .= $this->help($help);
 		}
 
@@ -175,8 +220,10 @@ class Form_View_New{
 		if($horizontal)
 			$html .= "</div>\n";
 
-		if($surround==true)
-			$html = $this->surround($html);
+		if($surround==true){
+			$status = $this->Status($name) !== null? $this->Status($name):$status;
+			$html = $this->surround($html, $status);
+		}
 
 		if($display)
 			echo $html;
@@ -184,12 +231,21 @@ class Form_View_New{
 		return $html;
 	}
 
+	public function text($id, $value=null, $label=null, $type='text', $attributes=array()){
+		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>$type, 'attributes'=>$attributes]);
+	}
+
+	public function checkbox($id, $label='', $checked=null){
+		$checked = $checked ? "on" : null;
+		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>'checkbox', 'value'=>$checked]);
+	}
+
+	public function submit($label){
+		return $this->input(['id'=>'submit', 'type'=>'submit', 'label'=>$label]);
+	}
 
 	public function checkboxs($opt, $checkboxs, $display=true){
 
 	}
 
-	public function submit($opt=[]){
-
-	}
 }

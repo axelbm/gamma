@@ -7,12 +7,14 @@
 			</div>
 			<div class="modal-body">
 				<?php
-				$form = new Form_View('login');
-				$form->input('email', '', 'Address courriel:', 'text');
-				$form->input('pwd', '', 'Mot de passe:', 'password');
-				$form->checkbox('remember', 'Se souvenir de moi.');
-				$form->submit('Envoyer');
-				$form->done();
+				$form = new Form_View_New('user_login');
+
+				$form->start();
+					$form->text('email', '', 'Address courriel', 'email', ['required'=>true]);
+					$form->text('password', '', 'Mot de passe', 'password', ['required'=>true]);
+					$form->checkbox('remember', 'Se souvenir de moi.');
+					$form->submit('Envoyer');
+				$form->end();
 				?>
 			</div>
 		</div>

@@ -101,6 +101,16 @@ class Member{
 		$this->connection_token = null;
 	}
 
+	public function CheckPassword($password, $encrypted=false){
+		if(!$encrypted)
+			$password = md5($password);
+
+		if($this->Password() === $password)
+			return true;
+
+		return false;
+	}
+
 	public function ChangePassword($password){
 		$pwd = md5($password);
 		$this->Password($pwd);
