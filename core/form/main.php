@@ -2,16 +2,16 @@
 class Form_New {
 	private $id;
 	private $failed;
+	private $vars             	= array();
 	private $default_objects  	= array();
 	private $blacklisted_items	= array();
-	private $action;
-	private $objects = array();
-	private $message = array();
-	protected $Controller;
+	private $objects          	= array();
+	private $message          	= array();
 
-	public function __construct($id, $data, $controller){
+	public function __construct($id, $data, $vars){
 		$this->id = $id;
-		$this->Controller = $controller;
+		$this->vars = $vars;
+		// $this->Controller = $controller;
 
 		$this->BlacList('formid');
 		$this->Init();
@@ -53,12 +53,14 @@ class Form_New {
 		$this->End();
 	}
 
-	public function Analize(){
-		
-	}
-
 	function __get($name){
-		return $this->Controller->$name;
+		$fc = substr($name, 0, 1);
+		if(ctype_upper($fc)){
+			$model = $this->Model($name);
+			if($model){
+				return $this->$name = $model;
+			}
+		}
 	}
 
 	public function ID(){
@@ -75,6 +77,17 @@ class Form_New {
 
 	public function IsSuccessful(){
 		return $this->successful;
+	}
+
+	protected function Get($key){
+		if(array_key_exists($key, $this->vars))
+			return $this->vars[$key];
+
+		return null;
+	}
+
+	protected function Model($name){
+		return Model::Load($name);
 	}
 
 	protected function DefaultCheck($obj){

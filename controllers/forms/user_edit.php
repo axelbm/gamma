@@ -5,7 +5,7 @@ class form_user_edit extends Form_New {
 	protected function Init(){
 		$this->DefaultObject(['username', 'country', 'birtdate']);
 
-		$user = $this->Controller->user;
+		$user = $this->Get('user');
 
 		if(!empty($user)){
 			$this->user = $user;
@@ -78,7 +78,8 @@ class form_user_edit extends Form_New {
 
 		$this->Member->Update($this->user);
 
-		$this->Controller->setjs('user_edit_tab', 'profil');
-		$this->Controller->setjs('hash', 'edit_profil');
+		$Controller = Controller::$self;
+		$Controller->setjs('user_edit_tab', 'profil');
+		$Controller->setjs('hash', 'edit_profil');
 	}
 }

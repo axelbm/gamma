@@ -3,7 +3,7 @@ class form_user_login extends Form_New{
 	protected function Init(){
 		$this->DefaultObject(['email', 'password', 'remember']);
 
-		$user = $this->Controller->user;
+		$user = $this->Get('user');
 		if(!empty($user))
 			$this->Fail();
 	}
@@ -29,7 +29,8 @@ class form_user_login extends Form_New{
 	}
 
 	protected function Failed(){
-		$this->Controller->setjs('connection_modal', true);
+		$Controller = Controller::$self;
+		$Controller->setjs('connection_modal', true);
 	}
 
 	protected function Successful(){
@@ -39,7 +40,8 @@ class form_user_login extends Form_New{
 			$password = $this->Value('password');
 
 			if($user->CheckPassword($password)){
-				$this->Controller->UserLogin($user);
+				$Controller = Controller::$self;
+				$Controller->UserLogin($user);
 
 				if($this->Value('remember')){
 					$this->Object('remember')->Status(1);

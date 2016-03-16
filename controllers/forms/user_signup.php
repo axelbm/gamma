@@ -3,7 +3,7 @@ class form_user_signup extends Form_New{
 	protected function Init(){
 		$this->DefaultObject(['username', 'email', 'password', 'password_conf', 'country', 'birtdate', 'aggre']);
 
-		$user = $this->Controller->user;
+		$user = $this->Get('user');
 		if(!empty($user))
 			$this->Fail();
 	}
