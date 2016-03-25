@@ -1,5 +1,7 @@
 <?php
-class form_user_setting extends Form{
+namespace Apps\Form\Old;
+
+class form_user_setting extends \Gamma\Old\Form{
 	
 	
 	function fail(){

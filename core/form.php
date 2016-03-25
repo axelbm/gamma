@@ -152,10 +152,10 @@ class Form{
 	}
 
 	static function load($formid, $data, $controller){
-		$formfile = ROOT.'controllers/forms/old/'.$formid.'.php';
+		$formfile = ROOT.'forms/old/'.$formid.'.php';
 
 		if(file_exists($formfile)){
-			$formclass = 'form_'.$formid;
+			$formclass = '\Apps\Form\Old\form_'.$formid;
 
 			require($formfile);
 			$form = new $formclass($data, $controller);

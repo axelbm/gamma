@@ -26,7 +26,7 @@
 				<div class="tab-content">
 					<div id="tab_book" class="tab-pane fade">
 						<?php
-						$form = new Form_View('edit_book', $data, true);
+						$form = new \Gamma\Old\Form\View('edit_book', $data, true);
 						$form->label('Information du livre', 3);
 						$form->input('title', '', 'Titre', 'text');
 						$form->textarea('description', '', 'Description', array('rows'=>8));

@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Form;
 
+use \Gamma\Controller as Controller;
+
 class Change_Password extends \Gamma\Form {
 	private $user;
 

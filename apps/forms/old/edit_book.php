@@ -1,5 +1,7 @@
 <?php
-class form_edit_book extends Form{
+namespace Apps\Form\Old;
+
+class form_edit_book extends \Gamma\Old\Form{
 	protected $formfields = array('title', 'description', 'language', 'category', 'starting_page', 'adult');
 
 	function init(){

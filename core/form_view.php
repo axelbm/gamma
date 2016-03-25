@@ -1,7 +1,9 @@
 <?php
-namespace Gamma\Old;
+namespace Gamma\Old\Form;
 
-class Form_View{
+use Gamma\Controller as Controller;
+
+class View{
 	private $inputs = array();
 	private $formid = "";
 	private $data = array();

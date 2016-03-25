@@ -1,5 +1,7 @@
 <?php
-class form_signup extends Form{
+namespace Apps\Form\Old;
+
+class form_signup extends \Gamma\Old\Form{
 	var $formfields = array('username', 'email', 'pwd', 'pwd_conf', 'country', 'birtdate', 'aggre');
 
 	function init(){

@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Model;
 
+use \Apps\Object\Book as BookO;
+
 class Book extends \Gamma\Model{
 
 
@@ -17,7 +19,7 @@ class Book extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$book = new Book($data);
+			$book = new BookO($data);
 			return $book;
 		}
 	}
@@ -31,7 +33,7 @@ class Book extends \Gamma\Model{
 		if($data){
 			$books = array();
 			foreach ($data as $key => $value) {
-				$book = new \Apps\Object\Book($value);
+				$book = new BookO($value);
 				array_push($books, $book);
 			}
 

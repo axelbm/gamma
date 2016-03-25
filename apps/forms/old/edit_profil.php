@@ -1,5 +1,7 @@
 <?php
-class form_edit_profil extends Form{
+namespace Apps\Form\Old;
+
+class form_edit_profil extends \Gamma\Old\Form{
 	var $formfields = array('username', 'country', 'birtdate');
 	var $user;
 

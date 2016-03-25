@@ -1,5 +1,7 @@
 <?php
-class form_book_action extends Form{
+namespace Apps\Form\Old;
+
+class form_book_action extends \Gamma\Old\Form{
 	var $formfields = array('action');
 	private $Link;
 	private $user;

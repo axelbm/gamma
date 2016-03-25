@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<?php
-				$form = new Form_View('delete_account', array(), true);
+				$form = new \Gamma\Old\Form\View('delete_account', array(), true);
 				$form->hidden('id', $user->ID());
 				$form->input('pwd', '', 'Mot de passe:', 'password');
 				$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
@@ -55,16 +55,7 @@
 				?>
 				<hr>
 				<?php
-				// $form = new Form_View('change_pwd', array(), true);
-				// $form->horizontal();
-				// $form->label('Changement de mot de passe', 3);
-				// $form->input('pwd', '', 'Mot de passe', 'password');
-				// $form->input('new_pwd', '', 'Nouveau mot de passe', 'password');
-				// $form->input('new_pwd_conf', '', 'Confirmez le mot de passe', 'password');
-				// $form->submit('Envoyer');
-				// $form->done();
-
-				$form = new Form_View_New('user_change_password');
+				$form = new Gamma\Form\View('user_change_password');
 				$form->horizontal();
 
 				$form->start();
@@ -81,7 +72,7 @@
 				$language_list = array('FR' => 'Français', 'EN' => 'English');
 				$style_list = array('default' => 'Défaut');
 				
-				$form = new Form_View('user_setting', $data, true);
+				$form = new Gamma\Old\Form\View('user_setting', $data, true);
 				$form->horizontal();
 				$form->label('Parametre', 3);
 				$form->select('language', $language_list, 'Langage');

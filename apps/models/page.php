@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Model;
 
+use Apps\Object\Page as PageO;
+
 class Page extends \Gamma\Model{
 
 
@@ -28,7 +30,7 @@ class Page extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$page = new Page($data);
+			$page = new PageO($data);
 			return $page;
 		}
 	}
@@ -43,7 +45,7 @@ class Page extends \Gamma\Model{
 		}else{
 			$pages = array();
 			foreach ($data as $key => $value) {
-				$page = new Page($value);
+				$page = new PageO($value);
 				array_push($pages, $page);
 			}
 			return $pages;
@@ -53,7 +55,7 @@ class Page extends \Gamma\Model{
 	public function Count($id){
 		$sql = "SELECT COUNT(id) AS count FROM ".$this->table." WHERE book=".$id;
 		$req = $this->query($sql);
-		return $req->fetch(PDO::FETCH_ASSOC)['count'];
+		return $req->fetch(\PDO::FETCH_ASSOC)['count'];
 	}
 
 	public function GetAuthors($book){

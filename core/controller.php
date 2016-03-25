@@ -2,7 +2,8 @@
 namespace Gamma;
 
 class Controller{
-	var $vars = array();
+	private $vars = array();
+	private $formvars = array();
 	var $layout = DEFAULT_LAYOUT;
 	var $controller;
 	var $action;
@@ -12,7 +13,6 @@ class Controller{
 	var $js = array();
 	var $jsvars = array();
 	var $models = array();
-	var $Database;
 
 	static $self;
 	static $controllername = '';
@@ -26,29 +26,23 @@ class Controller{
 		$this->action	= $action;
 		$this->params	= $params;
 		$this->data  	= $data;
-
-		$this->Database = new Database('localhost', DB_NAME, DB_NAME, DB_PSW);
-
-		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-			$this->user = $this->Member->GetByID($_SESSION['user_id']);
-		}else{
-			if(isset($_COOKIE['connection_token']) & !empty($_COOKIE['connection_token'])){
-				$this->user = $this->Member->GetByConnectionToken($_COOKIE['connection_token']);
-			}
-		}
 	}
 
 	function __get($name){
 		$fc = substr($name, 0, 1);
 		if(ctype_upper($fc)){
-			$this->$name = $this->loadModel($name);
-			return $this->$name;
+			$model = $this->Model($name);
+			if($model){
+				return $this->$name = $model;
+			}
 		}
 		
 	}
+	
+	function MainInit(){
+	}
 
-	function init(){
-
+	function Init(){
 	}
 
 	function set($vars, $value=null){
@@ -61,6 +55,20 @@ class Controller{
 				$this->vars = array_merge($this->vars, $vars);
 			}else{
 				array_push($this->vars, $vars);
+			}
+		}
+	}
+
+	function ToForm($key, $value=null){
+		if(isset($value)){
+			if(is_string($key)){
+				$this->formvars[$key] = $value;
+			}
+		}else{
+			if(is_array($key)){
+				$this->formvars = array_merge($this->formvars, $key);
+			}else{
+				array_push($this->formvars, $key);
 			}
 		}
 	}
@@ -138,32 +146,8 @@ class Controller{
 	}
 
 
-	function loadModel($name){
-		$file = ROOT.'models/'.strtolower($name).'.php';
-		
-		if(file_exists($file)){
-			require_once($file);
-
-			$obj_file = ROOT.'objects/'.strtolower($name).'.php';
-
-			if(file_exists($obj_file))
-				require_once $obj_file;
-
-			$modelname = 'Apps\Model\\'.strtolower($name);
-
-			if(!isset($this->models[$modelname]) | empty($this->models[$modelname])) {
-				$model = new $modelname();
-				$model->SetDatabase($this->Database);
-
-				$model->Init();
-
-				$this->models[$modelname] = $model;
-			}
-
-			return $this->models[$modelname];
-		}else{
-			//Controller::weberror('404', 'Le model demandé n\'existe pas.');
-		}
+	function Model($name){
+		return Model::Load($name);
 	}
 
 	function noaction($action=null, $params=null){
@@ -185,17 +169,18 @@ class Controller{
 	function run(){
 		$action = 'act_'.$this->action;
 		if(method_exists($this, $action)){
-			$this->init();
+			$this->MainInit();
+			$this->Init();
 
 			$formid = isset($_POST['formid']) ? $_POST['formid'] : null;
 			$newform = isset($_POST['newform']) ? true : false;
 
 			if(isset($formid)){
 				if($newform){
-					$this->newform = Form::load($formid, $_POST, $this);
+					$this->newform = Form::load($formid, $_POST, $this->formvars);
 				}else{
 					unset($_POST['formid']);
-					$this->form = Form::load($formid, $_POST, $this);
+					$this->form = Old\Form::load($formid, $_POST, $this);
 				}
 			}
 			

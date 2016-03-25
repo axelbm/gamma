@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Model;
 
+use \Apps\Object\Member as MemberO;
+
 class Member extends \Gamma\Model{
 	static private $_members = array();
 	
@@ -46,7 +48,7 @@ class Member extends \Gamma\Model{
 			if(empty($data)){
 				return null;
 			}else{
-				$member = new Member($data);
+				$member = new MemberO($data);
 				self::$_members[$member->ID()] = $member;
 				return $member;
 			}
@@ -62,7 +64,7 @@ class Member extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member($data);
+			$member = new MemberO($data);
 			self::$_members[$member->ID()] = $member;
 			return $member;
 		}
@@ -77,7 +79,7 @@ class Member extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new \Apps\Object\Member($data);
+			$member = new MemberO($data);
 			self::$_members[$member->ID()] = $member;
 			return $member;
 		}
@@ -92,7 +94,7 @@ class Member extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$member = new Member($data);
+			$member = new MemberO($data);
 			self::$_members[$member->ID()] = $member;
 			return $member;
 		}

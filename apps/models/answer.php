@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Model;
 
+use Apps\Object\Answer as AnswerO;
+
 class Answer extends \Gamma\Model{
 
 
@@ -29,7 +31,7 @@ class Answer extends \Gamma\Model{
 		if(empty($data)){
 			return null;
 		}else{
-			$answer = new Answer($data);
+			$answer = new AnswerO($data);
 			return $answer;
 		}
 	}
@@ -44,7 +46,7 @@ class Answer extends \Gamma\Model{
 		}else{
 			$answers = array();
 			foreach ($data as $key => $value) {
-				$answer = new Answer($value);
+				$answer = new AnswerO($value);
 				array_push($answers, $answer);
 			}
 			return $answers;
@@ -61,7 +63,7 @@ class Answer extends \Gamma\Model{
 		}else{
 			$answers = array();
 			foreach ($data as $key => $value) {
-				$answer = new Answer($value);
+				$answer = new AnswerO($value);
 				array_push($answers, $answer);
 			}
 			return $answers;

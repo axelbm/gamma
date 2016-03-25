@@ -1,13 +1,15 @@
 <?php 
 namespace Apps\Form;
 
+use \Gamma\Controller as Controller;
+
 class User_edit extends \Gamma\Form {
 	private $user;
 
 	protected function Init(){
 		$this->DefaultObject(['username', 'country', 'birtdate']);
 
-		$user = $this->Controller->user;
+		$user = $this->Get('user');
 
 		if(!empty($user)){
 			$this->user = $user;
@@ -80,7 +82,8 @@ class User_edit extends \Gamma\Form {
 
 		$this->Member->Update($this->user);
 
-		$this->Controller->setjs('user_edit_tab', 'profil');
-		$this->Controller->setjs('hash', 'edit_profil');
+		$Controller = Controller::$self;
+		$Controller->setjs('user_edit_tab', 'profil');
+		$Controller->setjs('hash', 'edit_profil');
 	}
 }

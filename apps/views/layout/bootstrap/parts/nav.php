@@ -18,14 +18,14 @@
 			
 			
 			<ul class="nav navbar-nav navbar-right">
-				<?php if(empty($user)){ ?>
+				<?php if(empty($this->user)){ ?>
 					<li><a href="<?php echo WEBROOT.'user/signup/' ?>"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
 					<li><a href="" data-toggle="modal" data-target="#connection_modal"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 				<?php 
 				}else{  ?>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo WEBROOT ?>">
-							<b><?php echo $user->Username() ?></b> 
+							<b><?php echo $this->user->Username() ?></b> 
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">

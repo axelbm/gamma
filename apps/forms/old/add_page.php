@@ -1,5 +1,7 @@
 <?php
-class form_add_page extends Form{
+namespace Apps\Form\Old;
+
+class form_add_page extends \Gamma\Old\Form{
 	var $formfields = array('answer', 'title', 'content', 'book', "pageid", 'page', 'action');
 	var $user;
 	var $selected_page;

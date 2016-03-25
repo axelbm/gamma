@@ -2,6 +2,8 @@
 namespace Gamma;
 
 class Model{
+	static $models = array();
+	static $mainDB;
 	protected $Database;
 	public $table;
 	protected $columns;
@@ -105,6 +107,45 @@ class Model{
 	public function delete($id){
 		$sql = "DELETE FROM {$this->table} WHERE id=$id";
 		$req = $this->query($sql);
+	}
+
+
+	////////
+
+	static function GetDatabase(){
+		if(self::$mainDB){
+			return self::$mainDB;
+		}else{
+			return self::$mainDB = new Database('localhost', DB_NAME, DB_NAME, DB_PSW);
+		}
+	}
+
+	static function Load($name){
+		if(array_key_exists($name, self::$models)){
+			return self::$models[$name];
+		}else{
+			$file = ROOT.'models/'.strtolower($name).'.php';
+			
+			if(file_exists($file)){
+				require_once($file);
+
+				$obj_file = ROOT.'objects/'.strtolower($name).'.php';
+
+				if(file_exists($obj_file))
+					require_once $obj_file;
+
+				$modelname = 'Apps\Model\\'.strtolower($name);
+
+				$model = new $modelname();
+				$model->SetDatabase(self::GetDatabase());
+
+				$model->Init();
+
+				self::$models[$name] = $model;
+
+				return self::$models[$name];
+			}
+		}
 	}
 }
 ?>

@@ -36,13 +36,13 @@
 				<div id="debug-value-container" class="collapse">
 					<div class="well" style="overflow-y: auto;">
 						<ul style="list-style:none; padding-left: 0px;">
-							<li><?php echo Util::SublimTab($this, 'Controller'); ?></li>
-							<li><?php echo Util::SublimTab($_COOKIE, 'Cookie'); ?></li>
-							<li><?php echo Util::SublimTab($_GET, 'Get'); ?></li>
-							<li><?php echo Util::SublimTab($_POST, 'Post'); ?></li>
-							<li><?php echo Util::SublimTab($_SERVER, 'Server'); ?></li>
-							<li><?php echo Util::SublimTab($_SESSION, 'Session'); ?></li>
-							<li><?php echo Util::SublimTab($this->user, 'User'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($this, 'Controller'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($_COOKIE, 'Cookie'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($_GET, 'Get'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($_POST, 'Post'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($_SERVER, 'Server'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($_SESSION, 'Session'); ?></li>
+							<li><?php echo \Gamma\Util::SublimTab($this->user, 'User'); ?></li>
 						</ul>
 					</div>
 				</div>

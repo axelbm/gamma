@@ -1,11 +1,13 @@
 <?php
 namespace Apps\Form;
 
+use \Gamma\Controller as Controller;
+
 class User_signup extends \Gamma\Form{
 	protected function Init(){
 		$this->DefaultObject(['username', 'email', 'password', 'password_conf', 'country', 'birtdate', 'aggre']);
 
-		$user = $this->Controller->user;
+		$user = $this->Get('user');
 		if(!empty($user))
 			$this->Fail();
 	}
