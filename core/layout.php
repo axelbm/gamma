@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Layout{
 	var $vars = array();
 

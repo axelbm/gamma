@@ -1,5 +1,7 @@
 <?php
-class Form_Object{
+namespace Gamma\Form;
+
+class Object{
 	private $id;
 	private $value;
 	private $message;

@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Model{
 	static $models = array();
 	static $mainDB;
@@ -35,7 +37,7 @@ class Model{
 		$sql = "SELECT $fields FROM {$this->table} WHERE id='$id'";
 		$req = $this->query($sql);
 
-		$data = $req->fetch(PDO::FETCH_ASSOC);
+		$data = $req->fetch(\PDO::FETCH_ASSOC);
 		return $data;
 	}
 
@@ -93,9 +95,9 @@ class Model{
 
 		if($req){
 			if($single){
-				$data = $req->fetch(PDO::FETCH_ASSOC);
+				$data = $req->fetch(\PDO::FETCH_ASSOC);
 			}else{
-				$data = $req->fetchAll(PDO::FETCH_ASSOC)?:array();
+				$data = $req->fetchAll(\PDO::FETCH_ASSOC)?:array();
 			}
 		
 			return $data;
@@ -132,7 +134,7 @@ class Model{
 				if(file_exists($obj_file))
 					require_once $obj_file;
 
-				$modelname = 'model_'.strtolower($name);
+				$modelname = 'Apps\Model\\'.strtolower($name);
 
 				$model = new $modelname();
 				$model->SetDatabase(self::GetDatabase());

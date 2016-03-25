@@ -1,5 +1,7 @@
 <?php
-class Form_New {
+namespace Gamma;
+
+class Form {
 	private $id;
 	private $failed;
 	private $vars             	= array();
@@ -26,7 +28,7 @@ class Form_New {
 
 		foreach ($data as $id => $value) {
 			if(!in_array($id, $this->blacklisted_items)){
-				$obj = new Form_Object($id, $value);
+				$obj = new Form\Object($id, $value);
 
 				$method = "check_$id";
 				if(method_exists($this, $method)){
@@ -183,10 +185,10 @@ class Form_New {
 	///
 
 	static function load($id, $data, $controller){
-		$formfile = ROOT.'controllers/forms/'.$id.'.php';
+		$formfile = ROOT.'forms/'.$id.'.php';
 
 		if(file_exists($formfile)){
-			$formclass = 'form_'.$id;
+			$formclass = 'Apps\Form\\'.$id;
 
 			require($formfile);
 			$form = new $formclass($id, $data, $controller);

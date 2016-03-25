@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Controller{
 	private $vars = array();
 	private $formvars = array();
@@ -36,18 +38,8 @@ class Controller{
 		}
 		
 	}
-
+	
 	function MainInit(){
-		if(isset($_SESSION['user_id']) & !empty($_SESSION['user_id'])){
-			$this->user = $this->Member->GetByID($_SESSION['user_id']);
-		}else{
-			if(isset($_COOKIE['connection_token']) & !empty($_COOKIE['connection_token'])){
-				$this->user = $this->Member->GetByConnectionToken($_COOKIE['connection_token']);
-			}
-		}
-
-		if($this->user)
-			$this->ToForm('user', $this->user);
 	}
 
 	function Init(){
@@ -185,10 +177,10 @@ class Controller{
 
 			if(isset($formid)){
 				if($newform){
-					$this->newform = Form_New::load($formid, $_POST, $this->formvars);
+					$this->newform = Form::load($formid, $_POST, $this->formvars);
 				}else{
 					unset($_POST['formid']);
-					$this->form = Form::load($formid, $_POST, $this);
+					$this->form = Old\Form::load($formid, $_POST, $this);
 				}
 			}
 			
@@ -209,7 +201,7 @@ class Controller{
 		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
-			$class = 'controller_'.$controller;
+			$class = 'Apps\Controller\\'.$controller;
 
 			$controller = new $class($action, $params, $data);
 			$controller->controller = $cn;

@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Util{
 	static $subtabid = 0;
 
