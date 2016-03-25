@@ -1,4 +1,8 @@
 <?php
+namespace Gamma;
+
+use \PDO as PDO;
+
 class Database extends PDO {
 	
 	public function __construct($hostname, $dbname=null, $username=null, $password=null, $option=null){

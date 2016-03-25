@@ -1,4 +1,6 @@
 <?php
+namespace Gamma\Old;
+
 class Form{
 	protected $Controller;
 	protected $varname;

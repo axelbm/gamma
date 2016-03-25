@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Model{
 	protected $Database;
 	public $table;
@@ -33,7 +35,7 @@ class Model{
 		$sql = "SELECT $fields FROM {$this->table} WHERE id='$id'";
 		$req = $this->query($sql);
 
-		$data = $req->fetch(PDO::FETCH_ASSOC);
+		$data = $req->fetch(\PDO::FETCH_ASSOC);
 		return $data;
 	}
 
@@ -91,9 +93,9 @@ class Model{
 
 		if($req){
 			if($single){
-				$data = $req->fetch(PDO::FETCH_ASSOC);
+				$data = $req->fetch(\PDO::FETCH_ASSOC);
 			}else{
-				$data = $req->fetchAll(PDO::FETCH_ASSOC)?:array();
+				$data = $req->fetchAll(\PDO::FETCH_ASSOC)?:array();
 			}
 		
 			return $data;

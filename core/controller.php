@@ -1,4 +1,6 @@
 <?php
+namespace Gamma;
+
 class Controller{
 	var $vars = array();
 	var $layout = DEFAULT_LAYOUT;
@@ -147,7 +149,7 @@ class Controller{
 			if(file_exists($obj_file))
 				require_once $obj_file;
 
-			$modelname = 'model_'.strtolower($name);
+			$modelname = 'Apps\Model\\'.strtolower($name);
 
 			if(!isset($this->models[$modelname]) | empty($this->models[$modelname])) {
 				$model = new $modelname();
@@ -190,7 +192,7 @@ class Controller{
 
 			if(isset($formid)){
 				if($newform){
-					$this->newform = Form_New::load($formid, $_POST, $this);
+					$this->newform = Form::load($formid, $_POST, $this);
 				}else{
 					unset($_POST['formid']);
 					$this->form = Form::load($formid, $_POST, $this);
@@ -214,7 +216,7 @@ class Controller{
 		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
-			$class = 'controller_'.$controller;
+			$class = 'Apps\Controller\\'.$controller;
 
 			$controller = new $class($action, $params, $data);
 			$controller->controller = $cn;

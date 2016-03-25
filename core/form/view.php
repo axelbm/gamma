@@ -1,7 +1,7 @@
 <?php
-// namespace StoryHub\Tools;
+namespace Gamma\Form;
 
-class Form_View_New{
+class View{
 	protected $id;
 	protected $data;
 	protected $horizontal	= false;
@@ -12,7 +12,7 @@ class Form_View_New{
 	public function __construct($id, $data=array()){
 		$this->id = $id;
 
-		$lastform = Controller::$self->newform;
+		$lastform = \Gamma\Controller::$self->newform;
 
 		if(isset($lastform) & !empty($lastform)){
 			if($lastform->ID() == $id){

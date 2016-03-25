@@ -1,5 +1,7 @@
 <?php
-class form_message {
+namespace Gamma\Form;
+
+class Message {
 	private $mesage;
 	private $status;
 	private $position;

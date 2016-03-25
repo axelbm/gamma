@@ -1,4 +1,6 @@
 <?php
+namespace Gamma\Old;
+
 class Form_View{
 	private $inputs = array();
 	private $formid = "";
