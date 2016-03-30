@@ -1,15 +1,13 @@
 <?php
-namespace Apps\Form;
+namespace Apps\Form\User;
 
-use \Gamma\Controller as Controller;
-
-class Change_Password extends \Gamma\Form {
+class ChangePassword extends \Gamma\Form {
 	private $user;
 
 	protected function Init(){
 		$this->DefaultObject(['password', 'new_password', 'new_password_conf']);
 
-		$user = $this->Controller->user;
+		$user = $this->controller->User();
 
 		if(!empty($user)){
 			$this->user = $user;
@@ -67,9 +65,8 @@ class Change_Password extends \Gamma\Form {
 	}
 
 	protected function Failed(){
-		$Controller = Controller::$self;
-		$Controller->setjs('user_edit_tab', 'profil');
-		$Controller->setjs('hash', 'change_pwd');
+		$this->controller->setjs('user_edit_tab', 'profil');
+		$this->controller->setjs('hash', 'change_pwd');
 	}
 
 	protected function Successful(){

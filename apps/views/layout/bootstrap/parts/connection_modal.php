@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<?php
-				$form = new \Gamma\Form\View('user_login');
+				$form = $this->form('login');
 
 				$form->start();
 					$form->text('email', '', 'Address courriel', 'email', ['required'=>true]);

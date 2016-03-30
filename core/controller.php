@@ -2,18 +2,16 @@
 namespace Gamma;
 
 class Controller{
-	private $vars = array();
-	private $formvars = array();
-	var $layout = DEFAULT_LAYOUT;
-	var $controller;
-	var $action;
-	var $params = array();
-	var $user = null;
-	var $error;
-	var $js = array();
-	var $jsvars = array();
-	var $models = array();
-
+	public $controller;
+	public $action;
+	protected $vars = array();
+	protected $layout = DEFAULT_LAYOUT;
+	protected $params = array();
+	protected $user = null;
+	protected $error;
+	protected $js = array();
+	protected $jsvars = array();
+	protected $models = array();
 	static $self;
 	static $controllername = '';
 
@@ -36,9 +34,8 @@ class Controller{
 				return $this->$name = $model;
 			}
 		}
-		
 	}
-	
+
 	function MainInit(){
 	}
 
@@ -55,20 +52,6 @@ class Controller{
 				$this->vars = array_merge($this->vars, $vars);
 			}else{
 				array_push($this->vars, $vars);
-			}
-		}
-	}
-
-	function ToForm($key, $value=null){
-		if(isset($value)){
-			if(is_string($key)){
-				$this->formvars[$key] = $value;
-			}
-		}else{
-			if(is_array($key)){
-				$this->formvars = array_merge($this->formvars, $key);
-			}else{
-				array_push($this->formvars, $key);
 			}
 		}
 	}
@@ -98,20 +81,7 @@ class Controller{
 		$viewfile = ROOT.'views/pages/'.$this->controller.'/'.$filename.'.php';
 
 		if(file_exists($viewfile)){
-			if(file_exists(ROOT.'/controllers/layout/'.$this->layout.'.php')){
-				require_once(ROOT.'/controllers/layout/'.$this->layout.'.php');
-				$name = 'layout_'.$this->layout;
-				$layout = new $name;
-				$this->set($layout->getvars());
-
-			}
-
 			extract($this->vars);
-
-			$this->addjs('views/pages/'.$this->controller.'/js/javascript.js');
-			$this->addjs('views/pages/'.$this->controller.'/js/'.$filename.'.js');
-			$this->addjs('views/layout/'.$this->layout.'/js/javascript.js');
-			$this->addjs('views/pages/'.$this->controller.'/js/'.$this->controller.'.js');
 
 			$jsfiles = array();
 			foreach ($this->js as $js) {
@@ -141,6 +111,18 @@ class Controller{
 		}
 	}
 
+	function form($id, $data=array()){
+		$formdata = array();
+
+		if(isset($this->form) and !empty($this->form)){
+			if($id == $this->form->ID()){
+				$formdata = $this->form->Objects();
+			}
+		}
+
+		return new Form\View($id, $data, $formdata);
+	}
+
 	function setTitle($title){
 		$this->vars['title'] = $title;
 	}
@@ -152,11 +134,6 @@ class Controller{
 
 	function noaction($action=null, $params=null){
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
-	}
-
-	function UserLogin($user){
-		$this->user = $user;
-		$_SESSION['user_id'] = $user->ID();
 	}
 
 	function HasError(){
@@ -173,15 +150,11 @@ class Controller{
 			$this->Init();
 
 			$formid = isset($_POST['formid']) ? $_POST['formid'] : null;
-			$newform = isset($_POST['newform']) ? true : false;
+			$formtoken = isset($_POST['token']) ? $_POST['token'] : null;
+			$formtime = isset($_POST['time']) ? $_POST['time'] : null;
 
 			if(isset($formid)){
-				if($newform){
-					$this->newform = Form::load($formid, $_POST, $this->formvars);
-				}else{
-					unset($_POST['formid']);
-					$this->form = Old\Form::load($formid, $_POST, $this);
-				}
+				$this->form = Form::load($formid, $_POST, $this);
 			}
 			
 			call_user_func_array(array($this, $action), $this->params);
@@ -189,6 +162,7 @@ class Controller{
 		else{
 			$this->noaction($this->action, $this->params);
 		}
+
 	}
 
 	static function load($controller=null, $action=null, $params=null, $data=null){
@@ -221,6 +195,10 @@ class Controller{
 	static function weberror($code, $message=null, $data=null){
 		self::load('error', $code, array($message), $data);
 		exit();
+	}
+
+	public function User(){
+		return $this->user;
 	}
 }
 ?>

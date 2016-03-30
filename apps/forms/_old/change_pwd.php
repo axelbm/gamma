@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_change_pwd extends \Gamma\Old\Form{
 	var $formfields = array('pwd', 'new_pwd', 'new_pwd_conf');

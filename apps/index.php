@@ -12,17 +12,15 @@ define('PREVIOUS_PAGE'     	, (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP
 
 require COREROOT.'database.php';
 require COREROOT.'controller.php';
-require COREROOT.'form.php';
-require COREROOT.'form_view.php';
-require COREROOT.'layout.php';
+//require COREROOT.'form.php';
+//require COREROOT.'form_view.php';
 require COREROOT.'model.php';
 require COREROOT.'util.php';
 
-require COREROOT.'form/main.php';
+require COREROOT.'form/form.php';
 require COREROOT.'form/view.php';
 require COREROOT.'form/object.php';
 require COREROOT.'form/message.php';
-require COREROOT.'form/result.php';
 
 require ROOT.'controller.php';
 

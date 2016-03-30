@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_user_setting extends \Gamma\Old\Form{
 	

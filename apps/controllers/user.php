@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Controller;
 
+use \Gamma\Controller as Controller;
+
 class User extends \Apps\Controller{
 
 	function init(){

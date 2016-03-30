@@ -13,7 +13,17 @@ class Controller extends \Gamma\Controller{
 
 		if($this->user){
 			$this->set('user', $this->user);
-			$this->ToForm('user', $this->user);
 		}
+		
+
+		$this->addjs('views/pages/'.$this->controller.'/js/javascript.js');
+		$this->addjs('views/pages/'.$this->controller.'/js/'.$this->action.'.js');
+		$this->addjs('views/layout/'.$this->layout.'/js/javascript.js');
+		$this->addjs('views/pages/'.$this->controller.'/js/'.$this->controller.'.js');
+	}
+
+	function UserLogin($user){
+		$this->user = $user;
+		$_SESSION['user_id'] = $user->ID();
 	}
 }

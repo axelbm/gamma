@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_create_book extends \Gamma\Old\Form{
 	protected $formfields = array('title', 'description', 'language', 'category', 'adult', 'perm_all', 'perm_members', 'group', 'perm_group'/*, 'page_title', 'page_content'*/);

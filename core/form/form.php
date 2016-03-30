@@ -2,20 +2,19 @@
 namespace Gamma;
 
 class Form {
-	private $id;
-	private $failed;
-	private $vars             	= array();
-	private $default_objects  	= array();
-	private $blacklisted_items	= array();
-	private $objects          	= array();
-	private $message          	= array();
+	protected $id;
+	protected $failed;
+	protected $controller;
+	protected $default_objects  	= array();
+	protected $blacklisted_items	= array();
+	protected $objects          	= array();
+	protected $message          	= array();
 
-	public function __construct($id, $data, $vars){
-		$this->id = $id;
-		$this->vars = $vars;
-		// $this->Controller = $controller;
+	public function __construct($id, $data, $controller){
+		$this->id        	= $id;
+		$this->controller	= $controller;
 
-		$this->BlacList('formid');
+		$this->BlacList('formid', 'token');
 		$this->Init();
 
 		$inputs = array();
@@ -81,13 +80,6 @@ class Form {
 		return $this->successful;
 	}
 
-	protected function Get($key){
-		if(array_key_exists($key, $this->vars))
-			return $this->vars[$key];
-
-		return null;
-	}
-
 	protected function Model($name){
 		return Model::Load($name);
 	}
@@ -142,6 +134,25 @@ class Form {
 		}
 	}
 
+	public function Action($action=null){
+		if(!empty($action))
+			$this->action = $action;
+
+		return $this->action;
+	}
+
+	public function ActionData(){
+		return $this->actiondata;
+	}
+
+	public function FormData(){
+		return $this->formdata;
+	}
+
+	public function ClientData(){
+		return $this->clientdata;
+	}
+
 	//Tool
 
 	public function Value($obj){
@@ -185,11 +196,15 @@ class Form {
 	///
 
 	static function load($id, $data, $controller){
-		$formfile = ROOT.'forms/'.$id.'.php';
+		$formfile = ROOT."forms/{$controller->controller}/$id.php";
+		$formclass = "Apps\Form\\{$controller->controller}\\$id";
+
+		if(!file_exists($formfile)){
+			$formfile = ROOT."forms/$id.php";
+			$formclass = "Apps\Form\\$id";
+		}
 
 		if(file_exists($formfile)){
-			$formclass = 'Apps\Form\\'.$id;
-
 			require($formfile);
 			$form = new $formclass($id, $data, $controller);
 			return $form;

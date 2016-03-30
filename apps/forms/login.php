@@ -1,15 +1,19 @@
 <?php
 namespace Apps\Form;
 
-use \Gamma\Controller as Controller;
+class Login extends \Gamma\Form{
+	private $user;
 
-class User_login extends \Gamma\Form{
 	protected function Init(){
 		$this->DefaultObject(['email', 'password', 'remember']);
 
-		$user = $this->Get('user');
-		if(!empty($user))
+		$user = $this->controller->User();
+
+		if(!empty($user)){
+			$this->user = $user;
+		}else{
 			$this->Fail();
+		}
 	}
 
 	protected function check_email($obj){
@@ -33,8 +37,7 @@ class User_login extends \Gamma\Form{
 	}
 
 	protected function Failed(){
-		$Controller = Controller::$self;
-		$Controller->setjs('connection_modal', true);
+		$this->controller->setjs('connection_modal', true);
 	}
 
 	protected function Successful(){
@@ -44,8 +47,7 @@ class User_login extends \Gamma\Form{
 			$password = $this->Value('password');
 
 			if($user->CheckPassword($password)){
-				$Controller = Controller::$self;
-				$Controller->UserLogin($user);
+				$this->controller->UserLogin($user);
 
 				if($this->Value('remember')){
 					$this->Object('remember')->Status(1);

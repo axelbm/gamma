@@ -8,16 +8,18 @@ class View{
 	protected $inline    	= false;
 	protected $method    	= 'post';
 	protected $messages  	= array();
+	protected $token;
+	protected $time;
 
-	public function __construct($id, $data=array()){
-		$this->id = $id;
+	public function __construct($id, $data=array(), $formdata=array()){
+		$this->id   	= $id;
+		$this->token	= uniqid(rand(), true);
+		$this->time 	= time();
 
-		$lastform = \Gamma\Controller::$self->newform;
+		$lastform = \Gamma\Controller::$self->form;
 
-		if(isset($lastform) & !empty($lastform)){
-			if($lastform->ID() == $id){
-				$this->data = $lastform->Objects();
-			}
+		if(!empty($formdata)){
+			$this->data = $formdata;
 		}
 
 		if(empty($this->data)){
@@ -92,10 +94,12 @@ class View{
 
 	public function start($display=true){
 		$horizontal = $this->horizontal ? 'form-horizontal' : '';
+		
+		$_SESSION["forms_token"][$this->id] = array("token" => $this->token, "time" => $this->time);
 
 		$html  = "<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">";
 		$html .= $this->hidden('formid', $this->id, false);
-		$html .= $this->hidden('newform', true, false);
+		$html .= $this->hidden('token', $this->token, false);
 
 		if($display)
 			echo $html;
@@ -275,7 +279,7 @@ class View{
 	}
 
 	public function text($id, $value=null, $label=null, $type='text', $attributes=array(), $display=true){
-		return $this->input(['id'=>$id, 'label'=>$label, 'type'=>$type, 'attributes'=>$attributes], $display);
+		return $this->input(['id'=>$id, 'value'=>$value, 'label'=>$label, 'type'=>$type, 'attributes'=>$attributes], $display);
 	}
 
 	public function hidden($id, $value, $display=true){
@@ -297,6 +301,10 @@ class View{
 
 	public function label($text, $size=0, $display=true){
 		return $this->input(['type'=>'label', 'value'=>$text, 'size'=>$size], $display);
+	}
+
+	public function textarea($id, $value=null, $label=null, $attributes=array(), $display=true){
+		return $this->input(['id'=>$id, 'value'=>$value, 'label'=>$label, 'type'=>'textarea', 'attributes'=>$attributes], $display);
 	}
 
 	public function checkboxs($opt, $checkboxs, $display=true){

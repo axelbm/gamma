@@ -7,13 +7,15 @@
 			</div>
 			<div class="modal-body">
 				<?php
-				$form = new \Gamma\Old\Form\View('delete_account', array(), true);
-				$form->hidden('id', $user->ID());
-				$form->input('pwd', '', 'Mot de passe:', 'password');
-				$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
-				$form->label('Attention, cette action est irreversible!');
-				$form->submit('Supprimer');
-				$form->done();
+				$form = $this->form('delete');
+
+				$form->start();
+					$form->hidden('id', $user->ID());
+					$form->text('pwd', '', 'Mot de passe:', 'password');
+					$form->checkbox('confirm', 'Êtes vous bien sûr de vouloir supprimer votre compte?');
+					$form->label('Attention, cette action est irreversible!');
+					$form->submit('Supprimer');
+				$form->end();
 				?>
 			</div>
 		</div>
@@ -40,7 +42,7 @@
 				);
 				//ssdccxxsdf - Julie
 
-				$form = new Gamma\Form\View('user_edit');
+				$form = $this->form('edit');
 				$form->horizontal();
 
 				$form->start();
@@ -55,7 +57,7 @@
 				?>
 				<hr>
 				<?php
-				$form = new Gamma\Form\View('user_change_password');
+				$form = $this->form('changepassword');
 				$form->horizontal();
 
 				$form->start();
@@ -72,13 +74,15 @@
 				$language_list = array('FR' => 'Français', 'EN' => 'English');
 				$style_list = array('default' => 'Défaut');
 				
-				$form = new Gamma\Old\Form\View('user_setting', $data, true);
+				$form = $this->form('setting');
 				$form->horizontal();
-				$form->label('Parametre', 3);
-				$form->select('language', $language_list, 'Langage');
-				$form->select('style', $style_list, 'Style du site');
-				$form->submit('Envoyer');
-				$form->done();
+
+				$form->start();
+					$form->label('Parametre', 3);
+					$form->select('language', $language_list, 'Langage');
+					$form->select('style', $style_list, 'Style du site');
+					$form->submit('Envoyer');
+				$form->end();
 				?>
 			</div>
 			<div id="tab_security" class="tab-pane fade">

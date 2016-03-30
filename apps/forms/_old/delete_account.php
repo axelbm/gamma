@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_delete_account extends \Gamma\Old\Form{
 	var $formfields = array('id', 'pwd', 'confirm');

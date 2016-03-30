@@ -1,80 +1,34 @@
-<?php
-namespace Apps\Form;
+<?php 
+namespace Apps\Form\User;
 
-use \Gamma\Controller as Controller;
+class Edit extends \Gamma\Form {
+	private $user;
 
-class User_signup extends \Gamma\Form{
 	protected function Init(){
-		$this->DefaultObject(['username', 'email', 'password', 'password_conf', 'country', 'birtdate', 'aggre']);
+		$this->DefaultObject(['username', 'country', 'birtdate']);
 
-		$user = $this->Get('user');
-		if(!empty($user))
+		$user = $this->controller->User();
+
+		if(!empty($user)){
+			$this->user = $user;
+		}else{
 			$this->Fail();
+		}
 	}
 
 	protected function check_username($obj){
 		if($this->ValidString($obj)){
 			$username = $obj->Value();
 
-			if(strlen($username) < 1 or strlen($username) > 32){
-				$obj->Status(3);
-				$obj->Message("Le nom doit être entre 1 et 32 lettres");
-			}else{
-				$obj->Status(1);
-				$obj->Valid();
-			}
-		}else{
-			$obj->Status(3);
-			$obj->Message("Vous devez entrer un nom.");
-		}
-	}
-
-	protected function check_email($obj){
-		if($this->IsEmail($obj)){
-			$account = $this->Member->GetByEmail($obj->Value());
-
-			if($account){
-				$obj->Status(3);
-				$obj->Message("L'email est déja utilisé.");
-			}else{
-				$obj->Status(1);
-				$obj->Valid();
-			}
-		}else{
-			$obj->Status(3);
-			$obj->Message("Veuillez entrer votre courriel.");
-		}
-	}
-
-	protected function check_password($obj){
-		if($this->ValidString($obj)){
-			$password = $obj->Value();
-
-			if(strlen($password) < 6 or strlen($password) > 16){
-				$obj->Status(3);
-				$obj->Message("Le mot de passe doit contenir entre 6 et 16 lettres.");
-			}else{
-				$obj->Status(1);
-				$obj->Valid();
-			}
-		}else{
-			$obj->Status(3);
-			$obj->Message("Le mot de passe est obligatoir.");
-		}
-	}
-
-	protected function check_password_conf($obj){
-		if($this->ValidString($obj)){
-			if($obj->Value() == $this->Value('password')){
+			if(strlen($username) >= 1 & strlen($username) <= 32){
 				$obj->Status(1);
 				$obj->Valid();
 			}else{
 				$obj->Status(3);
-				$obj->Message("Les mots de passe ne correspondent pas.");
+				$obj->Message('Le nom doit être entre 1 et 32 lettres');
 			}
 		}else{
-			$obj->Status(3);
-			$obj->Message("Vous devez confirmer votre mot de passse.");
+			$obj->Valid();
 		}
 	}
 
@@ -90,8 +44,7 @@ class User_signup extends \Gamma\Form{
 				$obj->Message("Il y a une érreur dans la sélection du pays.");
 			}
 		}else{
-			$obj->Status(3);
-			$obj->Message('Vous devez sélectionner votre pays.');
+			$obj->Valid();
 		}
 	}
 
@@ -105,37 +58,28 @@ class User_signup extends \Gamma\Form{
 				$obj->Message("La date est invalide. (aaaa-mm-jj)");
 			}
 		}else{
-			$obj->Status(3);
-			$obj->Message('Vous devez entrer votre date de naissence.');
+			$obj->Valid();
 		}
 	}
 
-	protected function check_aggre($obj){
-		if($this->ValidString($obj)){
-			$obj->Status(1);
-			$obj->Valid();
-		}else{
-			$obj->Status(3);
-			$obj->Message('Vous devez accepter les condition d\'utilisateur.');
-		}
+	protected function Failed(){
+		$this->controller->setjs('user_edit_tab', 'profil');
+		$this->controller->setjs('hash', 'edit_profil');
 	}
 
 	protected function Successful(){
-		$account = array();
+		if($this->ValidString('username'))
+			$this->user->UserName($this->HTMLEscape('username'));
 
-		$account['email']   	= $this->Value('email');
-		$account['username']	= $this->HTMLEscape('username');
-		$account['password']	= $this->Value('password');
-		$account['country'] 	= $this->Value('country');
-		$account['birtdate']	= $this->Value('birtdate');
+		if($this->ValidString('country'))
+			$this->user->Country($this->Value('country'));
 
-		$id = $this->Member->CreateAccout($account);
+		if($this->ValidString('birtdate'))
+			$this->user->Birtdate($this->Value('birtdate'));
 
-		if(isset($id) & !empty($id)){
-			$_SESSION['success_userid'] = $id;
+		$this->Member->Update($this->user);
 
-			header('Location: '.WEBROOT.'user/success');
-			exit;
-		}
+		$this->controller->setjs('user_edit_tab', 'profil');
+		$this->controller->setjs('hash', 'edit_profil');
 	}
 }

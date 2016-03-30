@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_page_answer extends \Gamma\Old\Form{
 	var $formfields = array('answer');

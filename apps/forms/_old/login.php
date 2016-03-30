@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Form\Old;
+namespace Apps\Form\_Old;
 
 class form_login extends \Gamma\Old\Form{
 	var $formfields = array('email', 'pwd', 'remember');
