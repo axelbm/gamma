@@ -16,15 +16,13 @@ class View{
 		$this->token	= uniqid(rand(), true);
 		$this->time 	= time();
 
-		$lastform = \Gamma\Controller::$self->form;
-
 		if(!empty($formdata)){
 			$this->data = $formdata;
 		}
 
 		if(empty($this->data)){
 			foreach ($data as $id => $value) {
-				$obj = new Form_Object($id, $value);
+				$obj = new Object($id, $value);
 				$this->data[$id] = $obj;
 			}
 		}
@@ -50,7 +48,7 @@ class View{
 		return "<div class=\"form-group{$status}\">$html</div>";
 	}
 
-	protected function inline($bool=true){
+	public function inline($bool=true){
 		$this->inline = $bool;
 	}
 
@@ -94,10 +92,11 @@ class View{
 
 	public function start($display=true){
 		$horizontal = $this->horizontal ? 'form-horizontal' : '';
+		$inline = $this->inline ? 'form-inline' : '';
 		
 		$_SESSION["forms_token"][$this->id] = array("token" => $this->token, "time" => $this->time);
 
-		$html  = "<form id=\"{$this->id}\" class=\"$horizontal\" role=\"form\" method=\"{$this->method}\">";
+		$html  = "<form id=\"{$this->id}\" class=\"{$horizontal}{$inline}\" role=\"form\" method=\"{$this->method}\">";
 		$html .= $this->hidden('formid', $this->id, false);
 		$html .= $this->hidden('token', $this->token, false);
 

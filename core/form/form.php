@@ -209,6 +209,7 @@ class Form {
 			$form = new $formclass($id, $data, $controller);
 			return $form;
 		}else{
+			die($formfile);
 			return null;
 		}
 	}

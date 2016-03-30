@@ -15,7 +15,7 @@ class Controller{
 	static $self;
 	static $controllername = '';
 
-	function __construct($action=null, $params=array(), $data=array()){
+	public function __construct($action=null, $params=array(), $data=array()){
 		Controller::$self = $this;
 
 		if(!isset($action) or empty($action))
@@ -26,7 +26,7 @@ class Controller{
 		$this->data  	= $data;
 	}
 
-	function __get($name){
+	public function __get($name){
 		$fc = substr($name, 0, 1);
 		if(ctype_upper($fc)){
 			$model = $this->Model($name);
@@ -36,13 +36,13 @@ class Controller{
 		}
 	}
 
-	function MainInit(){
+	public function MainInit(){
 	}
 
-	function Init(){
+	public function Init(){
 	}
 
-	function set($vars, $value=null){
+	public function set($vars, $value=null){
 		if(isset($value)){
 			if(is_string($vars)){
 				$this->vars[$vars] = $value;
@@ -56,7 +56,7 @@ class Controller{
 		}
 	}
 
-	function setjs($vars, $value=null){
+	public function setjs($vars, $value=null){
 		if(isset($value) & !empty($value)){
 			if(is_string($vars)){
 				$this->jsvars[$vars] = $value;
@@ -70,11 +70,11 @@ class Controller{
 		}
 	}
 
-	function addjs($name){
+	public function addjs($name){
 		array_push($this->js, $name);
 	}
 
-	function render($filename=null){
+	public function render($filename=null){
 		if(empty($filename))
 			$filename = $this->action;
 
@@ -111,7 +111,7 @@ class Controller{
 		}
 	}
 
-	function form($id, $data=array()){
+	public function form($id, $data=array()){
 		$formdata = array();
 
 		if(isset($this->form) and !empty($this->form)){
@@ -123,27 +123,27 @@ class Controller{
 		return new Form\View($id, $data, $formdata);
 	}
 
-	function setTitle($title){
+	public function setTitle($title){
 		$this->vars['title'] = $title;
 	}
 
 
-	function Model($name){
+	public function Model($name){
 		return Model::Load($name);
 	}
 
-	function noaction($action=null, $params=null){
+	public function noaction($action=null, $params=null){
 		Controller::weberror('404', 'L\'action demandé n\'existe pas.');
 	}
 
-	function HasError(){
+	public function HasError(){
 		if($this->error){
 			return true;
 		}
 		return false;
 	}
 
-	function run(){
+	public function run(){
 		$action = 'act_'.$this->action;
 		if(method_exists($this, $action)){
 			$this->MainInit();

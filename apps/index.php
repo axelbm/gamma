@@ -3,6 +3,7 @@ define('WEBROOT'           	, preg_replace('(apps\/[^\/]*\.php)', '', $_SERVER['
 define('ROOT'              	, preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('COREROOT'          	, preg_replace('(apps\/[^\/]*\.php)', 'core/', $_SERVER['SCRIPT_FILENAME']));
 define('Site_Name'         	, 'Story Hub');
+define('Language'          	, 'fr');
 define('DB_NAME'           	, 'story_hub');
 define('DB_PSW'            	, 'kiwi');
 define('DEFAULT_CONTROLLER'	, 'home');

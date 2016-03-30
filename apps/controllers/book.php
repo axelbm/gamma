@@ -5,7 +5,6 @@ class Book extends \Apps\Controller{
 	public $book;
 
 	function init(){
-
 		if(isset($this->params[0]) & !empty($this->params[0])){
 			$bookid = $this->params[0];
 			if(is_numeric($bookid)){
@@ -51,7 +50,7 @@ class Book extends \Apps\Controller{
 			$stats['rate'] 	= round($stats['likerate']*100, 2);
 			$stats['stars']	= round($stats['likerate']*5);
 
-			$category = $this->Categories->GetByID($this->book->Category()?:'OT', 'FR');
+			$category = $this->Resource->Categories($this->book->Category()?:'OT', 'fr');
 
 			$this->set('book_category',	$category);
 			$this->set('stats',        	$stats);

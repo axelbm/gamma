@@ -8,7 +8,7 @@ class Home extends \Apps\Controller{
 		$offset	= isset($_GET['p'])&!empty($_GET['p'])?$_GET['p']:0;
 		$books 	= $this->Book->GetList($count, $offset)?:array();
 
-		$categories = $this->Categories->GetAll('FR');
+		$categories = $this->Resource->Categories();
 
 		$getcreator = function($book){
 			return $book->Creator();

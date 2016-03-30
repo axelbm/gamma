@@ -4,13 +4,16 @@
 		<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book->Creator(); ?>"><?php echo $usersname[$book->Creator()]; ?></a></small></h1>
 		<p><span class="glyphicon glyphicon-time"></span> Livre publié le <?php echo $book->PublicationDate(); ?></p>
 		<div>
+			<?php
+			$form = $this->form("action");
 
-			<form id="book_link" class="form-inline" role="form" method="post">
-				<input name="formid" type="hidden" value="book_action">
-
+			$form->start();
+			?>
 				<a class="btn btn-default btn-sm" href="<?php echo WEBROOT.'book/view/'.$book->ID(); ?>">Retour</a>
 				<button type="submit" class="btn btn-default btn-sm" value="restart" name="action">Recommencer</button>
-			</form>
+			<?php 
+			$form->end();
+			?>
 		</div>
 	</div>
 	<hr>

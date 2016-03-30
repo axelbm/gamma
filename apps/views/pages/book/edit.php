@@ -26,16 +26,19 @@
 				<div class="tab-content">
 					<div id="tab_book" class="tab-pane fade">
 						<?php
-						$form = new \Gamma\Old\Form\View('edit_book', $data, true);
-						$form->label('Information du livre', 3);
-						$form->input('title', '', 'Titre', 'text');
-						$form->textarea('description', '', 'Description', array('rows'=>8));
-						$form->select('language', $language, 'Langue', 'Choisissez la langue');
-						$form->select('category', $categories, 'Catégorie', 'Choisissez la categorie');
-						$form->select('starting_page', $pages_title, 'Première page', 'Choisissez la page de commencement');
-						$form->checkbox('adult', 'Contenu adulte.');
-						$form->submit('Envoyer');
-						$form->done();
+						$form = new \Gamma\Form\View('edit', $data);
+						// $form->horizontal();
+
+						$form->start();
+							$form->label('Information du livre', 3);
+							$form->text('title', "", 'Titre', 'text');
+							$form->textarea('description', "", 'Description', array('rows'=>8));
+							$form->select('language', $language, 'Langue', 'Choisissez la langue');
+							$form->select('category', $categories, 'Catégorie', 'Choisissez la categorie');
+							$form->select('starting_page', $pages_title, 'Première page', 'Choisissez la page de commencement');
+							$form->checkbox('adult', 'Contenu adulte.');
+							$form->submit('Envoyer');
+						$form->end();
 						?>
 					</div>
 					<div id="tab_pages" class="tab-pane fade">

@@ -16,6 +16,9 @@ class User extends \Apps\Controller{
 		if($message == 'success'){
 			echo 'heyyy';
 		}else{
+			$country_list = $this->Resource->Countries();
+			
+			$this->set("country_list", $country_list);
 			$this->render();
 		}
 	}
@@ -79,6 +82,9 @@ class User extends \Apps\Controller{
 
 	function act_edit(){
 		if($this->user){
+			$country_list = $this->Resource->Countries();
+			
+			$this->set("country_list", $country_list);
 			$this->render();
 		}else{
 			Controller::weberror('404', 'La page est invalide.');

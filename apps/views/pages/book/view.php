@@ -5,18 +5,23 @@
 			<small>Par <a href="<?php echo WEBROOT.'user/profil/'.$book->Creator(); ?>"><?php echo $usersname[$book->Creator()]; ?></a></small></h2>
 			<p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $book->PublicationDate(); ?></p>
 			
-			<form id="book_link" class="form-inline" role="form" method="post">
-				<input name="formid" type="hidden" value="book_action">
-					<button type="submit" class="btn btn-info <?php echo empty($user)? 'disabled' : ''; ?>" value="follow" name="action"><span class="glyphicon glyphicon-paperclip"></span> 
-						<?php echo $link['following'] ? 'Se désabonner' : 'S\'abonner' ?>
-					</button>
+			<?php
+			$form = $this->form("action");
+
+			$form->start();
+			?>
+				<button type="submit" class="btn btn-info <?php echo empty($user)? 'disabled' : ''; ?>" value="follow" name="action"><span class="glyphicon glyphicon-paperclip"></span> 
+					<?php echo $link['following'] ? 'Se désabonner' : 'S\'abonner' ?>
+				</button>
 				<div class="btn-group">
 					<button type="submit" class="btn btn-<?php echo $link['dislike'] ? 'danger' : 'default'; ?> <?php echo empty($user)? 'disabled' : ''; ?>" value="dislike" name="action"><span class="glyphicon glyphicon-thumbs-down"></span>
 					</button>
 					<button type="submit" class="btn btn-<?php echo $link['like'] ? 'success' : 'default'; ?> <?php echo empty($user)? 'disabled' : ''; ?>" value="like" name="action"><span class="glyphicon glyphicon-thumbs-up"></span>
 					</button>
 				</div>
-			</form>
+			<?php 
+			$form->end();
+			?>
 		</div>
 		<hr>
 		<div class="body">

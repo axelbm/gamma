@@ -81,7 +81,7 @@ class User_book extends \Gamma\Model{
 
 	public function GetStats($book){
 		$table	= $this->table;
-		$sql  	= "SELECT SUM(`like`) AS `like`, SUM(`dislike`) AS `dislike`, COUNT(`user`) AS `view`, SUM(`following`) AS `following` FROM $table WHERE `book`='$book'";
+		$sql  	= "SELECT SUM(`like`) AS `like`, SUM(`dislike`) AS `dislike`, COUNT(`user`) AS `view`, SUM(`following`) AS `following` FROM `$table` WHERE `book`='$book'";
 		$req  	= $this->query($sql);
 		$data 	= $req->fetch(\PDO::FETCH_ASSOC);
 
