@@ -7,7 +7,6 @@ class Controller{
 	protected $vars = array();
 	protected $layout = DEFAULT_LAYOUT;
 	protected $params = array();
-	protected $user = null;
 	protected $error;
 	protected $js = array();
 	protected $jsvars = array();
@@ -86,7 +85,7 @@ class Controller{
 			$jsfiles = array();
 			foreach ($this->js as $js) {
 				if(file_exists(ROOT.$js)){
-					array_push($jsfiles, WEBROOT.$js);
+					array_push($jsfiles, WEBROOT.'apps/'.$js);
 				}
 			}
 
@@ -156,6 +155,7 @@ class Controller{
 			if(isset($formid)){
 				$this->form = Form::load($formid, $_POST, $this);
 			}
+			$_SESSION["forms_token"] = null;
 			
 			call_user_func_array(array($this, $action), $this->params);
 		}
@@ -195,10 +195,6 @@ class Controller{
 	static function weberror($code, $message=null, $data=null){
 		self::load('error', $code, array($message), $data);
 		exit();
-	}
-
-	public function User(){
-		return $this->user;
 	}
 }
 ?>

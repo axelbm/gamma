@@ -3,6 +3,7 @@ namespace Apps\Model;
 
 class Resource extends \Gamma\Model{
 	private $language = Language;
+	private $resources = array();
 
 	public function Init(){
 		$this->setTable('resources');
@@ -16,41 +17,30 @@ class Resource extends \Gamma\Model{
 		$table = strtolower($table);
 
 		if(empty($arguments)){
-			return $this->GetAll($table);
+			return $this->Get($table);
 		}elseif(count($arguments) === 1){
-			return $this->GetAll($table, $arguments[0]);
-		}elseif(count($arguments) === 2){
-			return $this->Get($table, $arguments[0], $arguments[1]);
+			return $this->Get($table, $arguments[0]);
 		}
 	}
 
-	public function GetAll($table, $lang=null){
-		if(is_null($lang))
-			$lang = $this->language;
+	public function Get($table, $lang=null){
+		$langs = [$this->language];
+		if(!is_null($lang))
+			array_push($langs, $lang);
+		$langfield = '`' . implode($langs, '`, `') . '`';
+
 
 		$data = $this->find([
-			'fields'    	=> "`id`, `$lang`",
+			'fields'    	=> "`id`, $langfield",
 			'conditions'	=> "`table` = \"$table\""
 		]);
 		$d = array();
+
 		foreach ($data as $key => $value) {
-			$d[$value['id']] = $value[$lang];
+			$d[$value['id']] = isset($lang) ? $value[$lang] : $value[$this->language];
 		}
 
 		return $d;
-	}
-
-	public function Get($table, $id, $lang=null){
-		if(is_null($lang))
-			$lang = $this->language;
-
-		$data = $this->find([
-			'fields'    	=> "`$lang`",
-			'conditions'	=> "`table` = \"$table\" AND `id` = \"$id\"",
-			'single'    	=> true
-		]);
-
-		return $data[$lang];
 	}
 
 	public function FindByName($name, $lang=null){
@@ -76,4 +66,3 @@ class Resource extends \Gamma\Model{
 		}
 	}
 }
-?>

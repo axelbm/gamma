@@ -66,4 +66,3 @@ class Page extends \Gamma\Model{
 		return array_map(function($v){return $v['creator'];}, $data);
 	}
 }
-?>

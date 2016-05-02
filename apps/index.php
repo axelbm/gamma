@@ -2,7 +2,7 @@
 define('WEBROOT'           	, preg_replace('(apps\/[^\/]*\.php)', '', $_SERVER['SCRIPT_NAME']));
 define('ROOT'              	, preg_replace('([^\/]*\.php)', '', $_SERVER['SCRIPT_FILENAME']));
 define('COREROOT'          	, preg_replace('(apps\/[^\/]*\.php)', 'core/', $_SERVER['SCRIPT_FILENAME']));
-define('Site_Name'         	, 'Story Hub');
+define('Site_Name'         	, 'StoryHub');
 define('Language'          	, 'fr');
 define('DB_NAME'           	, 'story_hub');
 define('DB_PSW'            	, 'kiwi');
@@ -13,11 +13,8 @@ define('PREVIOUS_PAGE'     	, (isset($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP
 
 require COREROOT.'database.php';
 require COREROOT.'controller.php';
-//require COREROOT.'form.php';
-//require COREROOT.'form_view.php';
 require COREROOT.'model.php';
 require COREROOT.'util.php';
-
 require COREROOT.'form/form.php';
 require COREROOT.'form/view.php';
 require COREROOT.'form/object.php';

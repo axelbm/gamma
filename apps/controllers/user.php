@@ -1,26 +1,23 @@
 <?php
 namespace Apps\Controller;
 
-use \Gamma\Controller as Controller;
-
 class User extends \Apps\Controller{
 
-	function init(){
+	function Init(){
 		
 	}
 
-	function act_signup($message=null){
-		if($this->user)
-			Controller::weberror('404', 'La page est invalide.');
-
-		if($message == 'success'){
-			echo 'heyyy';
-		}else{
-			$country_list = $this->Resource->Countries();
-			
-			$this->set("country_list", $country_list);
-			$this->render();
+	function act_signup(){
+		if($this->User()){
+			header('Location: '.WEBROOT);
+			exit;
 		}
+
+		$country_list = $this->Resource->Countries();
+		
+		$this->set("country_list", $country_list);
+		$this->render();
+	
 	}
 
 	function act_success(){
@@ -31,7 +28,7 @@ class User extends \Apps\Controller{
 				$user = $this->Member->GetByID($id);
 
 				if(empty($user))
-					Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+					die('L\'utilisateur demandé est introuvable.');
 
 
 				$data = array('member'=>$user);
@@ -39,10 +36,12 @@ class User extends \Apps\Controller{
 
 				$this->render();
 			}else{
-				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+				header('Location: '.WEBROOT);
+				exit;
 			}
 		}else{
-			Controller::weberror('404', '');
+			header('Location: '.WEBROOT);
+			exit;
 		}
 	}
 
@@ -52,8 +51,10 @@ class User extends \Apps\Controller{
 
 		$user = $this->Member->GetByToken($token);
 
-		if(empty($user))
-			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+		if(empty($user)){
+			header('Location: '.WEBROOT);
+			exit;
+		}
 
 		if(!$user->Confirmed()){
 			$user->Confirm();
@@ -64,7 +65,8 @@ class User extends \Apps\Controller{
 			$this->set($d);
 			$this->render();
 		}else{
-			Controller::weberror('404', 'Votre compte a déjà été confirmé.');
+			header('Location: '.WEBROOT);
+			exit;
 		}
 
 	}
@@ -87,7 +89,8 @@ class User extends \Apps\Controller{
 			$this->set("country_list", $country_list);
 			$this->render();
 		}else{
-			Controller::weberror('404', 'La page est invalide.');
+			header('Location: '.WEBROOT);
+			exit;
 		}
 	}
 
@@ -98,7 +101,8 @@ class User extends \Apps\Controller{
 			if(!empty($this->user)){
 				$user = $this->user;
 			}else{
-				Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+				header('Location: '.WEBROOT);
+				exit;
 			}
 		}
 		else{
@@ -106,7 +110,8 @@ class User extends \Apps\Controller{
 		}
 
 		if(!$user){
-			Controller::weberror('404', 'L\'utilisateur demandé est introuvable.');
+			header('Location: '.WEBROOT);
+			exit;
 		}
 
 		$data = array('member'=>$user);
@@ -116,4 +121,3 @@ class User extends \Apps\Controller{
 		$this->render();
 	}
 }
-?>

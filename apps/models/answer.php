@@ -70,4 +70,3 @@ class Answer extends \Gamma\Model{
 		}
 	}
 }
-?>

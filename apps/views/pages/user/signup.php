@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<?php
-		$form = new Gamma\Form\View('Signup');
+		$form = $this->form('signup');
 		$form->horizontal();
 
 		$form->start();

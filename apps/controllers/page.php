@@ -3,7 +3,7 @@ namespace Apps\Controller;
 
 class Page extends \Apps\Controller{
 
-	function init(){
+	function Init(){
 	}
 
 	function act_add($id=null){
@@ -32,4 +32,3 @@ class Page extends \Apps\Controller{
 		}
 	}
 }
-?>

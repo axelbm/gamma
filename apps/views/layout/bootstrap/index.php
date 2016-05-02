@@ -28,28 +28,10 @@
 				include 'parts/connection_modal.php'; ?>
 
 			<?php echo $content_for_layout; ?>
-
 			<hr>
-			
-			<div>
-				<button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#debug-value-container">Debug</button>
-				<div id="debug-value-container" class="collapse">
-					<div class="well" style="overflow-y: auto;">
-						<ul style="list-style:none; padding-left: 0px;">
-							<li><?php echo \Gamma\Util::SublimTab($this, 'Controller'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($_COOKIE, 'Cookie'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($_GET, 'Get'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($_POST, 'Post'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($_SERVER, 'Server'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($_SESSION, 'Session'); ?></li>
-							<li><?php echo \Gamma\Util::SublimTab($this->user, 'User'); ?></li>
-						</ul>
-					</div>
-				</div>
-			</div> 
 		</div>
 		<?php foreach ($jsfiles as $key => $jsfile): ?>
-			<script src="<?php echo ($jsfile); ?>"></script>
+			<script src="<?=$jsfile?>"></script>
 		<?php endforeach; ?>
 	</body>
 </html>

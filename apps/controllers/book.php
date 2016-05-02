@@ -4,7 +4,7 @@ namespace Apps\Controller;
 class Book extends \Apps\Controller{
 	public $book;
 
-	function init(){
+	function Init(){
 		if(isset($this->params[0]) & !empty($this->params[0])){
 			$bookid = $this->params[0];
 			if(is_numeric($bookid)){
@@ -160,7 +160,7 @@ class Book extends \Apps\Controller{
 
 	function act_create(){
 		if($this->user){
-			$categories = $this->Categories->GetAll('FR');
+			$categories = $this->Resource->Categories();
 
 			$this->set('categories', $categories);
 			$this->render();
@@ -169,4 +169,3 @@ class Book extends \Apps\Controller{
 		}
 	}
 }
-?>

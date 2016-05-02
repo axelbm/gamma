@@ -61,4 +61,3 @@ class Book extends \Gamma\Model{
 
 	}
 }
-?>

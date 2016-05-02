@@ -33,4 +33,3 @@ class Error extends \Apps\Controller{
 		$this->render('err_404');
 	}
 }
-?>
