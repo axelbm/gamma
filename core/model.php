@@ -124,12 +124,12 @@ class Model{
 		if(array_key_exists($name, self::$models)){
 			return self::$models[$name];
 		}else{
-			$file = ROOT.'models/'.strtolower($name).'.php';
+			$file = APPROOT.'models/'.strtolower($name).'.php';
 			
 			if(file_exists($file)){
 				require_once($file);
 
-				$obj_file = ROOT.'objects/'.strtolower($name).'.php';
+				$obj_file = APPROOT.'objects/'.strtolower($name).'.php';
 
 				if(file_exists($obj_file))
 					require_once $obj_file;

@@ -50,7 +50,7 @@ class Book extends \Apps\Controller{
 			$stats['rate'] 	= round($stats['likerate']*100, 2);
 			$stats['stars']	= round($stats['likerate']*5);
 
-			$category = $this->Resource->Categories($this->book->Category()?:'OT', 'fr');
+			$category = $this->Resource->Categories()[$this->book->Category()?:'OT'];
 
 			$this->set('book_category',	$category);
 			$this->set('stats',        	$stats);

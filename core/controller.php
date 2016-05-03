@@ -77,14 +77,14 @@ class Controller{
 		if(empty($filename))
 			$filename = $this->action;
 
-		$viewfile = ROOT.'views/pages/'.$this->controller.'/'.$filename.'.php';
+		$viewfile = APPROOT.'views/pages/'.$this->controller.'/'.$filename.'.php';
 
 		if(file_exists($viewfile)){
 			extract($this->vars);
 
 			$jsfiles = array();
 			foreach ($this->js as $js) {
-				if(file_exists(ROOT.$js)){
+				if(file_exists(APPROOT.$js)){
 					array_push($jsfiles, WEBROOT.'apps/'.$js);
 				}
 			}
@@ -98,7 +98,7 @@ class Controller{
 			if($this->layout == false){
 				echo $content_for_layout;
 			}else{
-				$path = ROOT.'views/layout/'.$this->layout.'/';
+				$path = APPROOT.'views/layout/'.$this->layout.'/';
 				if(file_exists($path.$filename.'.php')){
 					require_once($path.$filename.'.php');
 				}else{
@@ -172,7 +172,7 @@ class Controller{
 		self::$controllername = $controller;
 		$cn = $controller;
 
-		$filename = ROOT.'controllers/'.strtolower($controller).'.php';
+		$filename = APPROOT.'controllers/'.strtolower($controller).'.php';
 		if(file_exists($filename)){
 			require_once($filename);
 			$class = 'Apps\Controller\\'.$controller;

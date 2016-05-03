@@ -18,7 +18,7 @@ class Resource extends \Gamma\Model{
 
 		if(empty($arguments)){
 			return $this->Get($table);
-		}elseif(count($arguments) === 1){
+		}elseif(count($arguments) == 1){
 			return $this->Get($table, $arguments[0]);
 		}
 	}
